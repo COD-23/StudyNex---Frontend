@@ -8,7 +8,7 @@ const Features = ({ data }) => {
         Aos.init();
       }, []);
   return (
-    <div className="flex gap-20 even:flex-row-reverse">
+    <div className="flex flex-col lg:flex-row gap-20 even:lg:flex-row-reverse">
       <div className="flex flex-col gap-6"
       data-aos="fade-right"
       >
