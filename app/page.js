@@ -125,7 +125,7 @@ export default function Home() {
 
         {/* section1 */}
         <motion.div
-          className="py-10 px-12 lg:px-32 lg:py-20 flex flex-col lg:flex-row gap-16 items-center justify-center"
+          className="py-10 px-12 lg:px-32 lg:py-20 flex flex-col lg:flex-row gap-16 items-center justify-center "
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
         >
@@ -152,7 +152,7 @@ export default function Home() {
 
       <div className="max-w-[80%] m-auto">
         {/* Intro */}
-        <div className="py-20">
+        <div className="py-20 overflow-x-hidden">
           <div className="lg:px-48">
             <p className="font-semibold text-3xl text-center">
               All-In-One <span className="text-blue-500">Solution</span>
@@ -190,7 +190,7 @@ export default function Home() {
         </div>
 
         {/* Our Features */}
-        <div className="py-20">
+        <div className="py-20 overflow-x-hidden">
           <div className="lg:px-48">
             <p className="font-semibold text-3xl text-center">
               Our <span className="text-blue-500">Features</span>
