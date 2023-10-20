@@ -2,26 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.landingHome{
+  background-color: #e9f8f5;
+  /* height: 100vh; */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.gradient-transition {
+  background-image: linear-gradient(to right, #4983f6, #a578f7, #3eb2ffda);
+  background-size: 200% 100%;
+  transition: background-position 0.5s;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.gradient-transition:hover {
+  background-position: 100% 0;
+}
+.welcomePage{
+  background-image: url('../public/Assets/Images/study1.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.instructors{
+  background-image: url('../public/Assets/Images/teacher1.jpg');
+}
+.students{
+  background-image: url('../public/Assets/Images/teacher2.jpg');
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.body{
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
