@@ -12,7 +12,7 @@ const OfferCards = ({ data }) => {
     data-aos-duration="1500"
     >
       <div
-        className={` bg-cover bg-center py-20 px-6 md:p-24 relative -z-10`}
+        className={` bg-cover bg-center py-20 px-6 lg:p-24 relative -z-10`}
         style={{ backgroundImage: `url(${data?.logo?.src})` }}
       >
         <div className="absolute inset-0 bg-black opacity-30 -z-10" />
@@ -21,7 +21,7 @@ const OfferCards = ({ data }) => {
             For {data?.class}
           </p>
           <button className="p-4 border-2 border-white rounded-full bg-transparent lg:cursor-pointer">
-            <p className="text-white md:text-xl">{data?.btnText}</p>
+            <p className="text-white lg:text-xl">{data?.btnText}</p>
           </button>
         </div>
       </div>

@@ -4,10 +4,10 @@ import thumbnailImg2 from '../../public/Assets/Images/study3.png'
 import teacher1 from '../../public/Assets/Images/teacher.jpg'
 import teacher2 from '../../public/Assets/Images/teacher2.jpg'
 import student1 from '../../public/Assets/Images/student1.jpg'
-import Study from '../../public/Assets/Images/login-study.jpg'
+import Girl from "../../public/Assets/Images/girl.svg";
 
 export const StudyLogo = studyLogo;
 export const TeacherLogo = teacher1;
 export const TeacherLogo2 = teacher2;
 export const StudentLogo = student1;
-export const RegisterStudy = Study;
+export const GirlImage = Girl;

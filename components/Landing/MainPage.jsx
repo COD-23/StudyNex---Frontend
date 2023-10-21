@@ -151,7 +151,7 @@ export default function MainPage() {
               ullam facilis.
             </p>
             <div className="lg:w-[40%]">
-            <PrimaryBtn label="Get Started" box />
+            <PrimaryBtn label="Get Started" box link="/register"/>
             </div>
           </div>
 

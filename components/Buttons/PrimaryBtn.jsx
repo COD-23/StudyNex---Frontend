@@ -1,12 +1,15 @@
 import classNames from "classnames";
+import Link from "next/link";
 import React from "react";
 
-const PrimaryBtn = ({ children, label, invert,box }) => {
+const PrimaryBtn = ({ children, label, invert, box, link="" }) => {
   return (
-    <div
+    <Link
+      href={link}
       className={classNames(
-        "md:px-6 px-4 py-3 z-50 md:cursor-pointer font-bold uppercase  flex flex-row justify-center items-center  shadow-xl",
-        invert ? "bg-white text-violet-800" : "gradient-transition text-white", !box && "rounded-full"
+        "lg:px-6 px-4 py-3 z-50 lg:cursor-pointer font-bold uppercase  flex flex-row justify-center items-center  shadow-xl",
+        invert ? "bg-white text-violet-800" : "gradient-transition text-white",
+        !box && "rounded-full"
       )}
     >
       <p>{label}</p>
@@ -18,7 +21,7 @@ const PrimaryBtn = ({ children, label, invert,box }) => {
           <span className="bg-white rounded-full  opacity-20 inline-block w-[6px] h-[6px]" />
         </div>
       )}
-    </div>
+    </Link>
   );
 };
 

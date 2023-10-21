@@ -2,7 +2,6 @@
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { useEffect, useState } from "react";
-import * as animationData from "../public/Assets/Lotties/studyLottie1.json";
 import MainPage from "@/components/Landing/MainPage";
 import ParentLayout from "@/components/Layouts/ParentLayout";
 
@@ -12,15 +11,6 @@ export default function Home() {
   useEffect(() => {
     Aos.init();
   }, []);
-
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
 
   // useEffect(() => {
   //   const handleScroll = () => {

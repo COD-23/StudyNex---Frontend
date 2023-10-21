@@ -84,8 +84,8 @@ const Header = ({ activeSection }) => {
       </nav>
 
       <div className="hidden lg:flex gap-4 items-center">
-        <PrimaryBtn label="Login" invert />
-        <PrimaryBtn label="Sign Up" />
+        <PrimaryBtn label="Login" invert link='/login'/>
+        <PrimaryBtn label="Sign Up" link="/register"/>
       </div>
       <div className="p-5 lg:hidden" onClick={showNavbar}>
         <FaBars />
