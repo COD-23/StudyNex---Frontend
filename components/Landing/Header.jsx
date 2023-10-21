@@ -39,17 +39,17 @@ const Header = ({ activeSection }) => {
 
   return (
     <motion.header
-      className="flex sticky top-0 z-50 items-center w-screen h-[80px] lg:px-32 justify-between py-12"
+      className="flex sticky top-0 z-[999] items-center w-screen lg:px-32 justify-between py-2 h-[80px] lg:h-auto  bg-[#daf8f2] shadow-lg"
       initial={{ opacity: 0, y: -100 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      <div className="hidden lg:flex gap-4 justify-center items-center">
-        <Image src={StudyLogo} alt="studyNex logo" height={80} width={80} />
-        <p className="font-bold text-3xl">StudyNex</p>
+      <div className="flex gap-4 justify-center items-center">
+        <Image src={StudyLogo} alt="studyNex logo" height={60} width={60} />
+        <p className="font-bold text-xl lg:text-3xl">StudyNex</p>
       </div>
       <nav
         ref={navRef}
-        className="fixed top-0 lg:h-[80px] h-screen w-screen lg:w-auto text-[20px] bg-[rgba(153,246,220,0.9)] lg:bg-transparent flex items-center justify-center flex-col gap-6 transition duration-[1s] -translate-y-[100vh] lg:translate-y-0 lg:relative lg:flex-row lg:justify-center"
+        className="fixed top-0 lg:h-auto h-screen w-screen lg:w-auto text-[20px] bg-[rgba(153,246,220,0.9)] lg:bg-transparent flex items-center justify-center flex-col gap-6 transition duration-[1s] -translate-y-[100vh] lg:translate-y-0 lg:relative lg:flex-row lg:justify-center"
       >
         {navBarValues.map((item, index) => (
           <Link
@@ -83,7 +83,7 @@ const Header = ({ activeSection }) => {
         </div>
       </nav>
 
-      <div className="hidden lg:flex gap-4">
+      <div className="hidden lg:flex gap-4 items-center">
         <PrimaryBtn label="Login" invert />
         <PrimaryBtn label="Sign Up" />
       </div>
