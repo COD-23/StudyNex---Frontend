@@ -6,10 +6,10 @@ import React from "react";
 const Register = () => {
   return (
     <div className="h-screen bg-white flex">
-      <div className="flex-1 flex justify-center items-center">
+      {/* <div className="flex-1 flex justify-center items-center">
         <RegisterComponent />
-      </div>
-      <div className="flex-1 bg-black register bg-no-repeat bg-cover"></div>
+      </div> */}
+      <div className="w-full h-full flex-1 bg-black register bg-no-repeat bg-cover bg-center"></div>
     </div>
   );
 };
