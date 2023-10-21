@@ -5,7 +5,7 @@ const PrimaryBtn = ({ children, label, invert,box }) => {
   return (
     <div
       className={classNames(
-        "md:px-6 px-4 py-3 mt-4 z-50 md:cursor-pointer font-bold uppercase  flex flex-row justify-center items-center  shadow-xl",
+        "md:px-6 px-4 py-3 z-50 md:cursor-pointer font-bold uppercase  flex flex-row justify-center items-center  shadow-xl",
         invert ? "bg-white text-violet-800" : "gradient-transition text-white", !box && "rounded-full"
       )}
     >

@@ -39,7 +39,7 @@ const Header = ({ activeSection }) => {
 
   return (
     <motion.header
-      className="flex sticky top-0 z-[999] items-center w-screen lg:px-32 justify-between py-2 h-[80px] lg:h-auto  bg-[#daf8f2] shadow-lg"
+      className="flex sticky top-0 z-[999] items-center w-screen lg:px-32 justify-between py-2 h-[80px] lg:h-auto  bg-[#e9f8f5]"
       initial={{ opacity: 0, y: -100 }}
       animate={{ opacity: 1, y: 0 }}
     >
