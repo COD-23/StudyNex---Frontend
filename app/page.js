@@ -122,7 +122,6 @@ export default function Home() {
     <div id="home" className="scrollbar-none">
       <div className="landingHome overflow-x-hidden">
         <Header activeSection={activeSection} />
-
         {/* section1 */}
         <motion.div
           className="py-10 px-12 lg:px-32 lg:py-20 flex flex-col lg:flex-row gap-16 items-center justify-center "
@@ -152,7 +151,7 @@ export default function Home() {
 
       <div className="max-w-[80%] m-auto">
         {/* Intro */}
-        <div className="py-20 overflow-x-hidden">
+        <div className="py-20 overflow-hidden">
           <div className="lg:px-48">
             <p className="font-semibold text-3xl text-center">
               All-In-One <span className="text-blue-500">Solution</span>
