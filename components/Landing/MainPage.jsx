@@ -5,6 +5,7 @@ import "aos/dist/aos.css";
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import * as animationData from "../../public/Assets/Lotties/studyLottie1.json";
+import * as animationData2 from "../../public/Assets/Lotties/featuresLottie.json";
 import Lottie from "react-lottie";
 import InfoCards from "@/components/Cards/InfoCards";
 import { CgNotes } from "react-icons/cg";
@@ -18,8 +19,10 @@ import {
   TeacherLogo2,
 } from "@/components/Constants/imageContants";
 import Features from "@/components/Landing/Features";
-import ParentLayout from "../Layouts/ParentLayout";
 import PrimaryBtn from "../Buttons/PrimaryBtn";
+import {BsFillGridFill} from 'react-icons/bs';
+import {SiGooglemeet} from 'react-icons/si';
+import {FaLayerGroup} from 'react-icons/fa';
 
 export default function MainPage() {
   const [activeSection, setActiveSection] = useState("");
@@ -32,6 +35,15 @@ export default function MainPage() {
     loop: true,
     autoplay: true,
     animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
+  const defaultOptions2 = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData2,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
@@ -106,23 +118,42 @@ export default function MainPage() {
     () => [
       {
         mainLabel: "Tools",
-        label: "For Teachers Ans Learners",
+        label: "For Teachers And Learners",
         logo: TeacherLogo2,
         desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam cumque repellat fugiat dignissimos nostrum, in sunt omnis ipsum dolore nihil dolorem, obcaecati ex quasi totam voluptas labore adipisci animi inventore?",
+        isLottie: false,
         link: "#",
+
       },
       {
         mainLabel: "A user interface",
         label: "designed for the classroom",
-        logo: StudentLogo,
         desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam cumque repellat fugiat dignissimos nostrum, in sunt omnis ipsum dolore nihil dolorem, obcaecati ex quasi totam voluptas labore adipisci animi inventore?",
+        isLottie: true,
+        options: defaultOptions2,
         link: "#",
+        details:[
+          {
+            logo: BsFillGridFill,
+            desc:"Teachers don't get lost in the grid view & have conntrol over dedicated classes."
+          },
+          {
+            logo: SiGooglemeet,
+            desc:"Students can meet virtually with their groups."
+          },
+          {
+            logo: FaLayerGroup,
+            desc:"Layered architecture that is scalable as per the individuals requirements."
+          },
+        ]
+
       },
       {
         label: "For Students",
         logo: StudentLogo,
         desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam cumque repellat fugiat dignissimos nostrum, in sunt omnis ipsum dolore nihil dolorem, obcaecati ex quasi totam voluptas labore adipisci animi inventore?",
         link: "#",
+        isLottie: false,
       },
     ],
     []
@@ -164,7 +195,7 @@ export default function MainPage() {
 
       <div className="max-w-[80%] m-auto">
         {/* Intro */}
-        <div className="py-20 overflow-hidden">
+        <div className="py-20 overflow-hidden" data-aos="fade-up">
           <div className="lg:px-48">
             <p className="font-semibold text-3xl text-center">
               All-In-One <span className="text-blue-500">Solution</span>
@@ -183,7 +214,7 @@ export default function MainPage() {
         </div>
 
         {/* What is StudyNex */}
-        <div className="py-20">
+        <div className="py-20" data-aos="fade-up">
           <div className="lg:px-48">
             <p className="font-semibold text-3xl text-center">
               What is <span className="text-blue-500">{MainLabel}</span>
@@ -202,7 +233,7 @@ export default function MainPage() {
         </div>
 
         {/* Our Features */}
-        <div className="py-20 overflow-x-hidden">
+        <div className="py-20 overflow-x-hidden" data-aos="fade-up">
           <div className="lg:px-48">
             <p className="font-semibold text-3xl text-center">
               Our <span className="text-blue-500">Features</span>

@@ -9,7 +9,7 @@ const OfferCards = ({ data }) => {
   }, []);
   return (
     <div className="rounded-3xl" data-aos="fade-up"
-    data-aos-duration="1500"
+    
     >
       <div
         className={` bg-cover bg-center py-20 px-6 lg:p-24 relative -z-10`}

@@ -43,7 +43,12 @@ const Header = ({ activeSection }) => {
       initial={{ opacity: 0, y: -100 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      <div className="flex gap-4 justify-center items-center">
+      <div
+        className="flex gap-4 justify-center items-center lg:cursor-pointer"
+        onClick={() => {
+          window.location.reload();
+        }}
+      >
         <Image src={StudyLogo} alt="studyNex logo" height={60} width={60} />
         <p className="font-bold text-xl lg:text-3xl">StudyNex</p>
       </div>
@@ -84,8 +89,8 @@ const Header = ({ activeSection }) => {
       </nav>
 
       <div className="hidden lg:flex gap-4 items-center">
-        <PrimaryBtn label="Login" invert link='/login'/>
-        <PrimaryBtn label="Sign Up" link="/register"/>
+        <PrimaryBtn label="Login" invert link="/login" />
+        <PrimaryBtn label="Sign Up" link="/register" />
       </div>
       <div className="p-5 lg:hidden" onClick={showNavbar}>
         <FaBars />
