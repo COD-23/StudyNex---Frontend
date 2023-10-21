@@ -12,7 +12,6 @@ const Register = () => {
         <RegisterComponent />
       </div>
       <div className="flex-1 lg:flex hidden">
-        {/* <LottieComponent/> */}
       </div>
     </div>
   );

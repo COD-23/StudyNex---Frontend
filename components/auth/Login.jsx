@@ -1,7 +1,9 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import PrimaryBtn from "../Buttons/PrimaryBtn";
+import { motion } from "framer-motion";
+import LottieComponent from "./Lottie";
 
 const LoginComponent = () => {
   const [type, setType] = useState(true);
@@ -17,7 +19,11 @@ const LoginComponent = () => {
     }
   };
   return (
-    <div className="lg:w-[70%] w-full lg:mx-0 mx-2 lg:px-10 px-4 py-8 pb-12 bg-white rounded-md shadow-md">
+    <motion.div
+      initial={{ opacity: 0, y: -100 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="lg:w-[70%] w-full lg:mx-0 mx-2 lg:px-10 px-4 py-8 pb-12 bg-white rounded-md shadow-md"
+    >
       <p className="text-xl font-extrabold pt-4 text-center">
         <span className="text-blue-500">Welcome</span> Back !
       </p>
@@ -27,6 +33,9 @@ const LoginComponent = () => {
           Sign up now
         </a>
       </p>
+      <div className="md:hidden">
+        <LottieComponent />
+      </div>
       <form
         action=""
         className="flex flex-col gap-4"
@@ -93,12 +102,12 @@ const LoginComponent = () => {
             <span className="text-red-600 text-xs">Password is required</span>
           )} */}
         </div>
-        <a className="text-[#4983f6] text-end pr-4 text-xs" href="/login">
+        <a className="text-[#4983f6] text-end pr-4 text-xs" href="/forgot-password">
           Forgot password?
         </a>
         <PrimaryBtn label="Log in" />
       </form>
-    </div>
+    </motion.div>
   );
 };
 

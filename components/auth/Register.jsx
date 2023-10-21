@@ -3,22 +3,30 @@
 import React, { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import PrimaryBtn from "../Buttons/PrimaryBtn";
+import Image from "next/image";
+import { AvatarReg } from "../Constants/imageContants";
+import { BiSolidCamera } from "react-icons/bi";
+import { motion } from "framer-motion";
 
 const RegisterComponent = () => {
   const [type, setType] = useState(true);
-  const [confirmType, setConfirmType] = useState(true);
 
-  const togglePassword = (id) => {
-    let input = document.getElementById(id);
-    id === "password" ? setType(!type) : setConfirmType(!confirmType);
-    if (input.type == "password") {
+  const togglePassword = () => {
+    let input = document.getElementById("password");
+    setType(!type);
+    if (input.type === "password") {
       input.type = "text";
     } else {
       input.type = "password";
     }
   };
+
   return (
-    <div className="lg:w-[70%] w-full lg:mx-0 mx-2 lg:px-10 px-4 py-8 pb-12 bg-white rounded-md shadow-md">
+    <motion.div
+      initial={{ opacity: 0, y: -100 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="lg:w-[70%] w-full lg:mx-0 mx-2 lg:px-10 px-4 py-8 pb-12 bg-white rounded-md shadow-md"
+    >
       <p className="text-xl font-extrabold pt-4 text-center">
         Welcome to <span className="text-blue-500">StudyNex</span> !
       </p>
@@ -33,7 +41,13 @@ const RegisterComponent = () => {
         className="flex flex-col gap-4"
         // onSubmit={handleSubmit(submitData)}
       >
-        <label className="w-1/2 m-auto relative" for="image">
+        <label className="m-auto relative flex justify-center" for="image">
+          <Image
+            src={AvatarReg}
+            alt=""
+            className="w-24 h-24 cursor-pointer rounded-full"
+          ></Image>
+          <BiSolidCamera className="absolute bottom-0 right-2 text-white text-2xl bg-blue-500 rounded-full p-1 cursor-pointer" />
           <input
             id="image"
             type="file"
@@ -52,7 +66,7 @@ const RegisterComponent = () => {
             // {...register("fname", { required: true, maxLength: 30 })}
           />
           <label for="first_name" className="placeholder">
-            First Name
+            Name
           </label>
           {/* {errors.fname && errors.fname.type === "required" && (
                   <span className="text-red-600 text-xs">
@@ -152,7 +166,7 @@ const RegisterComponent = () => {
           </label>
           <p
             className="absolute right-[10px] top-[11px] cursor-pointer"
-            onClick={() => togglePassword("password")}
+            onClick={() => togglePassword()}
           >
             {type ? (
               <AiFillEye className="text-[#808080] text-xl" />
@@ -164,49 +178,9 @@ const RegisterComponent = () => {
             <span className="text-red-600 text-xs">Password is required</span>
           )} */}
         </div>
-        <div className="input-group w-full">
-          <input
-            id="confirm_password"
-            type="password"
-            required
-            className="input"
-            // {...register("confirm_password", {
-            //   required: true,
-            //   validate: (value) => {
-            //     const { password } = getValues();
-            //     return password === value || "Passwords should match!";
-            //   },
-            // })}
-          />
-          <label for="confirm_password" className="placeholder">
-            Confirm Password
-          </label>
-          <p
-            className="absolute right-[10px] top-[11px] cursor-pointer"
-            onClick={() => togglePassword("confirm_password")}
-          >
-            {confirmType ? (
-              <AiFillEye className="text-[#808080] text-xl" />
-            ) : (
-              <AiFillEyeInvisible className="text-[#808080] text-xl" />
-            )}
-          </p>
-          {/* {errors.confirm_password &&
-                errors.confirm_password.type === "required" && (
-                  <span className="text-red-600 text-xs">
-                    Password is required
-                  </span>
-                )}
-              {errors.confirm_password &&
-                errors.confirm_password.type === "validate" && (
-                  <span className="text-red-600 text-xs">
-                    {errors.confirm_password.message}
-                  </span>
-                )} */}
-        </div>
         <PrimaryBtn label="Sign Up" />
       </form>
-    </div>
+    </motion.div>
   );
 };
 

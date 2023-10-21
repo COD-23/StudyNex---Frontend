@@ -13,7 +13,7 @@ const LottieComponent = () => {
       },
     };
   return (
-    <div className='w-[80%] m-auto'>
+    <div className='w-[50%] m-auto'>
       <Lottie options={defaultOptions} />
     </div>
   );
