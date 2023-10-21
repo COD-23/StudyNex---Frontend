@@ -70,7 +70,44 @@ body::-webkit-scrollbar {
   background-image: url('../public/Assets/Images/teacher2.jpg');
 }
 
+.register{
+  background-image: url('../public/Assets/Images/login-study.png');
+}
+
 .body{
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+}
+
+/* input  */
+.input-group {
+  position: relative;
+}
+
+.input {
+  padding: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  border: 1px solid #C0C0C0;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.placeholder {
+  position: absolute;
+  top: 12px;
+  left: 15px;
+  color: #808080;
+  font-size: 14px;
+  padding: 0px 5px;
+  transition: 0.3s;
+  pointer-events: none;
+}
+
+.input:focus~.placeholder,
+.input:valid~.placeholder {
+  top: -12px;
+  color: gray;
+  background: #fff;
 }
