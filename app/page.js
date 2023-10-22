@@ -1,16 +1,19 @@
-"use client";
 import Aos from "aos";
 import "aos/dist/aos.css";
-import { useEffect, useState } from "react";
 import MainPage from "@/components/Landing/MainPage";
 import ParentLayout from "@/components/Layouts/ParentLayout";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
+const isLoggedIn = () => {
+  const token = cookies().get("token")?.value;
+  if (token) {
+    redirect("/organization");
+  }
+};
 export default function Home() {
-  const [activeSection, setActiveSection] = useState("");
 
-  useEffect(() => {
-    Aos.init();
-  }, []);
+  isLoggedIn();
 
   // useEffect(() => {
   //   const handleScroll = () => {
@@ -36,7 +39,7 @@ export default function Home() {
   // }, []);
 
   return (
-    <ParentLayout id="home" className="scrollbar-none" activeSection={activeSection}>
+    <ParentLayout id="home" className="scrollbar-none">
      <MainPage/>
     </ParentLayout>
   );

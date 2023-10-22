@@ -4,20 +4,57 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import PrimaryBtn from "../Buttons/PrimaryBtn";
 import { motion } from "framer-motion";
 import LottieComponent from "./Lottie";
+import axios from "axios";
+import { ApiUrl, loginApi } from "../Constants/apiEndpoinds";
+import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { setCookie } from "cookies-next";
 
 const LoginComponent = () => {
   const [type, setType] = useState(true);
-  const [confirmType, setConfirmType] = useState(true);
+  const [loading, setLoading] = useState(true);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  const router = useRouter();
 
   const togglePassword = (id) => {
     let input = document.getElementById(id);
-    id === "password" ? setType(!type) : setConfirmType(!confirmType);
+    setType(!type);
     if (input.type == "password") {
       input.type = "text";
     } else {
       input.type = "password";
     }
   };
+
+  const submitData = async (data) => {
+    try {
+      setLoading(true);
+      const response = await axios.post(`${ApiUrl}${loginApi}`, data);
+      if (response?.data?.status) {
+        setCookie("token", response?.data?.data?.token);
+        reset();
+        toast.success("Login Successful!");
+        router.push("/organization");
+        setLoading(false);
+      } else {
+        toast.error(response?.data?.message);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+      setLoading(false);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: -100 }}
@@ -39,43 +76,24 @@ const LoginComponent = () => {
       <form
         action=""
         className="flex flex-col gap-4"
-        // onSubmit={handleSubmit(submitData)}
+        onSubmit={handleSubmit(submitData)}
       >
-        <label className="w-1/2 m-auto relative" for="image">
-          <input
-            id="image"
-            type="file"
-            accept="image/*"
-            required
-            className="opacity-0 text-[0.4rem] absolute"
-            // onChange={(e) => uploadImage(e.target.files[0])}
-          />
-        </label>
         <div className="input-group w-full">
           <input
             id="email"
             type="text"
             required
             className="input"
-            // {...register("email", {
-            //   required: true,
-            //   pattern: {
-            //     value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-            //     message: "Email is invalid",
-            //   },
-            // })}
+            {...register("email", {
+              required: true,
+            })}
           />
-          <label for="email" className="placeholder">
+          <label htmlFor="email" className="placeholder">
             Email or username
           </label>
-          {/* {errors.email && errors.email.type === "required" && (
-                <span className="text-red-600 text-xs">Email is required</span>
-              )}
-              {errors.email && errors.email.type === "pattern" && (
-                <span className="text-red-600 text-xs">
-                  {errors.email.message}
-                </span>
-              )} */}
+          {errors.email && errors.email.type === "required" && (
+            <span className="text-red-600 text-xs">Email is required</span>
+          )}
         </div>
         <div className="input-group w-full">
           <input
@@ -83,9 +101,9 @@ const LoginComponent = () => {
             type="password"
             required
             className="input"
-            // {...register("password", { required: true })}
+            {...register("password", { required: true })}
           />
-          <label for="password" className="placeholder">
+          <label htmlFor="password" className="placeholder">
             Password
           </label>
           <p
@@ -98,14 +116,17 @@ const LoginComponent = () => {
               <AiFillEyeInvisible className="text-[#808080] text-xl" />
             )}
           </p>
-          {/* {errors.password && errors.password.type === "required" && (
+          {errors.password && errors.password.type === "required" && (
             <span className="text-red-600 text-xs">Password is required</span>
-          )} */}
+          )}
         </div>
-        <a className="text-[#4983f6] text-end pr-4 text-xs" href="/forgot-password">
+        <a
+          className="text-[#4983f6] text-end pr-4 text-xs"
+          href="/forgot-password"
+        >
           Forgot password?
         </a>
-        <PrimaryBtn label="Log in" />
+        <PrimaryBtn label="Log in" type="submit" />
       </form>
     </motion.div>
   );

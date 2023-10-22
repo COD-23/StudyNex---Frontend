@@ -31,7 +31,7 @@ const ForgotPassword = () => {
             //   },
             // })}
           />
-          <label for="email" className="placeholder">
+          <label htmlFor="email" className="placeholder">
             Email
           </label>
           {/* {errors.email && errors.email.type === "required" && (

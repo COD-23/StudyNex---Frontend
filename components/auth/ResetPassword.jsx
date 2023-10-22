@@ -30,7 +30,7 @@ const ResetPassword = () => {
             //   },
             // })}
           />
-          <label for="password" className="placeholder">
+          <label htmlFor="password" className="placeholder">
             Password
           </label>
           {/* {errors.password && errors.password.type === "required" && (
@@ -56,7 +56,7 @@ const ResetPassword = () => {
             //   },
             // })}
           />
-          <label for="confirm_password" className="placeholder">
+          <label htmlFor="confirm_password" className="placeholder">
             Confirm password
           </label>
           {/* {errors.confirm_password && errors.confirm_password.type === "required" && (
