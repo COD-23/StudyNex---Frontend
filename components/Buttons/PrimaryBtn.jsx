@@ -12,7 +12,7 @@ const PrimaryBtn = ({
   type = "button",
 }) => {
   return (
-    <button type={type}>
+    <button type={type} onClick={clickEvent}>
       <a
         href={link ? link : null}
         className={classNames(

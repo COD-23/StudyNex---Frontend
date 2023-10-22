@@ -25,7 +25,7 @@ const Features = ({ data }) => {
                   <div className="p-3 rounded-full bg-white shadow-lg shrink-0">
                     <Icon className="h-6 w-6" />
                   </div>
-                  <p className="shrink-0 text-lg">{item.desc}</p>
+                  <p className="text-lg">{item.desc}</p>
                 </div>
               );
             })}
@@ -44,7 +44,7 @@ const Features = ({ data }) => {
           width={500}
           height={500}
           alt="features"
-          className="flex-1 aspect-[8/4]"
+          className="flex-1 aspect-[8/4] rounded-tr-3xl rounded-bl-3xl"
         />
       )}
     </div>

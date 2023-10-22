@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import * as animationData from "../../public/Assets/Lotties/studyLottie1.json";
 import * as animationData2 from "../../public/Assets/Lotties/featuresLottie.json";
+import * as animationData3 from "../../public/Assets/Lotties/featuresLottie2.json";
 import Lottie from "react-lottie";
 import InfoCards from "@/components/Cards/InfoCards";
 import { CgNotes } from "react-icons/cg";
@@ -14,6 +15,7 @@ import { MdLeaderboard } from "react-icons/md";
 import { MainLabel } from "@/components/Constants/labelConstant";
 import OfferCards from "@/components/Cards/OfferCards";
 import {
+  QuizLogo,
   StudentLogo,
   TeacherLogo,
   TeacherLogo2,
@@ -23,6 +25,7 @@ import PrimaryBtn from "../Buttons/PrimaryBtn";
 import {BsFillGridFill} from 'react-icons/bs';
 import {SiGooglemeet} from 'react-icons/si';
 import {FaLayerGroup} from 'react-icons/fa';
+import Footer from "./Footer";
 
 export default function MainPage() {
   const [activeSection, setActiveSection] = useState("");
@@ -44,6 +47,15 @@ export default function MainPage() {
     loop: true,
     autoplay: true,
     animationData: animationData2,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
+  const defaultOptions3 = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData3,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
@@ -135,7 +147,7 @@ export default function MainPage() {
         details:[
           {
             logo: BsFillGridFill,
-            desc:"Teachers don't get lost in the grid view & have conntrol over dedicated classes."
+            desc:"Teachers don't get lost in the grid view & have control over dedicated classes."
           },
           {
             logo: SiGooglemeet,
@@ -149,18 +161,27 @@ export default function MainPage() {
 
       },
       {
-        label: "For Students",
-        logo: StudentLogo,
+        mainLabel: "Quizzes",
+        label: "Assessments & Surveys",
+        logo: QuizLogo,
+        desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam cumque repellat fugiat dignissimos nostrum, in sunt omnis ipsum dolore nihil dolorem, obcaecati ex quasi totam voluptas labore adipisci animi inventore?",
+        isLottie: false,
+        link: "#",
+      },
+      {
+        mainLabel: "One-on-One",
+        label: "Discussions",
+        isLottie: true,
+        options: defaultOptions3,
         desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam cumque repellat fugiat dignissimos nostrum, in sunt omnis ipsum dolore nihil dolorem, obcaecati ex quasi totam voluptas labore adipisci animi inventore?",
         link: "#",
-        isLottie: false,
       },
     ],
     []
   );
   return (
     <div>
-      <div className="landingHome overflow-x-hidden">
+      <div className="landingHome overflow-x-hidden" id="Home">
         {/* <Header activeSection={activeSection} /> */}
 
         {/* section1 */}
@@ -195,7 +216,7 @@ export default function MainPage() {
 
       <div className="max-w-[80%] m-auto">
         {/* Intro */}
-        <div className="py-20 overflow-hidden" data-aos="fade-up">
+        <div className="py-20 overflow-hidden" data-aos="fade-up" id="Intro">
           <div className="lg:px-48">
             <p className="font-semibold text-3xl text-center">
               All-In-One <span className="text-blue-500">Solution</span>
@@ -214,7 +235,7 @@ export default function MainPage() {
         </div>
 
         {/* What is StudyNex */}
-        <div className="py-20" data-aos="fade-up">
+        <div className="py-20" data-aos="fade-up" id="About">
           <div className="lg:px-48">
             <p className="font-semibold text-3xl text-center">
               What is <span className="text-blue-500">{MainLabel}</span>
@@ -233,7 +254,7 @@ export default function MainPage() {
         </div>
 
         {/* Our Features */}
-        <div className="py-20 overflow-x-hidden" data-aos="fade-up">
+        <div className="py-20 overflow-x-hidden" data-aos="fade-up" id="Features">
           <div className="lg:px-48">
             <p className="font-semibold text-3xl text-center">
               Our <span className="text-blue-500">Features</span>
@@ -250,6 +271,7 @@ export default function MainPage() {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }
