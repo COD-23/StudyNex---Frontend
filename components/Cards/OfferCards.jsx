@@ -8,8 +8,8 @@ const OfferCards = ({ data }) => {
     Aos.init();
   }, []);
   return (
-    <div className="rounded-3xl" data-aos="fade-up"
-    
+    <div className="rounded-3xl" 
+    data-aos="fade-up"
     >
       <div
         className={` bg-cover bg-center py-20 px-6 lg:p-24 relative -z-10`}

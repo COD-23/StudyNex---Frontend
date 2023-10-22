@@ -7,6 +7,7 @@ import { Link } from "react-scroll";
 import classNames from "classnames";
 import PrimaryBtn from "../Buttons/PrimaryBtn";
 import { motion } from "framer-motion";
+import MainLogo from "../Logo/MainLogo";
 
 const Header = ({ activeSection }) => {
   const [clicked, setClicked] = useState("Home");
@@ -19,11 +20,11 @@ const Header = ({ activeSection }) => {
       },
       {
         label: "About",
-        link: "/about",
+        link: "/#About",
       },
       {
         label: "Contact",
-        link: "/contact",
+        link: "/#Contact",
       },
     ],
     []
@@ -43,18 +44,10 @@ const Header = ({ activeSection }) => {
       initial={{ opacity: 0, y: -100 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      <div
-        className="flex gap-4 justify-center items-center lg:cursor-pointer"
-        onClick={() => {
-          window.location.reload();
-        }}
-      >
-        <Image src={StudyLogo} alt="studyNex logo" height={60} width={60} />
-        <p className="font-bold text-xl lg:text-3xl">StudyNex</p>
-      </div>
+      <MainLogo/>
       <nav
         ref={navRef}
-        className="fixed top-0 lg:h-auto h-screen w-screen lg:w-auto text-[20px] bg-[rgba(153,246,220,0.9)] lg:bg-transparent flex items-center justify-center flex-col gap-6 transition duration-[1s] -translate-y-[100vh] lg:translate-y-0 lg:relative lg:flex-row lg:justify-center"
+        className="fixed top-0 lg:h-auto h-screen w-screen lg:w-auto text-[20px] bg-[rgba(177,145,245,0.9)] lg:bg-transparent flex items-center justify-center flex-col gap-6 transition duration-[1s] -translate-y-[100vh] lg:translate-y-0 lg:relative lg:flex-row lg:justify-center"
       >
         {navBarValues.map((item, index) => (
           <Link
