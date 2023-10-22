@@ -1,9 +1,67 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import PrimaryBtn from "../Buttons/PrimaryBtn";
+import { useParams, useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import axios from "axios";
+import { ApiUrl, resetPasswordApi } from "../Constants/apiEndpoinds";
+import toast from "react-hot-toast";
 
 const ResetPassword = () => {
+  const [loading, setLoading] = useState(true);
+  const [type, setType] = useState(true);
+  const [confirmType, setConfirmType] = useState(true);
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+    reset,
+    setValue
+  } = useForm();
+
+  const password = watch("password");
+  const params = useParams();
+  const { id } = params;
+
+  useEffect(() => {
+    setValue("token", id);
+  }, [id]);
+
+  const togglePassword = (id) => {
+    let input = document.getElementById(id);
+    id == "password" ? setType(!type) : setConfirmType(!confirmType);
+    if (input.type === "password") {
+      input.type = "text";
+    } else {
+      input.type = "password";
+    }
+  };
+
+  const submitData = async (data) => {
+    console.log(data);
+    try {
+      setLoading(true);
+      const response = await axios.post(`${ApiUrl}${resetPasswordApi}`, data);
+      if (response?.data?.status) {
+        reset();
+        toast.success(response?.data?.message);
+        router.push("/login");
+        setLoading(false);
+      } else {
+        toast.error(response?.data?.message);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+      setLoading(false);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: -100 }}
@@ -15,32 +73,41 @@ const ResetPassword = () => {
         Set your new password so you can login and access{" "}
         <span className="text-blue-500">StudyNex</span>
       </p>
-      <form action="" className="flex flex-col gap-4">
+      <form
+        action=""
+        onSubmit={handleSubmit(submitData)}
+        className="flex flex-col gap-4"
+      >
         <div className="input-group w-full">
           <input
             id="password"
             type="password"
             required
             className="input"
-            // {...register("password", {
-            //   required: true,
-            //   pattern: {
-            //     value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-            //     message: "password is invalid",
-            //   },
-            // })}
+            {...register("password", {
+              required: true,
+              minLength:8
+            })}
           />
           <label htmlFor="password" className="placeholder">
             Password
           </label>
-          {/* {errors.password && errors.password.type === "required" && (
-                <span className="text-red-600 text-xs">password is required</span>
-              )}
-              {errors.password && errors.password.type === "pattern" && (
-                <span className="text-red-600 text-xs">
-                  {errors.password.message}
-                </span>
-              )} */}
+          <p
+            className="absolute right-[10px] top-[11px] cursor-pointer"
+            onClick={() => togglePassword("password")}
+          >
+            {type ? (
+              <AiFillEye className="text-[#808080] text-xl" />
+            ) : (
+              <AiFillEyeInvisible className="text-[#808080] text-xl" />
+            )}
+          </p>
+          {errors.password && errors.password.type === "required" && (
+            <span className="text-red-600 text-xs">password is required</span>
+          )}
+          {errors.password && errors.password.type === "minLength" && (
+            <span className="text-red-600 text-xs">Password must be greater than 8 characters</span>
+          )}
         </div>
         <div className="input-group w-full">
           <input
@@ -48,29 +115,42 @@ const ResetPassword = () => {
             type="password"
             required
             className="input"
-            // {...register("confirm_password", {
-            //   required: true,
-            //   pattern: {
-            //     value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-            //     message: "password is invalid",
-            //   },
-            // })}
+            {...register("confirm_password", {
+              required: true,
+              validate: (value) =>
+                value === password || "The passwords do not match",
+            })}
           />
           <label htmlFor="confirm_password" className="placeholder">
             Confirm password
           </label>
-          {/* {errors.confirm_password && errors.confirm_password.type === "required" && (
-                <span className="text-red-600 text-xs">confirm_password is required</span>
-              )}
-              {errors.confirm_password && errors.confirm_password.type === "pattern" && (
-                <span className="text-red-600 text-xs">
-                  {errors.confirm_password.message}
-                </span>
-              )} */}
+          <p
+            className="absolute right-[10px] top-[11px] cursor-pointer"
+            onClick={() => togglePassword("confirm_password")}
+          >
+            {confirmType ? (
+              <AiFillEye className="text-[#808080] text-xl" />
+            ) : (
+              <AiFillEyeInvisible className="text-[#808080] text-xl" />
+            )}
+          </p>
+          {errors.confirm_password &&
+            errors.confirm_password.type === "required" && (
+              <span className="text-red-600 text-xs">
+                confirm_password is required
+              </span>
+            )}
+          {errors.confirm_password &&
+            errors.confirm_password.type === "validate" && (
+              <span className="text-red-600 text-xs">
+                {errors.confirm_password.message}
+              </span>
+            )}
         </div>
         <PrimaryBtn
           label="Reset Password"
           className="w-fit text-xs capitalize ml-auto"
+          type="submit"
         />
       </form>
     </motion.div>

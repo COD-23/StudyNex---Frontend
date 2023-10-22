@@ -35,7 +35,7 @@ const RegisterComponent = () => {
         setLoading(true);
         const response = await axios.post(`${ApiUrl}${registerApi}`, data);
         if (response?.data?.status) {
-          setCookie("token", response?.data?.token);
+          setCookie("token", response?.data?.data?.token);
           reset();
           toast.success("Registration Successful!");
           router.push("/organization");
