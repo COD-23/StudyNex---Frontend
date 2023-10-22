@@ -9,6 +9,7 @@ const PrimaryBtn = ({
   box,
   link = "",
   className,
+  clickEvent,
   type = "button",
 }) => {
   return (
