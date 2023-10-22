@@ -11,7 +11,7 @@ const Error = ({ error, reset }) => {
   };
 
   return (
-    <div className="bg-white absolute inset-0 flex justify-center items-center">
+    <div className="bg-white absolute inset-0 flex flex-col justify-center items-center">
       <p>Oops Something went wrong!!</p>
       <PrimaryBtn label="Try Again" clickEvent={handleReset} />
     </div>
