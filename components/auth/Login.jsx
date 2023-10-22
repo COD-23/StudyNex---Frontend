@@ -33,7 +33,7 @@ const LoginComponent = () => {
       input.type = "password";
     }
   };
-
+console.log(ApiUrl);
   const submitData = async (data) => {
     try {
       setLoading(true);
