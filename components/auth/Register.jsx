@@ -7,9 +7,48 @@ import Image from "next/image";
 import { AvatarReg } from "../Constants/imageContants";
 import { BiSolidCamera } from "react-icons/bi";
 import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { setCookie } from "cookies-next";
+import axios from "axios";
+import { ApiUrl, registerApi } from "../Constants/apiEndpoinds";
+import { useRouter } from "next/navigation";
 
 const RegisterComponent = () => {
   const [type, setType] = useState(true);
+  const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+   const {
+     register,
+     handleSubmit,
+     formState: { errors },
+     getValues,
+     setValue,
+     reset,
+   } = useForm();
+
+   const router = useRouter();
+
+   const submitData = async (data) => {
+      try {
+        setLoading(true);
+        const response = await axios.post(`${ApiUrl}${registerApi}`, data);
+        if (response?.data?.status) {
+          setCookie("token", response?.data?.data?.token);
+          reset();
+          toast.success("Registration Successful!");
+          router.push("/organization");
+          setLoading(false);
+        } else {
+          toast.error(response?.data?.message);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+   };
 
   const togglePassword = () => {
     let input = document.getElementById("password");
@@ -18,6 +57,35 @@ const RegisterComponent = () => {
       input.type = "text";
     } else {
       input.type = "password";
+    }
+  };
+
+  const uploadImage = (file) => {
+    if (file === undefined) {
+      toast.error("Invalid Image!");
+      return;
+    }
+    if (
+      file.type == "image/png" ||
+      file.type == "image/jpg" ||
+      file.type == "image/jpeg"
+    ) {
+      setImage(URL.createObjectURL(file));
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "study-nex");
+      data.append("cloud_name", "dgu3ljso6");
+      fetch("https://api.cloudinary.com/v1_1/dgu3ljso6/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res.url);
+          setValue("image", res.url.toString());
+        });
+    } else {
+      toast.error("Invalid Image!");
     }
   };
 
@@ -39,67 +107,77 @@ const RegisterComponent = () => {
       <form
         action=""
         className="flex flex-col gap-4"
-        // onSubmit={handleSubmit(submitData)}
+        onSubmit={handleSubmit(submitData)}
       >
-        <label className="m-auto relative flex justify-center" for="image">
-          <Image
-            src={AvatarReg}
-            alt=""
-            className="w-24 h-24 cursor-pointer rounded-full"
-          ></Image>
+        <label className="m-auto relative flex justify-center" htmlFor="image">
+          {image ? (
+            <img
+              src={image}
+              alt=""
+              className="w-24 h-24 cursor-pointer rounded-full object-cover bg-center"
+            />
+          ) : (
+            <Image
+              src={AvatarReg}
+              alt=""
+              className="w-24 h-24 cursor-pointer rounded-full"
+            ></Image>
+          )}
           <BiSolidCamera className="absolute bottom-0 right-2 text-white text-2xl bg-blue-500 rounded-full p-1 cursor-pointer" />
           <input
             id="image"
             type="file"
             accept="image/*"
-            required
             className="opacity-0 text-[0.4rem] absolute"
-            // onChange={(e) => uploadImage(e.target.files[0])}
+            onChange={(e) => uploadImage(e.target.files[0])}
           />
         </label>
         <div className="input-group w-full">
           <input
-            id="first_name"
+            id="name"
             type="text"
             required
             className="input"
-            // {...register("fname", { required: true, maxLength: 30 })}
+            {...register("name", { required: true, maxLength: 30 })}
           />
-          <label for="first_name" className="placeholder">
+          <label htmlFor="name" className="placeholder">
             Name
           </label>
-          {/* {errors.fname && errors.fname.type === "required" && (
-                  <span className="text-red-600 text-xs">
-                    First Name is required
-                  </span>
-                )}
-                {errors.fname && errors.fname.type === "maxLength" && (
-                  <span className="text-red-600 text-xs">
-                    Max length exceeded
-                  </span>
-                )} */}
+          {errors.name && errors.name.type === "required" && (
+            <span className="text-red-600 text-xs">Name is required</span>
+          )}
+          {errors.name && errors.name.type === "maxLength" && (
+            <span className="text-red-600 text-xs">Max length exceeded</span>
+          )}
         </div>
         <div className="input-group w-full">
           <input
             id="mobile_number"
             type="tel"
             required
+            maxLength={10}
             className="input"
-            // {...register("mobile_number", { required: true, maxLength: 30 })}
+            {...register("mobile_number", {
+              required: true,
+              maxLength: 10,
+              minLength: 10,
+            })}
           />
-          <label for="mobile_number" className="placeholder">
+          <label htmlFor="mobile_number" className="placeholder">
             Mobile number
           </label>
-          {/* {errors.mobile_number && errors.mobile_number.type === "required" && (
-                  <span className="text-red-600 text-xs">
-                    First Name is required
-                  </span>
-                )}
-                {errors.mobile_number && errors.mobile_number.type === "maxLength" && (
-                  <span className="text-red-600 text-xs">
-                    Max length exceeded
-                  </span>
-                )} */}
+          {errors.mobile_number && errors.mobile_number.type === "required" && (
+            <span className="text-red-600 text-xs">
+              Mobile number is required
+            </span>
+          )}
+          {(errors.mobile_number &&
+            errors.mobile_number?.type === "maxLength") ||
+            (errors.mobile_number?.type === "minLength" && (
+              <span className="text-red-600 text-xs">
+                Mobile number must be of 10 digits long
+              </span>
+            ))}
         </div>
         <div className="input-group w-full">
           <input
@@ -107,25 +185,23 @@ const RegisterComponent = () => {
             type="text"
             required
             className="input"
-            // {...register("email", {
-            //   required: true,
-            //   pattern: {
-            //     value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-            //     message: "Email is invalid",
-            //   },
-            // })}
+            {...register("email", {
+              required: true,
+              pattern: {
+                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                message: "Email is invalid",
+              },
+            })}
           />
-          <label for="email" className="placeholder">
+          <label htmlFor="email" className="placeholder">
             Email
           </label>
-          {/* {errors.email && errors.email.type === "required" && (
-                <span className="text-red-600 text-xs">Email is required</span>
-              )}
-              {errors.email && errors.email.type === "pattern" && (
-                <span className="text-red-600 text-xs">
-                  {errors.email.message}
-                </span>
-              )} */}
+          {errors.email && errors.email.type === "required" && (
+            <span className="text-red-600 text-xs">Email is required</span>
+          )}
+          {errors.email && errors.email.type === "pattern" && (
+            <span className="text-red-600 text-xs">{errors.email.message}</span>
+          )}
         </div>
         <div className="input-group w-full">
           <input
@@ -133,25 +209,16 @@ const RegisterComponent = () => {
             type="text"
             required
             className="input"
-            // {...register("username", {
-            //   required: true,
-            //   pattern: {
-            //     value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-            //     message: "username is invalid",
-            //   },
-            // })}
+            {...register("username", {
+              required: true,
+            })}
           />
-          <label for="username" className="placeholder">
+          <label htmlFor="username" className="placeholder">
             Username
           </label>
-          {/* {errors.username && errors.username.type === "required" && (
-                <span className="text-red-600 text-xs">Username is required</span>
-              )}
-              {errors.username && errors.username.type === "pattern" && (
-                <span className="text-red-600 text-xs">
-                  {errors.username.message}
-                </span>
-              )} */}
+          {errors.username && errors.username.type === "required" && (
+            <span className="text-red-600 text-xs">Username is required</span>
+          )}
         </div>
         <div className="input-group w-full">
           <input
@@ -159,9 +226,9 @@ const RegisterComponent = () => {
             type="password"
             required
             className="input"
-            // {...register("password", { required: true })}
+            {...register("password", { required: true })}
           />
-          <label for="password" className="placeholder">
+          <label htmlFor="password" className="placeholder">
             Password
           </label>
           <p
@@ -174,11 +241,11 @@ const RegisterComponent = () => {
               <AiFillEyeInvisible className="text-[#808080] text-xl" />
             )}
           </p>
-          {/* {errors.password && errors.password.type === "required" && (
+          {errors.password && errors.password.type === "required" && (
             <span className="text-red-600 text-xs">Password is required</span>
-          )} */}
+          )}
         </div>
-        <PrimaryBtn label="Sign Up" />
+        <PrimaryBtn label="Sign Up" type="submit" />
       </form>
     </motion.div>
   );
