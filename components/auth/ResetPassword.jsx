@@ -6,8 +6,9 @@ import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import axios from "axios";
-import { ApiUrl, resetPasswordApi } from "../Constants/apiEndpoinds";
+import { ApiUrl, resetPasswordApi } from "../Constants/apiEndpoints";
 import toast from "react-hot-toast";
+import { postRequest } from "@/config/axiosInterceptor";
 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(true);
@@ -45,7 +46,11 @@ const ResetPassword = () => {
     console.log(data);
     try {
       setLoading(true);
-      const response = await axios.post(`${ApiUrl}${resetPasswordApi}`, data);
+      const response = await postRequest({
+        url: resetPasswordApi,
+        body: data,
+      });
+      // const response = await axios.post(`${ApiUrl}${resetPasswordApi}`, data);
       if (response?.data?.status) {
         reset();
         toast.success(response?.data?.message);
