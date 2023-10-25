@@ -80,8 +80,8 @@ const Header = ({ activeSection }) => {
             <FaTimes />
           </div>
           <div className="hidden lg:flex gap-4 items-center">
-            <PrimaryBtn label="Login" invert link="/login" />
-            <PrimaryBtn label="Sign Up" link="/register" />
+            <PrimaryBtn label="Login" invert link="/login" className="text-sm" />
+            <PrimaryBtn label="Sign Up" link="/register" className="text-sm" />
           </div>
         </nav>
       <div className="p-5 lg:hidden" onClick={showNavbar}>

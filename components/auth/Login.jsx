@@ -131,7 +131,7 @@ console.log(ApiUrl);
         >
           Forgot password?
         </a>
-        <PrimaryBtn label="Log in" type="submit" />
+        <PrimaryBtn label="Login" type="submit" />
       </form>
     </motion.div>
   );
