@@ -16,8 +16,6 @@ import { MainLabel } from "@/components/Constants/labelConstant";
 import OfferCards from "@/components/Cards/OfferCards";
 import {
   QuizLogo,
-  StudentLogo,
-  TeacherLogo,
   TeacherLogo2,
 } from "@/components/Constants/imageContants";
 import Features from "@/components/Landing/Features";
@@ -111,15 +109,13 @@ export default function MainPage() {
     () => [
       {
         label: "For Instructors",
-        logo: TeacherLogo,
-        class: "instructors",
+        class: "bg-instructors",
         btnText: "Create a class today",
         link: "#",
       },
       {
         label: "For Students",
-        logo: StudentLogo,
-        class: "students",
+        class: "bg-students",
         btnText: "Enter access code",
         link: "#",
       },
