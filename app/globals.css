@@ -60,32 +60,6 @@ body::-webkit-scrollbar {
 .gradient-transition:hover {
   background-position: 100% 0;
 }
-.welcomePage{
-  background-image: url('../public/Assets/Images/study1.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.instructors{
-  background-image: url('../public/Assets/Images/teacher1.jpg');
-}
-.students{
-  background-image: url('../public/Assets/Images/teacher2.jpg');
-}
-
-.bg-login{
-  background-image: url('../public/Assets/Images/login-study.jpg');
-  background-repeat: no-repeat;
-  background-position: left;
-  background-size: cover;
-}
-.bg-register{
-  background-image: url('../public/Assets/Images/login-study1.jpg');
-  background-repeat: no-repeat;
-  background-position: left;
-  background-size: cover;
-}
 
 .body{
   -ms-overflow-style: none;  /* IE and Edge */
@@ -126,11 +100,4 @@ body::-webkit-scrollbar {
   font-size: 12px;
   color: gray;
   /* background: #fff; */
-}
-
-
-@media screen and (max-width: 768px) {
-  .bg-register{
-    background-position: right;
-  }
 }
