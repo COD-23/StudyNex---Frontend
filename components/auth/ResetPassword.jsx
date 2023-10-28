@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import PrimaryBtn from "../Buttons/PrimaryBtn";
+import PrimaryBtn from "../Helpers/PrimaryBtn";
 import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";

@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import stopOverflow from "./stopOverflow";
+import stopOverflow from "../Helpers/stopOverflow";
 import classNames from "classnames";
 import { CgClose } from "react-icons/cg";
 import { useRouter } from "next/navigation";
 
-        //   window.history.pushState("#", null, null);
 function PopupContainer({
   setPopup = void 0,
   children,

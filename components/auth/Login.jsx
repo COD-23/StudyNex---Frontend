@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import PrimaryBtn from "../Buttons/PrimaryBtn";
+import PrimaryBtn from "../Helpers/PrimaryBtn";
 import { motion } from "framer-motion";
 import LottieComponent from "./Lottie";
 import axios from "axios";
@@ -11,6 +11,8 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
 import { getRequest, postRequest } from "@/config/axiosInterceptor";
+import Title from "../Helpers/Title";
+import Description from "../Helpers/Description";
 
 const LoginComponent = () => {
   const [type, setType] = useState(true);
@@ -66,15 +68,15 @@ console.log(ApiUrl);
       animate={{ opacity: 1, y: 0 }}
       className="lg:w-[70%] w-full lg:mx-0 mx-2 lg:px-10 px-4 py-8 pb-12 bg-white rounded-md shadow-md"
     >
-      <p className="text-xl font-extrabold pt-4 text-center">
+      <Title>
         <span className="text-blue-500">Welcome</span> Back !
-      </p>
-      <p className="text-xs text-[#838186] text-center mb-6">
+      </Title>
+      <Description>
         Not a member?{" "}
         <a className="text-[#4983f6]" href="/register">
           Sign up now
         </a>
-      </p>
+      </Description>
       <div className="md:hidden">
         <LottieComponent />
       </div>

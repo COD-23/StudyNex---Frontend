@@ -19,7 +19,7 @@ import {
   TeacherLogo2,
 } from "@/components/Constants/imageContants";
 import Features from "@/components/Landing/Features";
-import PrimaryBtn from "../Buttons/PrimaryBtn";
+import PrimaryBtn from "../Helpers/PrimaryBtn";
 import {BsFillGridFill} from 'react-icons/bs';
 import {SiGooglemeet} from 'react-icons/si';
 import {FaLayerGroup} from 'react-icons/fa';

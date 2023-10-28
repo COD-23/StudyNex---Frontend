@@ -20,7 +20,7 @@ const PrimaryBtn = ({
           className,
           "px-4 py-2 z-50 lg:cursor-pointer font-bold uppercase  flex flex-row justify-center items-center  shadow-xl",
           invert
-            ? "bg-white text-violet-800"
+            ? "bg-white text-violet-800 hover:bg-gray-100"
             : "gradient-transition text-white",
           !box && "rounded-full"
         )}
