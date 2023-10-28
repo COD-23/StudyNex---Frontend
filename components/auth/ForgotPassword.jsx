@@ -4,9 +4,10 @@ import { motion } from "framer-motion";
 import PrimaryBtn from "../Buttons/PrimaryBtn";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { ApiUrl, forgotPasswordApi } from "../Constants/apiEndpoinds";
+import { ApiUrl, forgotPasswordApi } from "../Constants/apiEndpoints";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { postRequest } from "@/config/axiosInterceptor";
 
 const ForgotPassword = () => {
   const [loading, setLoading] = useState(true);
@@ -21,7 +22,11 @@ const ForgotPassword = () => {
   const submitData = async (data) => {
     try {
       setLoading(true);
-    const response = await axios.post(`${ApiUrl}${forgotPasswordApi}`, data);
+      const response = await postRequest({
+        url: forgotPasswordApi,
+        body: data,
+      });
+    // const response = await axios.post(`${ApiUrl}${forgotPasswordApi}`, data);
       if (response?.data?.status) {
         reset();
         toast.success(response?.data?.message);

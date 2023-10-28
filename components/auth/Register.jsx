@@ -1,5 +1,4 @@
-
-"use client"
+"use client";
 import React, { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import PrimaryBtn from "../Buttons/PrimaryBtn";
@@ -11,44 +10,49 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { setCookie } from "cookies-next";
 import axios from "axios";
-import { ApiUrl, registerApi } from "../Constants/apiEndpoinds";
+import { ApiUrl, registerApi } from "../Constants/apiEndpoints";
 import { useRouter } from "next/navigation";
+import { postRequest } from "@/config/axiosInterceptor";
 
 const RegisterComponent = () => {
   const [type, setType] = useState(true);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
-   const {
-     register,
-     handleSubmit,
-     formState: { errors },
-     getValues,
-     setValue,
-     reset,
-   } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+    setValue,
+    reset,
+  } = useForm();
 
-   const router = useRouter();
+  const router = useRouter();
 
-   const submitData = async (data) => {
-      try {
-        setLoading(true);
-        const response = await axios.post(`${ApiUrl}${registerApi}`, data);
-        if (response?.data?.status) {
-          setCookie("token", response?.data?.data?.token);
-          reset();
-          toast.success("Registration Successful!");
-          router.push("/organization");
-          setLoading(false);
-        } else {
-          toast.error(response?.data?.message);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.log(error);
+  const submitData = async (data) => {
+    try {
+      setLoading(true);
+      const response = await postRequest({
+        url: registerApi,
+        body: data,
+      });
+      // const response = await axios.post(`${ApiUrl}${registerApi}`, data);
+      if (response?.data?.status) {
+        setCookie("token", response?.data?.data?.token);
+        reset();
+        toast.success("Registration Successful!");
+        router.push("/organization");
+        setLoading(false);
+      } else {
+        toast.error(response?.data?.message);
         setLoading(false);
       }
-   };
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
 
   const togglePassword = () => {
     let input = document.getElementById("password");

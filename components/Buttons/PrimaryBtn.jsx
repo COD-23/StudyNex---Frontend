@@ -18,7 +18,7 @@ const PrimaryBtn = ({
         href={link ? link : null}
         className={classNames(
           className,
-          "lg:px-6 px-4 py-3 z-50 lg:cursor-pointer font-bold uppercase  flex flex-row justify-center items-center  shadow-xl",
+          "px-4 py-2 z-50 lg:cursor-pointer font-bold uppercase  flex flex-row justify-center items-center  shadow-xl",
           invert
             ? "bg-white text-violet-800"
             : "gradient-transition text-white",

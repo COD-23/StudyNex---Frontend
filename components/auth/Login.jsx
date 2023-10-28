@@ -5,11 +5,12 @@ import PrimaryBtn from "../Buttons/PrimaryBtn";
 import { motion } from "framer-motion";
 import LottieComponent from "./Lottie";
 import axios from "axios";
-import { ApiUrl, loginApi } from "../Constants/apiEndpoinds";
+import { ApiUrl, loginApi } from "../Constants/apiEndpoints";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
+import { getRequest, postRequest } from "@/config/axiosInterceptor";
 
 const LoginComponent = () => {
   const [type, setType] = useState(true);
@@ -37,7 +38,11 @@ console.log(ApiUrl);
   const submitData = async (data) => {
     try {
       setLoading(true);
-      const response = await axios.post(`${ApiUrl}${loginApi}`, data);
+      const response = await postRequest({
+        url: loginApi,
+        body: data,
+      })
+      // const response = await axios.post(`${ApiUrl}${loginApi}`, data);
       if (response?.data?.status) {
         setCookie("token", response?.data?.data?.token);
         reset();
@@ -126,7 +131,7 @@ console.log(ApiUrl);
         >
           Forgot password?
         </a>
-        <PrimaryBtn label="Log in" type="submit" />
+        <PrimaryBtn label="Login" type="submit" />
       </form>
     </motion.div>
   );
