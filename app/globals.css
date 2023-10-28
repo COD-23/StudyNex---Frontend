@@ -128,6 +128,14 @@ body::-webkit-scrollbar {
   /* background: #fff; */
 }
 
+/* .bg-createjoin{
+  background-image: url('../public/Assets/Images/createbg.jpeg');
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: cover;
+  
+} */
+
 
 @media screen and (max-width: 768px) {
   .bg-register{
