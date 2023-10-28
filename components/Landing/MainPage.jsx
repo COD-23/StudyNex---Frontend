@@ -14,15 +14,12 @@ import { BsPeopleFill } from "react-icons/bs";
 import { MdLeaderboard } from "react-icons/md";
 import { MainLabel } from "@/components/Constants/labelConstant";
 import OfferCards from "@/components/Cards/OfferCards";
-import {
-  QuizLogo,
-  TeacherLogo2,
-} from "@/components/Constants/imageContants";
+import { QuizLogo, TeacherLogo2 } from "@/components/Constants/imageContants";
 import Features from "@/components/Landing/Features";
 import PrimaryBtn from "../Buttons/PrimaryBtn";
-import {BsFillGridFill} from 'react-icons/bs';
-import {SiGooglemeet} from 'react-icons/si';
-import {FaLayerGroup} from 'react-icons/fa';
+import { BsFillGridFill } from "react-icons/bs";
+import { SiGooglemeet } from "react-icons/si";
+import { FaLayerGroup } from "react-icons/fa";
 import Footer from "./Footer";
 
 export default function MainPage() {
@@ -131,7 +128,6 @@ export default function MainPage() {
         desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam cumque repellat fugiat dignissimos nostrum, in sunt omnis ipsum dolore nihil dolorem, obcaecati ex quasi totam voluptas labore adipisci animi inventore?",
         isLottie: false,
         link: "#",
-
       },
       {
         mainLabel: "A user interface",
@@ -140,21 +136,20 @@ export default function MainPage() {
         isLottie: true,
         options: defaultOptions2,
         link: "#",
-        details:[
+        details: [
           {
             logo: BsFillGridFill,
-            desc:"Teachers don't get lost in the grid view & have control over dedicated classes."
+            desc: "Teachers don't get lost in the grid view & have control over dedicated classes.",
           },
           {
             logo: SiGooglemeet,
-            desc:"Students can meet virtually with their groups."
+            desc: "Students can meet virtually with their groups.",
           },
           {
             logo: FaLayerGroup,
-            desc:"Layered architecture that is scalable as per the individuals requirements."
+            desc: "Layered architecture that is scalable as per the individuals requirements.",
           },
-        ]
-
+        ],
       },
       {
         mainLabel: "Quizzes",
@@ -199,7 +194,7 @@ export default function MainPage() {
               ullam facilis.
             </p>
             <div className="lg:w-[40%]">
-            <PrimaryBtn label="Get Started" box link="/register"/>
+              <PrimaryBtn label="Get Started" box link="/register" />
             </div>
           </div>
 
@@ -250,7 +245,11 @@ export default function MainPage() {
         </div>
 
         {/* Our Features */}
-        <div className="py-20 overflow-x-hidden" data-aos="fade-up" id="Features">
+        <div
+          className="py-20 overflow-x-hidden"
+          data-aos="fade-up"
+          id="Features"
+        >
           <div className="lg:px-48">
             <p className="font-semibold text-3xl text-center">
               Our <span className="text-blue-500">Features</span>
@@ -267,7 +266,7 @@ export default function MainPage() {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
