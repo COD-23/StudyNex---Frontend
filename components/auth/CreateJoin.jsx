@@ -6,13 +6,17 @@ import LottieComponent from "./Lottie";
 import { FcApproval } from "react-icons/fc";
 import CreateOrgPopup from "../popup/CreateOrgPopup";
 import JoinOrgPopup from "../popup/JoinOrgPopup";
+import { userDetailsStore } from "@/store/userStore";
 
 const CreateJoin = () => {
   const [createPopup, setCreatePopup] = useState(false);
   const [joinPopup, setJoinPopup] = useState(false);
+  const userDetails = userDetailsStore((state) => state.userDetails);
+  const getUserDetails = userDetailsStore((state) => state.getUserDetails);
+  getUserDetails();
   return (
     <div
-      className="bg-cover bg-center h-screen
+      className="bg-cover bg-center min-h-screen
                     bg-login                    
                     xl:bg-[url('../public/Assets/Images/createbg.jpeg')] flex flex-col justify-center items-center xl:bg-no-repeat"
     >
@@ -98,8 +102,8 @@ const CreateJoin = () => {
           />
         </div>
       </div>
-      {createPopup && <CreateOrgPopup setPopup={setCreatePopup}/>}
-      {joinPopup && <JoinOrgPopup setPopup={setJoinPopup}/>}
+      {createPopup && <CreateOrgPopup setPopup={setCreatePopup} />}
+      {joinPopup && <JoinOrgPopup setPopup={setJoinPopup} />}
     </div>
   );
 };

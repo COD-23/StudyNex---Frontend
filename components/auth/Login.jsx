@@ -15,7 +15,7 @@ import Title from "../Helpers/Title";
 import Description from "../Helpers/Description";
 
 const LoginComponent = () => {
-  const [type, setType] = useState(true);
+  const [type, setType] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const {
@@ -95,7 +95,7 @@ const LoginComponent = () => {
         <div className="input-group w-full">
           <input
             id="password"
-            type={type ? "text" : "password"}
+            type={type ? "password" : "text"}
             required
             className="input"
             {...register("password", { required: true })}

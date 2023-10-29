@@ -55,16 +55,6 @@ const RegisterComponent = () => {
     }
   };
 
-  const togglePassword = () => {
-    let input = document.getElementById("password");
-    setType(!type);
-    if (input.type === "password") {
-      input.type = "text";
-    } else {
-      input.type = "password";
-    }
-  };
-
   const uploadImage = (file) => {
     if (file === undefined) {
       toast.error("Invalid Image!");
@@ -228,7 +218,7 @@ const RegisterComponent = () => {
         <div className="input-group w-full">
           <input
             id="password"
-            type="password"
+            type={type ? "password" : "text"}
             required
             className="input"
             {...register("password", { required: true })}
@@ -238,7 +228,7 @@ const RegisterComponent = () => {
           </label>
           <p
             className="absolute right-[10px] top-[11px] cursor-pointer"
-            onClick={() => togglePassword()}
+            onClick={() => setType(!type)}
           >
             {type ? (
               <AiFillEye className="text-[#808080] text-xl" />

@@ -32,16 +32,6 @@ const ResetPassword = () => {
     setValue("token", id);
   }, [id]);
 
-  const togglePassword = (id) => {
-    let input = document.getElementById(id);
-    id == "password" ? setType(!type) : setConfirmType(!confirmType);
-    if (input.type === "password") {
-      input.type = "text";
-    } else {
-      input.type = "password";
-    }
-  };
-
   const submitData = async (data) => {
     console.log(data);
     try {
@@ -86,12 +76,12 @@ const ResetPassword = () => {
         <div className="input-group w-full">
           <input
             id="password"
-            type="password"
+            type={type ? "password" : "text"}
             required
             className="input"
             {...register("password", {
               required: true,
-              minLength:8
+              minLength: 8,
             })}
           />
           <label htmlFor="password" className="placeholder">
@@ -99,7 +89,7 @@ const ResetPassword = () => {
           </label>
           <p
             className="absolute right-[10px] top-[11px] cursor-pointer"
-            onClick={() => togglePassword("password")}
+            onClick={() => setType(!type)}
           >
             {type ? (
               <AiFillEye className="text-[#808080] text-xl" />
@@ -111,13 +101,15 @@ const ResetPassword = () => {
             <span className="text-red-600 text-xs">password is required</span>
           )}
           {errors.password && errors.password.type === "minLength" && (
-            <span className="text-red-600 text-xs">Password must be greater than 8 characters</span>
+            <span className="text-red-600 text-xs">
+              Password must be greater than 8 characters
+            </span>
           )}
         </div>
         <div className="input-group w-full">
           <input
             id="confirm_password"
-            type="password"
+            type={confirmType ? "password" : "text"}
             required
             className="input"
             {...register("confirm_password", {
@@ -131,7 +123,7 @@ const ResetPassword = () => {
           </label>
           <p
             className="absolute right-[10px] top-[11px] cursor-pointer"
-            onClick={() => togglePassword("confirm_password")}
+            onClick={() => setType(!type)}
           >
             {confirmType ? (
               <AiFillEye className="text-[#808080] text-xl" />

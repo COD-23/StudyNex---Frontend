@@ -40,11 +40,14 @@ axiosDefaultInstance.interceptors.response.use(
   }
 );
 
-export const getRequest = ({ url, params = "" }) => {
+export const getRequest = ({ url, params = "", token }) => {
   return (
     axiosDefaultInstance.get(`${BASEURL + url + params}`),
     {
       timeout: timeout,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
@@ -54,7 +57,6 @@ export const postRequest = ({ url, params = "", body }) => {
     timeout: timeout,
   });
 };
-
 
 export const postRequestForImage = ({ url, params = "", body }) => {
   return axiosDefaultInstance.post(`${CLOUDINARYURL + url + params}`, body, {

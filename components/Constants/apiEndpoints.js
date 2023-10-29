@@ -6,3 +6,4 @@ export const loginApi = "/login";
 export const registerApi = "/register";
 export const forgotPasswordApi = "/forgot-password";
 export const resetPasswordApi = "/reset-password";
+export const user = "/user";
