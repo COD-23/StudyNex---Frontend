@@ -27,16 +27,6 @@ const LoginComponent = () => {
 
   const router = useRouter();
 
-  const togglePassword = (id) => {
-    let input = document.getElementById(id);
-    setType(!type);
-    if (input.type == "password") {
-      input.type = "text";
-    } else {
-      input.type = "password";
-    }
-  };
-console.log(ApiUrl);
   const submitData = async (data) => {
     try {
       setLoading(true);
@@ -105,7 +95,7 @@ console.log(ApiUrl);
         <div className="input-group w-full">
           <input
             id="password"
-            type="password"
+            type={type ? "text" : "password"}
             required
             className="input"
             {...register("password", { required: true })}
@@ -115,7 +105,7 @@ console.log(ApiUrl);
           </label>
           <p
             className="absolute right-[10px] top-[11px] cursor-pointer"
-            onClick={() => togglePassword("password")}
+            onClick={() => setType(!type)}
           >
             {type ? (
               <AiFillEye className="text-[#808080] text-xl" />

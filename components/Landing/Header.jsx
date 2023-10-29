@@ -1,7 +1,5 @@
 "use client";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { StudyLogo } from "../Constants/imageContants";
-import Image from "next/image";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-scroll";
 import classNames from "classnames";
