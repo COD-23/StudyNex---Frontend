@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { postRequest } from "@/config/axiosInterceptor";
 import { createOrgApi } from "../Constants/apiEndpoints";
 import { useRouter } from "next/navigation";
-import { getCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import { userDetailsStore } from "@/store/userStore";
 
 const CreateOrgPopup = ({ setPopup }) => {
@@ -69,6 +69,7 @@ const CreateOrgPopup = ({ setPopup }) => {
         reset();
         toast.success("Organization created Successfully!");
         getUserDetails();
+        setCookie("org", response?.data?.data?.slug);
         router.push("/organization/"+response?.data?.data?.slug);
         setLoading(false);
       } else {

@@ -6,10 +6,12 @@ import { redirect } from "next/navigation";
 
 const isLoggedIn = () => {
   const token = cookies().get("token")?.value;
+  const org = cookies().get("org")?.value;
   if (token) {
-    redirect("/organization");
+    redirect("/organization/" + org);
   }
 };
+
 const Register = () => {
   isLoggedIn();
   return (
