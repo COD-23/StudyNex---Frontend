@@ -41,20 +41,20 @@ axiosDefaultInstance.interceptors.response.use(
 );
 
 export const getRequest = ({ url, params = "", token }) => {
-  return (
-    axiosDefaultInstance.get(`${BASEURL + url + params}`),
-    {
-      timeout: timeout,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  return axiosDefaultInstance.get(`${BASEURL + url + params}`, {
+    timeout: timeout,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };
 
-export const postRequest = ({ url, params = "", body }) => {
+export const postRequest = ({ url, params = "", body, token }) => {
   return axiosDefaultInstance.post(`${BASEURL + url + params}`, body, {
     timeout: timeout,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 };
 

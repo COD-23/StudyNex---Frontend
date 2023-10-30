@@ -15,11 +15,13 @@ import { useRouter } from "next/navigation";
 import { postRequest } from "@/config/axiosInterceptor";
 import Title from "../Helpers/Title";
 import Description from "../Helpers/Description";
+import { userDetailsStore } from "@/store/userStore";
 
 const RegisterComponent = () => {
   const [type, setType] = useState(true);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const getUserDetails = userDetailsStore((state) => state.getUserDetails);
 
   const {
     register,
@@ -44,6 +46,7 @@ const RegisterComponent = () => {
         reset();
         toast.success("Registration Successful!");
         router.push("/create-join");
+        getUserDetails();
         setLoading(false);
       } else {
         toast.error(response?.data?.message);

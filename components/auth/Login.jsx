@@ -13,10 +13,12 @@ import { setCookie } from "cookies-next";
 import { getRequest, postRequest } from "@/config/axiosInterceptor";
 import Title from "../Helpers/Title";
 import Description from "../Helpers/Description";
+import { userDetailsStore } from "@/store/userStore";
 
 const LoginComponent = () => {
   const [type, setType] = useState(false);
   const [loading, setLoading] = useState(true);
+  const getUserDetails = userDetailsStore((state) => state.getUserDetails);
 
   const {
     register,
@@ -39,7 +41,12 @@ const LoginComponent = () => {
         setCookie("token", response?.data?.data?.token);
         reset();
         toast.success("Login Successful!");
-        router.push("/organization");
+        getUserDetails();
+        if (response?.data?.data?.org_joined){
+          router.push("/organization/" + response?.data?.data?.org_joined);
+        }else{
+          router.push("/create-join");
+        }
         setLoading(false);
       } else {
         toast.error(response?.data?.message);
