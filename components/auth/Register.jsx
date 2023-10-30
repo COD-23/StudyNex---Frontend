@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import PrimaryBtn from "../Buttons/PrimaryBtn";
+import PrimaryBtn from "../Helpers/PrimaryBtn";
 import Image from "next/image";
 import { AvatarReg } from "../Constants/imageContants";
 import { BiSolidCamera } from "react-icons/bi";
@@ -13,11 +13,15 @@ import axios from "axios";
 import { ApiUrl, registerApi } from "../Constants/apiEndpoints";
 import { useRouter } from "next/navigation";
 import { postRequest } from "@/config/axiosInterceptor";
+import Title from "../Helpers/Title";
+import Description from "../Helpers/Description";
+import { userDetailsStore } from "@/store/userStore";
 
 const RegisterComponent = () => {
   const [type, setType] = useState(true);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const getUserDetails = userDetailsStore((state) => state.getUserDetails);
 
   const {
     register,
@@ -37,12 +41,12 @@ const RegisterComponent = () => {
         url: registerApi,
         body: data,
       });
-      // const response = await axios.post(`${ApiUrl}${registerApi}`, data);
       if (response?.data?.status) {
         setCookie("token", response?.data?.data?.token);
         reset();
         toast.success("Registration Successful!");
-        router.push("/organization");
+        router.push("/create-join");
+        getUserDetails();
         setLoading(false);
       } else {
         toast.error(response?.data?.message);
@@ -51,16 +55,6 @@ const RegisterComponent = () => {
     } catch (error) {
       console.log(error);
       setLoading(false);
-    }
-  };
-
-  const togglePassword = () => {
-    let input = document.getElementById("password");
-    setType(!type);
-    if (input.type === "password") {
-      input.type = "text";
-    } else {
-      input.type = "password";
     }
   };
 
@@ -99,15 +93,15 @@ const RegisterComponent = () => {
       animate={{ opacity: 1, y: 0 }}
       className="lg:w-[70%] w-full lg:mx-0 mx-2 lg:px-10 px-4 py-8 pb-12 bg-white rounded-md shadow-md"
     >
-      <p className="text-xl font-extrabold pt-4 text-center">
+      <Title>
         Welcome to <span className="text-blue-500">StudyNex</span> !
-      </p>
-      <p className="text-xs text-[#838186] text-center mb-6">
+      </Title>
+      <Description>
         Already a member?{" "}
         <a className="text-[#4983f6]" href="/login">
           Log in now
         </a>
-      </p>
+      </Description>
       <form
         action=""
         className="flex flex-col gap-4"
@@ -227,7 +221,7 @@ const RegisterComponent = () => {
         <div className="input-group w-full">
           <input
             id="password"
-            type="password"
+            type={type ? "password" : "text"}
             required
             className="input"
             {...register("password", { required: true })}
@@ -237,7 +231,7 @@ const RegisterComponent = () => {
           </label>
           <p
             className="absolute right-[10px] top-[11px] cursor-pointer"
-            onClick={() => togglePassword()}
+            onClick={() => setType(!type)}
           >
             {type ? (
               <AiFillEye className="text-[#808080] text-xl" />

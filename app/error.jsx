@@ -1,5 +1,5 @@
 "use client";
-import PrimaryBtn from "@/components/Buttons/PrimaryBtn";
+import PrimaryBtn from "@/components/Helpers/PrimaryBtn";
 import React, { useEffect } from "react";
 
 const Error = ({ error, reset }) => {

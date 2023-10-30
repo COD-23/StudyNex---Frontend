@@ -16,11 +16,11 @@ import { MainLabel } from "@/components/Constants/labelConstant";
 import OfferCards from "@/components/Cards/OfferCards";
 import { QuizLogo, TeacherLogo2 } from "@/components/Constants/imageContants";
 import Features from "@/components/Landing/Features";
-import PrimaryBtn from "../Buttons/PrimaryBtn";
 import { BsFillGridFill } from "react-icons/bs";
 import { SiGooglemeet } from "react-icons/si";
 import { FaLayerGroup } from "react-icons/fa";
 import Footer from "./Footer";
+import PrimaryBtn from "../Helpers/PrimaryBtn";
 
 export default function MainPage() {
   const [activeSection, setActiveSection] = useState("");

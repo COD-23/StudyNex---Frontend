@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-scroll";
 import classNames from "classnames";
-import PrimaryBtn from "../Buttons/PrimaryBtn";
+import PrimaryBtn from "../Helpers/PrimaryBtn";
 import { motion } from "framer-motion";
 import MainLogo from "../Logo/MainLogo";
 

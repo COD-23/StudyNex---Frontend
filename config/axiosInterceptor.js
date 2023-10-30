@@ -40,21 +40,23 @@ axiosDefaultInstance.interceptors.response.use(
   }
 );
 
-export const getRequest = ({ url, params = "" }) => {
-  return (
-    axiosDefaultInstance.get(`${BASEURL + url + params}`),
-    {
-      timeout: timeout,
-    }
-  );
-};
-
-export const postRequest = ({ url, params = "", body }) => {
-  return axiosDefaultInstance.post(`${BASEURL + url + params}`, body, {
+export const getRequest = ({ url, params = "", token }) => {
+  return axiosDefaultInstance.get(`${BASEURL + url + params}`, {
     timeout: timeout,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 };
 
+export const postRequest = ({ url, params = "", body, token }) => {
+  return axiosDefaultInstance.post(`${BASEURL + url + params}`, body, {
+    timeout: timeout,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
 
 export const postRequestForImage = ({ url, params = "", body }) => {
   return axiosDefaultInstance.post(`${CLOUDINARYURL + url + params}`, body, {
