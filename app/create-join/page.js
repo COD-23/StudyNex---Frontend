@@ -6,8 +6,9 @@ import React from 'react'
 
 const isLoggedIn = () => {
   const token = cookies().get("token")?.value;
-  if (!token) {
-    redirect("/login");
+  const org = cookies().get("org")?.value;
+  if (token) {
+    redirect("/organization/" + org);
   }
 };
 

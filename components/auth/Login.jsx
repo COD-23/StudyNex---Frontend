@@ -43,6 +43,7 @@ const LoginComponent = () => {
         toast.success("Login Successful!");
         getUserDetails();
         if (response?.data?.data?.org_joined){
+          setCookie("org", response?.data?.data?.org_joined);
           router.push("/organization/" + response?.data?.data?.org_joined);
         }else{
           router.push("/create-join");

@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { postRequest } from '@/config/axiosInterceptor';
 import { joinOrgApi } from '../Constants/apiEndpoints';
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import toast from 'react-hot-toast';
 import { userDetailsStore } from '@/store/userStore';
 
@@ -35,6 +35,7 @@ const JoinOrgPopup = ({setPopup}) => {
         reset();
         toast.success("Joined Successfully!");
         getUserDetails();
+        setCookie("org", response?.data?.data?.slug);
         router.push("/organization/" + response?.data?.data?.slug);
       } else {
         toast.error(response?.data?.message);
