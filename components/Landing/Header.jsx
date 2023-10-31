@@ -14,15 +14,15 @@ const Header = ({ activeSection }) => {
     () => [
       {
         label: "Home",
-        link: "/",
+        link: "/Home",
       },
       {
         label: "About",
-        link: "/#About",
+        link: "About",
       },
       {
         label: "Contact",
-        link: "/#Contact",
+        link: "Contact",
       },
     ],
     []

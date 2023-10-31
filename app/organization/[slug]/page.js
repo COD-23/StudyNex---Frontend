@@ -1,11 +1,12 @@
+import ParentContainer from '@/components/Layouts/ParentContainer'
 import ProfilePage from '@/components/Organization/ProfilePage'
 import React from 'react'
 
 const page = () => {
   return (
-    <div>
-      <ProfilePage/>
-    </div>
+    <ParentContainer>
+      {/* <ProfilePage/> */}
+    </ParentContainer>
   )
 }
 
