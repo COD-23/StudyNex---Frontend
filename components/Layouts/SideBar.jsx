@@ -209,7 +209,7 @@ const SideBar = ({ data }) => {
               <p className="">Create Channel</p>
             </div>
             <div className="flex items-center gap-4 lg:cursor-pointer">
-              <MdOutlineLogout className="text-red-600 w-6 h-6" />
+              <FaPlus className="w-4 h-4" />
               <p className="">Join Channel</p>
             </div>
           </motion.div>
