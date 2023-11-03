@@ -1,11 +1,11 @@
 import ParentContainer from '@/components/Layouts/ParentContainer'
-import ProfilePage from '@/components/Organization/ProfilePage'
+import ChannelProfile from '@/components/Organization/Channel/ChannelProfile'
 import React from 'react'
 
 const page = () => {
   return (
     <ParentContainer>
-      <ProfilePage/>
+      <ChannelProfile/>
     </ParentContainer>
   )
 }

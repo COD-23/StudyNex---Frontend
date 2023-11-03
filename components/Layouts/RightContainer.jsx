@@ -1,10 +1,18 @@
+"use client";
 import React from "react";
+import {  motion } from "framer-motion";
 
 const RightContainer = ({ children }) => {
   return (
-    <div className="absolute right-0 w-full lg:w-[20%] bg-white h-screen z-50">
-      {children}
-    </div>
+      <motion.div
+        initial={{ opacity: 0, x: 100 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, type: "spring" }}
+        exit={{ opacity: 0, x: 100, type: "spring" }}
+        className="absolute right-0 w-full lg:w-[20%] bg-white h-screen z-[999] shadow-xl"
+      >
+        {children}
+      </motion.div>
   );
 };
 

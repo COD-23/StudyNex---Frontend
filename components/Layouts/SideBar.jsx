@@ -8,20 +8,28 @@ import {
 } from "../Constants/imageContants";
 import { FaHashtag, FaPlus } from "react-icons/fa";
 import classNames from "classnames";
-import { MdOutlineLogout } from "react-icons/md";
-import { motion } from "framer-motion";
+import { MdGroups2, MdOutlineLogout, MdOutlineQuiz } from "react-icons/md";
+import { AnimatePresence, motion } from "framer-motion";
 import { CgMenuGridR } from "react-icons/cg";
+import { AiOutlineUsergroupAdd } from "react-icons/ai";
+import { stringShortener } from "@/lib/stringShortener";
+import { channelProfileStore } from "@/store/channelProfileStore";
 
 const SideBar = ({ data }) => {
   const [activeTab, setActiveTab] = useState("General");
+  const setShowChannelProfile = channelProfileStore(
+    (state) => state.setShowChannelProfile
+  );
   const commonTabs = useMemo(() => [
     {
       label: "General",
       link: "/Home",
+      icon: MdGroups2,
     },
     {
       label: "Assessments",
       link: "About",
+      icon: MdOutlineQuiz,
     },
   ]);
 
@@ -73,10 +81,10 @@ const SideBar = ({ data }) => {
   const [showMenu, setShowMenu] = useState(false);
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.2 }}
-      className="sticky top-0 left-0  w-full h-screen p-5 z-[999] bg-white shadow-xl shadow-gray-400"
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5 }}
+      className="sticky top-0 left-0  w-full h-screen  p-5 z-50 bg-white shadow-xl shadow-gray-400"
     >
       {/* Header */}
       <motion.div
@@ -91,13 +99,19 @@ const SideBar = ({ data }) => {
           alt="org logo"
           className="rounded-full h-16 w-16  object-cover"
         />
-        <h1 className="text-2xl font-bold ">VJTI</h1>
+        <h1 className="text-lg font-bold">
+          {stringShortener(
+            "Veermata Jijabai Technological Institute nckjnfeukhvnu fhd nfkjnvk",
+            30
+          )}
+        </h1>
       </motion.div>
       <hr className="absolute inset-x-0  bg-white h-[2px] w-full" />
 
       {/* Common Section */}
-      <ul className="grid gap-4 py-5">
+      <ul className="grid gap-2 py-5">
         {commonTabs.map((item, index) => {
+          const Icon = item.icon;
           return (
             <motion.li
               initial={{ opacity: 0 }}
@@ -108,12 +122,12 @@ const SideBar = ({ data }) => {
               }}
               key={index}
               className={classNames(
-                "flex items-center p-2 transition-all duration-300 lg:cursor-pointer hover:bg-[#c4f4ea]",
+                "flex items-center gap-4 p-2 transition-all duration-300 lg:cursor-pointer hover:bg-[#c4f4ea]",
                 activeTab == item.label && "bg-[#c4f4ea] "
               )}
               onClick={() => setActiveTab(item.label)}
             >
-              <FaHashtag className="h-4 w-4 " />
+              <Icon className="h-6 w-6" />
               <p
                 className={classNames(
                   activeTab == item.label && "font-semibold"
@@ -157,16 +171,25 @@ const SideBar = ({ data }) => {
               }}
               key={index}
               className={classNames("flex items-center relative py-5")}
-              onClick={() => setActiveTab(item.label)}
+              onClick={() => {
+                setActiveTab(item.label);
+                setShowChannelProfile(true);
+              }}
             >
               <div className="border-2 border-t-gray-300 border-b-0 w-5" />
               <div
                 className={classNames(
-                  "absolute left-8 right-0 flex items-center p-2 transition-all duration-300 lg:cursor-pointer hover:bg-[#c4f4ea]",
-                  activeTab == item.label && "bg-[#c4f4ea] font-semibold"
+                  "absolute left-8 right-0 flex gap-1 items-center p-2 transition-all duration-300 lg:cursor-pointer hover:bg-[#c4f4ea]",
+                  activeTab == item.label && "bg-[#c4f4ea]"
                 )}
               >
-                <FaHashtag className="h-4 w-4 " />
+                <p
+                  className={classNames(
+                    activeTab == item.label && "font-semibold"
+                  )}
+                >
+                  #
+                </p>
                 <p
                   className={classNames(
                     "text-sm",
@@ -188,37 +211,44 @@ const SideBar = ({ data }) => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        {showMenu && (
-          <motion.div
-            initial={{ opacity: 0, y: 100, scale: 0 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{
-              opacity: 0,
-              y: 100,
-              scale: 0,
-              type: "spring",
-            }}
-            transition={{
-              duration: 0.5,
-              type: "spring",
-            }}
-            className="absolute -top-24 grid gap-4 w-fit h-fit p-4 bg-white border border-gray-100 shadow-lg"
-          >
-            <div className="flex items-center gap-4 lg:cursor-pointer">
-              <FaPlus className="w-4 h-4" />
-              <p className="">Create Channel</p>
-            </div>
-            <div className="flex items-center gap-4 lg:cursor-pointer">
-              <FaPlus className="w-4 h-4" />
-              <p className="">Join Channel</p>
-            </div>
-          </motion.div>
-        )}
+        <AnimatePresence>
+          {showMenu && (
+            <motion.div
+              initial={{ opacity: 0, y: 100, scale: 0 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{
+                opacity: 0,
+                y: 100,
+                scale: 0,
+                type: "spring",
+              }}
+              transition={{
+                duration: 0.5,
+                type: "spring",
+              }}
+              className="absolute -top-24 grid gap-4 w-fit h-fit p-4 bg-white border border-gray-100 shadow-lg"
+            >
+              <div className="flex items-center gap-4 lg:cursor-pointer">
+                <FaPlus className="w-4 h-4" />
+                <p className="">Create Channel</p>
+              </div>
+              <div className="flex items-center gap-4 lg:cursor-pointer">
+                <AiOutlineUsergroupAdd className="w-4 h-4" />
+                <p className="">Join Channel</p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
         <div
-          className="bg-[#acf3e4] active:bg-[#c4f4ea] transition-all duration-200 p-2 rounded-full cursor-pointer relative"
+          className="bg-[#acf3e4] active:bg-[#c4f4ea] transition-all duration-200 p-2 rounded-full lg:cursor-pointer relative"
           onClick={() => setShowMenu(!showMenu)}
         >
-          <CgMenuGridR className="h-5 w-5" />
+          <CgMenuGridR
+            className={classNames(
+              "h-5 w-5 transition-all duration-200",
+              showMenu && "rotate-45"
+            )}
+          />
         </div>
         <div className="flex items-center gap-4 lg:cursor-pointer">
           <MdOutlineLogout className="text-red-600 w-6 h-6" />
