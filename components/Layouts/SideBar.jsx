@@ -122,8 +122,8 @@ const SideBar = ({ data }) => {
               }}
               key={index}
               className={classNames(
-                "flex items-center gap-4 p-2 transition-all duration-300 lg:cursor-pointer hover:bg-[#c4f4ea]",
-                activeTab == item.label && "bg-[#c4f4ea] "
+                "flex items-center gap-4 p-2 transition-all duration-300 lg:cursor-pointer hover:bg-nack",
+                activeTab == item.label && "bg-nack "
               )}
               onClick={() => setActiveTab(item.label)}
             >
@@ -152,7 +152,7 @@ const SideBar = ({ data }) => {
           <div className="absolute border-2 top-10 border-r-gray-300 border-l-0 h-[calc(100vh-50vh)]" />
           <p className="font-semibold text-lg">Your Channels</p>
           {/* <div
-            className="bg-[#acf3e4] active:bg-[#c4f4ea] transition-all duration-200 p-2 rounded-full cursor-pointer relative"
+            className="bg-[#acf3e4] active:bg-nack transition-all duration-200 p-2 rounded-full cursor-pointer relative"
             onClick={addChannel}
           >
             <FaPlus className="h-4 w-4" />
@@ -179,8 +179,8 @@ const SideBar = ({ data }) => {
               <div className="border-2 border-t-gray-300 border-b-0 w-5" />
               <div
                 className={classNames(
-                  "absolute left-8 right-0 flex gap-1 items-center p-2 transition-all duration-300 lg:cursor-pointer hover:bg-[#c4f4ea]",
-                  activeTab == item.label && "bg-[#c4f4ea]"
+                  "absolute left-8 right-0 flex gap-1 items-center p-2 transition-all duration-300 lg:cursor-pointer hover:bg-nack",
+                  activeTab == item.label && "bg-nack"
                 )}
               >
                 <p
@@ -192,7 +192,6 @@ const SideBar = ({ data }) => {
                 </p>
                 <p
                   className={classNames(
-                    "text-sm",
                     activeTab == item.label && "font-semibold"
                   )}
                 >
@@ -240,7 +239,7 @@ const SideBar = ({ data }) => {
           )}
         </AnimatePresence>
         <div
-          className="bg-[#acf3e4] active:bg-[#c4f4ea] transition-all duration-200 p-2 rounded-full lg:cursor-pointer relative"
+          className="bg-[#acf3e4] active:bg-nack transition-all duration-200 p-2 rounded-full lg:cursor-pointer relative"
           onClick={() => setShowMenu(!showMenu)}
         >
           <CgMenuGridR

@@ -9,6 +9,7 @@ import { BsSearch } from "react-icons/bs";
 import { MdOutlineLogout } from "react-icons/md";
 import { channelProfileStore } from "@/store/channelProfileStore";
 import { CgClose } from "react-icons/cg";
+import { nameInitials } from "@/lib/nameInitials";
 
 const ChannelProfile = () => {
   const showChannelProfile = channelProfileStore(
@@ -19,20 +20,20 @@ const ChannelProfile = () => {
   );
   const channelUsers = useMemo(() => [
     {
-      username: "Test User",
+      username: "Pradnya",
     },
     {
       username: "Test User",
       isAdmin: true,
     },
     {
-      username: "Test User",
+      username: "Aaditya User",
     },
     {
       username: "Test User",
     },
     {
-      username: "Test User",
+      username: "Vinit User",
     },
     {
       username: "Test User",
@@ -95,12 +96,14 @@ const ChannelProfile = () => {
                   key={index}
                   className="flex gap-4 py-2 items-center relative"
                 >
-                  <div className="bg-[#c4f4ea] px-3 py-1 rounded-full shadow-md">
-                    <p className="font-semibold text-center">A</p>
+                  <div className="bg-nack px-3 py-1 rounded-full shadow-md">
+                    <p className=" text-center">{nameInitials(item.username)}</p>
                   </div>
                   <p className="text-sm">{item.username}</p>
                   {item.isAdmin && (
-                    <p className="text-sm italic absolute right-4">-Admin</p>
+                    <div className="p-1 rounded-md bg-nack absolute right-4 ">
+                      <p className="text-xs italic ">Admin</p>
+                    </div>
                   )}
                 </div>
               );

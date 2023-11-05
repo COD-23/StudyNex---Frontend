@@ -17,6 +17,9 @@ module.exports = {
         instructors: 'url("../public/Assets/Images/teacher1.jpg")',
         welcomePage:'url("../public/Assets/Images/study1.jpg")',
       },
+      colors:{
+        nack:"#c4f4ea"
+      }
     },
   },
   plugins: [],
