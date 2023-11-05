@@ -1,25 +1,26 @@
 "use client";
 import Image from "next/image";
 import React, { useMemo, useState } from "react";
-import {
-  StudyLogo,
-  TeacherLogo,
-  TeacherLogo2,
-} from "../Constants/imageContants";
 import { FaHashtag, FaPlus } from "react-icons/fa";
 import classNames from "classnames";
 import { MdGroups2, MdOutlineLogout, MdOutlineQuiz } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
 import { CgMenuGridR } from "react-icons/cg";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
-import { stringShortener } from "@/lib/stringShortener";
+import { stringShortener } from "@/helperFunctions/stringShortener";
 import { channelProfileStore } from "@/store/channelProfileStore";
+import { orgStore } from "@/store/orgStore";
 
-const SideBar = ({ data }) => {
+const SideBar = ({ channelsData }) => {
   const [activeTab, setActiveTab] = useState("General");
+  const [channelList, setChannelList] = useState([]);
+  console.log(channelsData);
   const setShowChannelProfile = channelProfileStore(
     (state) => state.setShowChannelProfile
   );
+  const orgDetails = orgStore((state) => state.orgDetails);
+  // const token = cookies().get("token")?.value;
+
   const commonTabs = useMemo(() => [
     {
       label: "General",
@@ -34,6 +35,70 @@ const SideBar = ({ data }) => {
   ]);
 
   const yourSection = useMemo(() => [
+    {
+      label: "Your Channel 1",
+      link: "/",
+    },
+    {
+      label: "Your Channel 1",
+      link: "/",
+    },
+    {
+      label: "Your Channel 1",
+      link: "/",
+    },
+    {
+      label: "Your Channel 1",
+      link: "/",
+    },
+    {
+      label: "Your Channel 1",
+      link: "/",
+    },
+    {
+      label: "Your Channel 1",
+      link: "/",
+    },
+    {
+      label: "Your Channel 1",
+      link: "/",
+    },
+    {
+      label: "Your Channel 1",
+      link: "/",
+    },
+    {
+      label: "Your Channel 1",
+      link: "/",
+    },
+    {
+      label: "Your Channel 1",
+      link: "/",
+    },
+    {
+      label: "Your Channel 1",
+      link: "/",
+    },
+    {
+      label: "Your Channel 1",
+      link: "/",
+    },
+    {
+      label: "Your Channel 1",
+      link: "/",
+    },
+    {
+      label: "Your Channel 1",
+      link: "/",
+    },
+    {
+      label: "Your Channel 1",
+      link: "/",
+    },
+    {
+      label: "Your Channel 1",
+      link: "/",
+    },
     {
       label: "Your Channel 1",
       link: "/",
@@ -76,7 +141,25 @@ const SideBar = ({ data }) => {
     },
   ]);
 
-  const addChannel = () => {};
+  // useEffect(() => {
+
+  //   const fetchChannels = async() =>{
+  //     try {
+  //       const response = await getRequest({
+  //         url: getChannels,
+  //         params: `?org_id=${orgDetails._id}`,
+  //         token: token,
+  //       });
+  //       const data = response.data;
+  //       if(response.status){
+  //         console.log("channel data",data);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  //   fetchChannels();
+  // }, [orgDetails])
 
   const [showMenu, setShowMenu] = useState(false);
   return (
@@ -95,15 +178,14 @@ const SideBar = ({ data }) => {
         onClick={() => window.location.reload()}
       >
         <Image
-          src={TeacherLogo}
+          src={orgDetails?.image}
           alt="org logo"
+          width="50"
+          height="50"
           className="rounded-full h-16 w-16  object-cover"
         />
         <h1 className="text-lg font-bold">
-          {stringShortener(
-            "Veermata Jijabai Technological Institute nckjnfeukhvnu fhd nfkjnvk",
-            30
-          )}
+          {stringShortener(orgDetails?.name, 30)}
         </h1>
       </motion.div>
       <hr className="absolute inset-x-0  bg-white h-[2px] w-full" />
@@ -142,14 +224,14 @@ const SideBar = ({ data }) => {
       <hr className="absolute inset-x-0  bg-white h-[2px] w-full" />
 
       {/* Custom Section */}
-      <ul className="grid gap-2 mt-6 relative h-[calc(100vh-50vh)] overflow-scroll scrollbar-none">
+      <ul className="flex flex-col gap-2 mt-6 relative h-[calc(100vh-50vh)] overflow-scroll scrollbar-none">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
           className="flex justify-between items-center sticky top-0 z-50 bg-white"
         >
-          <div className="absolute border-2 top-10 border-r-gray-300 border-l-0 h-[calc(100vh-50vh)]" />
+          <div className="absolute border-2 top-10 border-r-gray-300 border-l-0 h-[calc(100vh-55vh)]" />
           <p className="font-semibold text-lg">Your Channels</p>
           {/* <div
             className="bg-[#acf3e4] active:bg-nack transition-all duration-200 p-2 rounded-full cursor-pointer relative"
@@ -159,7 +241,7 @@ const SideBar = ({ data }) => {
           </div> */}
         </motion.div>
 
-        {yourSection.map((item, index) => {
+        {channelsData?.map((item, index) => {
           return (
             <motion.li
               initial={{ opacity: 0, x: -50 }}
@@ -172,7 +254,7 @@ const SideBar = ({ data }) => {
               key={index}
               className={classNames("flex items-center relative py-5")}
               onClick={() => {
-                setActiveTab(item.label);
+                setActiveTab(item.name);
                 setShowChannelProfile(true);
               }}
             >
@@ -185,17 +267,17 @@ const SideBar = ({ data }) => {
               >
                 <p
                   className={classNames(
-                    activeTab == item.label && "font-semibold"
+                    activeTab == item.name && "font-semibold"
                   )}
                 >
                   #
                 </p>
                 <p
                   className={classNames(
-                    activeTab == item.label && "font-semibold"
+                    activeTab == item.name && "font-semibold"
                   )}
                 >
-                  {item.label}
+                  {item.name}
                 </p>
               </div>
             </motion.li>

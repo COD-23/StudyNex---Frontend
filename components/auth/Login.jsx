@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
-import { getRequest, postRequest } from "@/config/axiosInterceptor";
+import { postRequest } from "@/config/axiosInterceptor";
 import Title from "../Helpers/Title";
 import Description from "../Helpers/Description";
 import { userDetailsStore } from "@/store/userStore";

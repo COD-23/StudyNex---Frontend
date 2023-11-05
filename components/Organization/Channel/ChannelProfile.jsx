@@ -4,12 +4,12 @@ import RightContainer from "../../Layouts/RightContainer";
 import Image from "next/image";
 import { QuizLogo } from "../../Constants/imageContants";
 import SecondaryBtn from "../../Helpers/SecondaryBtn";
-import { stringShortener } from "@/lib/stringShortener";
+import { stringShortener } from "@/helperFunctions/stringShortener";
 import { BsSearch } from "react-icons/bs";
 import { MdOutlineLogout } from "react-icons/md";
 import { channelProfileStore } from "@/store/channelProfileStore";
 import { CgClose } from "react-icons/cg";
-import { nameInitials } from "@/lib/nameInitials";
+import { nameInitials } from "@/helperFunctions/nameInitials";
 
 const ChannelProfile = () => {
   const showChannelProfile = channelProfileStore(
