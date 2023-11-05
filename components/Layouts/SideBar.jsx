@@ -7,7 +7,6 @@ import { MdGroups2, MdOutlineLogout, MdOutlineQuiz } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
 import { CgMenuGridR } from "react-icons/cg";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
-import { stringShortener } from "@/helperFunctions/stringShortener";
 import { channelProfileStore } from "@/store/channelProfileStore";
 import { orgStore } from "@/store/orgStore";
 
@@ -74,11 +73,11 @@ const SideBar = ({ channelsData, setPopup }) => {
           height="50"
           className="rounded-full h-16 w-16  object-cover"
         />
-        <h1 className="text-lg font-bold">
-          {stringShortener(orgDetails?.name, 30)}
+        <h1 className="text-lg font-bold line-clamp-2">
+          {orgDetails?.name}
         </h1>
       </motion.div>
-      <hr className="absolute inset-x-0  bg-white h-[2px] w-full" />
+      <hr className="absolute inset-x-0  bg-white h-[2px] mx-4" />
 
       {/* Common Section */}
       <ul className="grid gap-2 py-5">
@@ -111,7 +110,7 @@ const SideBar = ({ channelsData, setPopup }) => {
           );
         })}
       </ul>
-      <hr className="absolute inset-x-0  bg-white h-[2px] w-full" />
+      <hr className="absolute inset-x-0  bg-white h-[2px] mx-4" />
 
       {/* Custom Section */}
       <ul className="flex flex-col gap-2 mt-6 relative h-[calc(100vh-50vh)] overflow-scroll scrollbar-none">
@@ -174,7 +173,7 @@ const SideBar = ({ channelsData, setPopup }) => {
           );
         })}
       </ul>
-      <hr className="absolute inset-x-0  bg-white h-[2px] w-full" />
+      <hr className="absolute inset-x-0  bg-white h-[2px] mx-4" />
 
       <motion.div
         className="grid gap-4 py-5 place-items-center relative"
