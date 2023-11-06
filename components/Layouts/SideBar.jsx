@@ -7,19 +7,15 @@ import { MdGroups2, MdOutlineLogout, MdOutlineQuiz } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
 import { CgMenuGridR } from "react-icons/cg";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
-import { stringShortener } from "@/helperFunctions/stringShortener";
 import { channelProfileStore } from "@/store/channelProfileStore";
 import { orgStore } from "@/store/orgStore";
 
-const SideBar = ({ channelsData }) => {
+const SideBar = ({ channelsData, setPopup }) => {
   const [activeTab, setActiveTab] = useState("General");
-  const [channelList, setChannelList] = useState([]);
-  console.log(channelsData);
   const setShowChannelProfile = channelProfileStore(
     (state) => state.setShowChannelProfile
   );
   const orgDetails = orgStore((state) => state.orgDetails);
-  // const token = cookies().get("token")?.value;
 
   const commonTabs = useMemo(() => [
     {
@@ -31,113 +27,6 @@ const SideBar = ({ channelsData }) => {
       label: "Assessments",
       link: "About",
       icon: MdOutlineQuiz,
-    },
-  ]);
-
-  const yourSection = useMemo(() => [
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 1",
-      link: "/",
-    },
-    {
-      label: "Your Channel 2",
-      link: "",
-    },
-    {
-      label: "Your Channel 2",
-      link: "",
-    },
-    {
-      label: "Your Channel 2",
-      link: "",
-    },
-    {
-      label: "Your Channel 2",
-      link: "",
-    },
-    {
-      label: "Your Channel 2",
-      link: "",
-    },
-    {
-      label: "Your Channel 2",
-      link: "",
-    },
-    {
-      label: "Your Channel 2",
-      link: "",
-    },
-    {
-      label: "Your Channel 2",
-      link: "",
-    },
-    {
-      label: "Your Channel 2",
-      link: "",
     },
   ]);
 
@@ -184,11 +73,11 @@ const SideBar = ({ channelsData }) => {
           height="50"
           className="rounded-full h-16 w-16  object-cover"
         />
-        <h1 className="text-lg font-bold">
-          {stringShortener(orgDetails?.name, 30)}
+        <h1 className="text-lg font-bold line-clamp-2">
+          {orgDetails?.name}
         </h1>
       </motion.div>
-      <hr className="absolute inset-x-0  bg-white h-[2px] w-full" />
+      <hr className="absolute inset-x-0  bg-white h-[2px] mx-4" />
 
       {/* Common Section */}
       <ul className="grid gap-2 py-5">
@@ -221,7 +110,7 @@ const SideBar = ({ channelsData }) => {
           );
         })}
       </ul>
-      <hr className="absolute inset-x-0  bg-white h-[2px] w-full" />
+      <hr className="absolute inset-x-0  bg-white h-[2px] mx-4" />
 
       {/* Custom Section */}
       <ul className="flex flex-col gap-2 mt-6 relative h-[calc(100vh-50vh)] overflow-scroll scrollbar-none">
@@ -284,7 +173,7 @@ const SideBar = ({ channelsData }) => {
           );
         })}
       </ul>
-      <hr className="absolute inset-x-0  bg-white h-[2px] w-full" />
+      <hr className="absolute inset-x-0  bg-white h-[2px] mx-4" />
 
       <motion.div
         className="grid gap-4 py-5 place-items-center relative"
@@ -307,13 +196,19 @@ const SideBar = ({ channelsData }) => {
                 duration: 0.5,
                 type: "spring",
               }}
-              className="absolute -top-24 grid gap-4 w-fit h-fit p-4 bg-white border border-gray-100 shadow-lg"
+              className="absolute -top-24 grid gap-4 w-fit h-fit p-2 bg-white border border-gray-100 shadow-lg"
             >
-              <div className="flex items-center gap-4 lg:cursor-pointer">
+              <div
+                className="flex items-center gap-4 lg:cursor-pointer hover:bg-gray-100 px-2 py-1"
+                onClick={() => setPopup("create")}
+              >
                 <FaPlus className="w-4 h-4" />
                 <p className="">Create Channel</p>
               </div>
-              <div className="flex items-center gap-4 lg:cursor-pointer">
+              <div
+                className="flex items-center gap-4 lg:cursor-pointer hover:bg-gray-100 px-2 py-1"
+                onClick={() => setPopup("join")}
+              >
                 <AiOutlineUsergroupAdd className="w-4 h-4" />
                 <p className="">Join Channel</p>
               </div>

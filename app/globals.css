@@ -4,14 +4,14 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-body::-webkit-scrollbar {
+/* body::-webkit-scrollbar {
   display: none;
-}
+} */
 
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
   height: 6px;
   width: 8px;
-} */
+}
 
 /* Track */
 ::-webkit-scrollbar-track {
