@@ -4,13 +4,8 @@ import MainPage from "@/components/Landing/MainPage";
 import ParentLayout from "@/components/Layouts/ParentLayout";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { isLoggedIn } from "@/lib/isLoggedIn";
 
-const isLoggedIn = () => {
-  const token = cookies().get("token")?.value;
-  if (token) {
-    redirect("/organization");
-  }
-};
 export default function Home() {
 
   isLoggedIn();

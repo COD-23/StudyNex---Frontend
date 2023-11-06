@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FaHashtag, FaPlus } from "react-icons/fa";
 import classNames from "classnames";
 import { MdGroups2, MdOutlineLogout, MdOutlineQuiz } from "react-icons/md";
@@ -9,6 +9,11 @@ import { CgMenuGridR } from "react-icons/cg";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { channelProfileStore } from "@/store/channelProfileStore";
 import { orgStore } from "@/store/orgStore";
+import { getRequest } from "@/config/axiosInterceptor";
+import { getChannel } from "../Constants/apiEndpoints";
+import { getCookie } from "cookies-next";
+import toast from "react-hot-toast";
+import { channelStore } from "@/store/channelStore";
 
 const SideBar = ({ channelsData, setPopup }) => {
   const [activeTab, setActiveTab] = useState("General");
@@ -16,6 +21,8 @@ const SideBar = ({ channelsData, setPopup }) => {
     (state) => state.setShowChannelProfile
   );
   const orgDetails = orgStore((state) => state.orgDetails);
+  const token = getCookie("token");
+  const setChannelDetails = channelStore((state) => state.setChannelDetails);
 
   const commonTabs = useMemo(() => [
     {
@@ -30,25 +37,22 @@ const SideBar = ({ channelsData, setPopup }) => {
     },
   ]);
 
-  // useEffect(() => {
-
-  //   const fetchChannels = async() =>{
-  //     try {
-  //       const response = await getRequest({
-  //         url: getChannels,
-  //         params: `?org_id=${orgDetails._id}`,
-  //         token: token,
-  //       });
-  //       const data = response.data;
-  //       if(response.status){
-  //         console.log("channel data",data);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  //   fetchChannels();
-  // }, [orgDetails])
+  const loadChannelData = async (id) => {
+    try {
+      const response = await getRequest({
+        url: getChannel,
+        params: `/${id}`,
+        token: token
+      });
+      const data = response.data.data;
+      if (response.status) {
+        setChannelDetails(data);
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error);
+    }
+  };
 
   const [showMenu, setShowMenu] = useState(false);
   return (
@@ -56,7 +60,7 @@ const SideBar = ({ channelsData, setPopup }) => {
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5 }}
-      className="sticky top-0 left-0  w-full h-screen  p-5 z-50 bg-white shadow-xl shadow-gray-400"
+      className="sticky top-0 left-0  w-3/4 lg:w-full h-screen  p-5 z-50 bg-white shadow-xl shadow-gray-400"
     >
       {/* Header */}
       <motion.div
@@ -73,9 +77,7 @@ const SideBar = ({ channelsData, setPopup }) => {
           height="50"
           className="rounded-full h-16 w-16  object-cover"
         />
-        <h1 className="text-lg font-bold line-clamp-2">
-          {orgDetails?.name}
-        </h1>
+        <h1 className="text-lg font-bold line-clamp-2">{orgDetails?.name}</h1>
       </motion.div>
       <hr className="absolute inset-x-0  bg-white h-[2px] mx-4" />
 
@@ -122,12 +124,6 @@ const SideBar = ({ channelsData, setPopup }) => {
         >
           <div className="absolute border-2 top-10 border-r-gray-300 border-l-0 h-[calc(100vh-55vh)]" />
           <p className="font-semibold text-lg">Your Channels</p>
-          {/* <div
-            className="bg-[#acf3e4] active:bg-nack transition-all duration-200 p-2 rounded-full cursor-pointer relative"
-            onClick={addChannel}
-          >
-            <FaPlus className="h-4 w-4" />
-          </div> */}
         </motion.div>
 
         {channelsData?.map((item, index) => {
@@ -145,13 +141,14 @@ const SideBar = ({ channelsData, setPopup }) => {
               onClick={() => {
                 setActiveTab(item.name);
                 setShowChannelProfile(true);
+                loadChannelData(item?._id);
               }}
             >
               <div className="border-2 border-t-gray-300 border-b-0 w-5" />
               <div
                 className={classNames(
                   "absolute left-8 right-0 flex gap-1 items-center p-2 transition-all duration-300 lg:cursor-pointer hover:bg-nack",
-                  activeTab == item.label && "bg-nack"
+                  activeTab == item.name && "bg-nack"
                 )}
               >
                 <p

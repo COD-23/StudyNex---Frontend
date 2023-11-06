@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import RightContainer from "../../Layouts/RightContainer";
 import Image from "next/image";
 import { QuizLogo } from "../../Constants/imageContants";
@@ -9,6 +9,13 @@ import { MdOutlineLogout } from "react-icons/md";
 import { channelProfileStore } from "@/store/channelProfileStore";
 import { CgClose } from "react-icons/cg";
 import { nameInitials } from "@/helperFunctions/nameInitials";
+import { channelStore } from "@/store/channelStore";
+import { format } from "date-fns";
+import { isEmpty } from "lodash";
+import { getRequest, getRequestv2 } from "@/config/axiosInterceptor";
+import { getChannelMembers } from "@/components/Constants/apiEndpoints";
+import { getCookie } from "cookies-next";
+import axios from "axios";
 
 const ChannelProfile = () => {
   const showChannelProfile = channelProfileStore(
@@ -17,39 +24,82 @@ const ChannelProfile = () => {
   const setShowChannelProfile = channelProfileStore(
     (state) => state.setShowChannelProfile
   );
-  const channelUsers = useMemo(() => [
-    {
-      username: "Pradnya",
-    },
-    {
-      username: "Test User",
-      isAdmin: true,
-    },
-    {
-      username: "Aaditya User",
-    },
-    {
-      username: "Test User",
-    },
-    {
-      username: "Vinit User",
-    },
-    {
-      username: "Test User",
-    },
-    {
-      username: "Test User",
-    },
-    {
-      username: "Test User",
-    },
-    {
-      username: "Test User",
-    },
-    {
-      username: "Test User",
-    },
-  ]);
+  const channelDetails = channelStore((state) => state.channelDetails);
+  const [channelMembers, setChannelMembers] = useState([]);
+  const token = getCookie("token");
+  // console.log(channelDetails);
+  let createdDate;
+  if (!isEmpty(channelDetails)) {
+    createdDate = format(
+      new Date(channelDetails?.createdAt),
+      "dd-MM-yyyy HH:mm aa"
+    );
+  }
+
+  useEffect(() => {
+    if (!isEmpty(channelDetails)) {
+      const fetchChannelMembers = async () => {
+        const body = {
+          channelId: channelDetails?._id,
+        };
+        try {
+          const response = await getRequestv2({
+            url: getChannelMembers,
+            body: body,
+            token: token,
+          });
+          const data = response.data;
+          console.log(data);
+          if (response.status) {
+            console.log(data);
+            setChannelMembers((prev) => [...prev, data]);
+          }
+        } catch (error) {
+          toast.error("Something went wrong");
+          console.log(error);
+        }
+      };
+      fetchChannelMembers();
+    }
+  }, [channelDetails]);
+
+  useEffect(() => {
+    console.log(channelMembers);
+  }, [channelMembers]);
+
+  // const channelUsers = useMemo(() => [
+  //   {
+  //     username: "Pradnya",
+  //   },
+  //   {
+  //     username: "Test User",
+  //     isAdmin: true,
+  //   },
+  //   {
+  //     username: "Aaditya User",
+  //   },
+  //   {
+  //     username: "Test User",
+  //   },
+  //   {
+  //     username: "Vinit User",
+  //   },
+  //   {
+  //     username: "Test User",
+  //   },
+  //   {
+  //     username: "Test User",
+  //   },
+  //   {
+  //     username: "Test User",
+  //   },
+  //   {
+  //     username: "Test User",
+  //   },
+  //   {
+  //     username: "Test User",
+  //   },
+  // ]);
   return (
     showChannelProfile && (
       <RightContainer>
@@ -59,8 +109,10 @@ const ChannelProfile = () => {
             className="w-24 h-24 rounded-full"
             alt="profile image"
           />
-          <p className="font-semibold text-lg">Group Study</p>
-          <p className="text-sm text-gray-500">3 participants</p>
+          <p className="font-semibold text-lg">{channelDetails.name}</p>
+          <p className="text-sm text-gray-500">
+            {channelDetails?.users?.length} participants
+          </p>
           <CgClose
             className="w-6 h-6 absolute right-4 top-4 lg:cursor-pointer"
             onClick={() => setShowChannelProfile(false)}
@@ -70,10 +122,11 @@ const ChannelProfile = () => {
 
         <div className="px-4 py-2 mt-4">
           <p className="text-sm text-gray-700 break-all line-clamp-3">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus numquam sapiente dignissimos atque assumenda reiciendis nam, optio omnis obcaecati! Nemo nconeudichnufih?
+            {channelDetails?.description}
           </p>
           <p className="text-gray-600 text-xs mt-2 italic">
-            Channel created by Hardik Joshi, on 1/10/2023 at 14:21
+            Channel created by {channelDetails?.admin_id?.name}, on{" "}
+            {createdDate}
           </p>
         </div>
         <hr className="absolute inset-x-0  bg-white h-[2px] mx-4" />
@@ -88,7 +141,7 @@ const ChannelProfile = () => {
             <BsSearch className="h-6 w-6 absolute right-8 top-6 text-gray-500" />
           </div>
           <div className="p-4 overflow-scroll scrollbar-none ">
-            {channelUsers.map((item, index) => {
+            {channelDetails?.user?.map((item, index) => {
               return (
                 <div
                   key={index}

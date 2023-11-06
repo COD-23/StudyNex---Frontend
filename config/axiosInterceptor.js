@@ -49,6 +49,15 @@ export const getRequest = ({ url, params = "", token }) => {
   });
 };
 
+export const getRequestv2 = ({ url, body,token }) => {
+  return axiosDefaultInstance.get(`${BASEURL + url}`, body, {
+    timeout: timeout,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export const postRequest = ({ url, params = "", body, token }) => {
   return axiosDefaultInstance.post(`${BASEURL + url + params}`, body, {
     timeout: timeout,
