@@ -66,7 +66,7 @@ const ChannelProfile = () => {
             onClick={() => setShowChannelProfile(false)}
           />
         </div>
-        <hr className="absolute inset-x-0  bg-white h-[2px] mx-4" />
+        <hr className=" bg-white h-[2px] mx-4" />
 
         <div className="px-4 py-2 mt-4">
           <p className="text-sm text-gray-700 break-all line-clamp-3">
@@ -76,7 +76,7 @@ const ChannelProfile = () => {
             Channel created by Hardik Joshi, on 1/10/2023 at 14:21
           </p>
         </div>
-        <hr className="absolute inset-x-0  bg-white h-[2px] mx-4" />
+        <hr className=" bg-white h-[2px] mx-4" />
 
         <div className="flex flex-col py-2 h-[calc(100vh-55vh)] lg:h-[calc(100vh-60vh)]">
           <div className="rounded-full w-full relative p-4 z-50">
@@ -110,7 +110,7 @@ const ChannelProfile = () => {
             })}
           </div>
         </div>
-        <hr className="absolute inset-x-0  bg-white h-[2px] mx-4" />
+        <hr className=" bg-white h-[2px] mx-4" />
 
         <div className="text-sm">
           <div className="flex items-center gap-4 lg:cursor-pointer p-4">

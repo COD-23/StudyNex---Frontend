@@ -19,13 +19,21 @@ const ParentContainer = ({ children, orgData, channelsData }) => {
   const [popup, setPopup] = useState("");
   setOrgDetails(orgData.data);
   return (
-    <div className="grid lg:grid-cols-[280px,1fr] mx-auto bg-[#e9f8f5] overflow-hidden">
+    <div className="flex mx-auto bg-[#e9f8f5] overflow-hidden">
       <SideBar channelsData={channelsData} setPopup={setPopup} />
       {popup == "create" && (
-        <CreateChannel orgDetails={orgData.data} setPopup={setPopup} />
+        <CreateChannel
+          orgDetails={orgData.data}
+          channelsData={channelsData}
+          setPopup={setPopup}
+        />
       )}
       {popup == "join" && (
-        <JoinChannel orgDetails={orgData.data} setPopup={setPopup} />
+        <JoinChannel
+          orgDetails={orgData.data}
+          channelsData={channelsData}
+          setPopup={setPopup}
+        />
       )}
       {children}
     </div>

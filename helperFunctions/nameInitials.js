@@ -1,4 +1,4 @@
 export const nameInitials = (item) => {
-    return item[0].toUpperCase();
+    return item ? item[0].toUpperCase() : "";
   };
   

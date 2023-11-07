@@ -60,7 +60,7 @@ const SideBar = ({ channelsData, setPopup }) => {
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5 }}
-      className="sticky top-0 left-0  w-full h-screen  p-5 z-50 bg-white shadow-xl shadow-gray-400"
+      className="relative w-[280px] h-screen p-5 z-50 bg-white shadow-xl shadow-gray-400"
     >
       {/* Header */}
       <motion.div
@@ -204,7 +204,8 @@ const SideBar = ({ channelsData, setPopup }) => {
                   className="flex items-center gap-4 lg:cursor-pointer hover:bg-gray-100 px-2 py-2 transition-all"
                   onClick={() => {
                     setPopup("create");
-                    // window.history.pushState("#", null, null);
+                    setShowMenu(false);
+                    window.history.pushState("#", null, null);
                   }}
                 >
                   <FaPlus className="w-4 h-4" />
@@ -214,7 +215,8 @@ const SideBar = ({ channelsData, setPopup }) => {
                   className="flex items-center gap-4 lg:cursor-pointer hover:bg-gray-100 px-2 py-2 transition-all"
                   onClick={() => {
                     setPopup("join");
-                    // window.history.pushState("#", null, null);
+                    setShowMenu(false);
+                    window.history.pushState("#", null, null);
                   }}
                 >
                   <AiOutlineUsergroupAdd className="w-4 h-4" />
@@ -240,7 +242,9 @@ const SideBar = ({ channelsData, setPopup }) => {
             />
           ) : (
             <div className="bg-nack flex justify-center items-center h-12 w-12 rounded-full">
-              <p className="text-lg text-center">{nameInitials(userDetails.name)}</p>
+              <p className="text-lg text-center">
+                {nameInitials(userDetails.name)}
+              </p>
             </div>
           )}
           <div className="line-clamp-2 text-left flex-1">
