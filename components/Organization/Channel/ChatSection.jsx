@@ -13,13 +13,5 @@ function ChatSection() {
     </div>
   );
 }
-{/* <div
-      className={classNames(
-        showChannelProfile
-          ? "lg:w-[calc(100vw-280px-280px)]"
-          : "lg:w-[calc(100vw-280px)]",
-        "w-full overflow-hidden"
-      )}
-    ></div> */}
 
 export default ChatSection;

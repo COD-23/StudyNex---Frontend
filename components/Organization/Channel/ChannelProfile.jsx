@@ -117,7 +117,6 @@ const ChannelProfile = () => {
             className="w-6 h-6 absolute right-4 top-4 lg:cursor-pointer"
             onClick={() => setShowChannelProfile(false)}
           />
-          <hr className=" absolute inset-x-0 bottom-0 bg-gray-200 h-[2px] mx-4 " />
         </div>
         <hr className=" bg-white h-[2px] mx-4" />
 
@@ -129,7 +128,6 @@ const ChannelProfile = () => {
             Channel created by {channelDetails?.admin_id?.name}, on{" "}
             {createdDate}
           </p>
-          <hr className="absolute inset-x-0 bottom-0  bg-gray-200 h-[2px] mx-4" />
         </div>
         <hr className=" bg-white h-[2px] mx-4" />
 
@@ -164,7 +162,6 @@ const ChannelProfile = () => {
               );
             })}
           </div>
-          <hr className="absolute inset-x-0 bottom-0  bg-gray-200 h-[2px] mx-4" />
         </div>
         <hr className=" bg-white h-[2px] mx-4" />
 
