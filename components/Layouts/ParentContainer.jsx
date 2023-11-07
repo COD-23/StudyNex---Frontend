@@ -1,24 +1,33 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "./SideBar";
 import { orgStore } from "@/store/orgStore";
 import CreateChannel from "../popup/CreateChannel";
 import JoinChannel from "../popup/JoinChannel";
+import { isEmpty } from "lodash";
+import { userDetailsStore } from "@/store/userStore";
 
 const ParentContainer = ({ children, orgData, channelsData }) => {
   const setOrgDetails = orgStore((state) => state.setOrgDetails);
+  const userDetails = userDetailsStore((state) => state.userDetails);
+  const getUserDetails = userDetailsStore((state) => state.getUserDetails);
+
+  useEffect(()=>{
+    if(isEmpty(userDetails)) getUserDetails();
+  },[userDetails])
+
   const [popup, setPopup] = useState("");
   setOrgDetails(orgData.data);
   return (
-    <div className="grid lg:grid-cols-[280px,1fr] gap-10 mx-auto bg-[#e9f8f5]">
+    <div className="grid lg:grid-cols-[280px,1fr] mx-auto bg-[#e9f8f5] overflow-hidden">
       <SideBar channelsData={channelsData} setPopup={setPopup} />
-      {children}
       {popup == "create" && (
         <CreateChannel orgDetails={orgData.data} setPopup={setPopup} />
       )}
       {popup == "join" && (
         <JoinChannel orgDetails={orgData.data} setPopup={setPopup} />
       )}
+      {children}
     </div>
   );
 };
