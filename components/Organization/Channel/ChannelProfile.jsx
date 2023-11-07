@@ -103,7 +103,7 @@ const ChannelProfile = () => {
   return (
     showChannelProfile && (
       <RightContainer>
-        <div className="p-5 grid place-content-center place-items-center gap-2 relative">
+        <div className="p-5 flex-1 grid place-content-center place-items-center gap-2 relative">
           <Image
             src={QuizLogo}
             className="w-24 h-24 rounded-full"
@@ -117,10 +117,10 @@ const ChannelProfile = () => {
             className="w-6 h-6 absolute right-4 top-4 lg:cursor-pointer"
             onClick={() => setShowChannelProfile(false)}
           />
+          <hr className=" absolute inset-x-0 bottom-0 bg-gray-200 h-[2px] mx-4 " />
         </div>
-        <hr className="absolute inset-x-0  bg-white h-[2px] mx-4" />
 
-        <div className="px-4 py-2 mt-4">
+        <div className="px-4 py-4 relative">
           <p className="text-sm text-gray-700 break-all line-clamp-3">
             {channelDetails?.description}
           </p>
@@ -128,10 +128,10 @@ const ChannelProfile = () => {
             Channel created by {channelDetails?.admin_id?.name}, on{" "}
             {createdDate}
           </p>
+          <hr className="absolute inset-x-0 bottom-0  bg-gray-200 h-[2px] mx-4" />
         </div>
-        <hr className="absolute inset-x-0  bg-white h-[2px] mx-4" />
 
-        <div className="flex flex-col py-2 h-[calc(100vh-55vh)] lg:h-[calc(100vh-60vh)]">
+        <div className="flex flex-col py-2 h-[calc(100vh-55vh)] lg:h-[calc(100vh-60vh)] relative">
           <div className="rounded-full w-full relative p-4 z-50">
             <input
               type="text"
@@ -162,8 +162,8 @@ const ChannelProfile = () => {
               );
             })}
           </div>
+          <hr className="absolute inset-x-0 bottom-0  bg-gray-200 h-[2px] mx-4" />
         </div>
-        <hr className="absolute inset-x-0  bg-white h-[2px] mx-4" />
 
         <div className="text-sm">
           <div className="flex items-center gap-4 lg:cursor-pointer p-4">

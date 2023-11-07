@@ -49,7 +49,7 @@ export const getRequest = ({ url, params = "", token }) => {
   });
 };
 
-export const getRequestv2 = ({ url, body,token }) => {
+export const getRequestv2 = ({ url, body, token }) => {
   return axiosDefaultInstance.get(`${BASEURL + url}`, body, {
     timeout: timeout,
     headers: {

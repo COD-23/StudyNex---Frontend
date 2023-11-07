@@ -9,7 +9,7 @@ const RightContainer = ({ children }) => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, type: "spring" }}
         exit={{ opacity: 0, x: 100, type: "spring" }}
-        className="w-[40%] bg-white h-screen z-[999] shadow-xl"
+        className="w-[20%] bg-white h-screen z-[999] shadow-xl"
       >
         {children}
       </motion.div>
