@@ -18,8 +18,7 @@ import { AvatarReg } from "../Constants/imageContants";
 import { userDetailsStore } from "@/store/userStore";
 import { nameInitials } from "@/helperFunctions/nameInitials";
 
-const SideBar = ({ channelsData, setPopup }) => {
-  const [activeTab, setActiveTab] = useState("General");
+const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
   const setShowChannelProfile = channelProfileStore(
     (state) => state.setShowChannelProfile
   );
@@ -46,7 +45,7 @@ const SideBar = ({ channelsData, setPopup }) => {
       const response = await getRequest({
         url: getChannel,
         params: `/${id}`,
-        token: token
+        token: token,
       });
       const data = response.data.data;
       if (response.status) {

@@ -8,7 +8,12 @@ import { createChannelApi } from "../Constants/apiEndpoints";
 import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
 import { postRequest } from "@/config/axiosInterceptor";
-const CreateChannel = ({ orgDetails, setPopup, channelsData }) => {
+const CreateChannel = ({
+  orgDetails,
+  setPopup,
+  channelsData,
+  setActiveTab,
+}) => {
   const {
     register,
     handleSubmit,
@@ -33,6 +38,7 @@ const CreateChannel = ({ orgDetails, setPopup, channelsData }) => {
         toast.success("Channel created Successfully!");
         setPopup(false);
         channelsData.unshift(response.data.data);
+        setActiveTab(response.data.data.name);
       } else {
         toast.error(response?.data?.message);
       }

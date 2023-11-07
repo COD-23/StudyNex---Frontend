@@ -3,13 +3,16 @@ import PopupContainer from "../Layouts/PopupContainer";
 import Title from "../Helpers/Title";
 import Description from "../Helpers/Description";
 import { BsSearch } from "react-icons/bs";
-import { getRequest } from "@/config/axiosInterceptor";
+import { getRequest, postRequest } from "@/config/axiosInterceptor";
 import { channelListAPi, joinChannelApi } from "../Constants/apiEndpoints";
 import { getCookie } from "cookies-next";
 import { isEmpty } from "lodash";
+import { ChannelListSkeleton } from "../Layouts/Skeleton";
+import toast from "react-hot-toast";
 
-const JoinChannel = ({ orgDetails, setPopup }) => {
-  const [channelsData, setChannelsData] = useState([]);
+const JoinChannel = ({ orgDetails, setPopup, channelsData, setActiveTab }) => {
+  const [allChannelsData, setAllChannelsData] = useState([]);
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -19,15 +22,37 @@ const JoinChannel = ({ orgDetails, setPopup }) => {
           token: getCookie("token"),
         });
         if (response?.data?.status) {
-          setChannelsData(response.data.data);
-        } else {
+          setAllChannelsData(response.data.data);
         }
       } catch (error) {
         console.log(error);
       }
     };
     getData();
-  }, []);
+  }, [orgDetails]);
+
+  const join = async (channel) => {
+    try {
+      const response = await postRequest({
+        url: joinChannelApi,
+        body: {
+          channelId: channel._id,
+          org_id: orgDetails._id,
+        },
+        token: getCookie("token"),
+      });
+      if (response?.data?.status) {
+        channelsData.unshift(response?.data?.data);
+        setActiveTab(response?.data?.data?.name);
+        setPopup(false);
+      } else {
+        toast.error(response?.data?.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <PopupContainer setPopup={setPopup} closeBtn>
       <div className="bg-white w-[90vw] md:w-[30vw] h-[70vh] rounded-md shadow-md py-6 lg:px-10 px-4 flex flex-col gap-3">
@@ -47,19 +72,25 @@ const JoinChannel = ({ orgDetails, setPopup }) => {
           <BsSearch className="h-5 w-5 absolute right-2 top-[10px] text-gray-500" />
         </div>
         <div className="overflow-scroll scrollbar-none mb-4">
-          {!isEmpty(channelsData) && channelsData.map((item, index) => {
-            return (
-              <div key={index} className="flex flex-col relative ">
-                <div className="hover:bg-gray-100 cursor-pointer p-3">
-                  <p className=""># {item.name}</p>
-                  <p className="text-xs text-gray-500 truncate">
-                    {item.description}
-                  </p>
+          {!isEmpty(allChannelsData) &&
+            allChannelsData.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className="flex flex-col relative"
+                  onClick={() => join(item)}
+                >
+                  <div className="hover:bg-gray-100 cursor-pointer p-3">
+                    <p className=""># {item.name}</p>
+                    <p className="text-xs text-gray-500 truncate">
+                      {item.description}
+                    </p>
+                  </div>
+                  <hr />
                 </div>
-                <hr />
-              </div>
-            );
-          })}
+              );
+            })}
+          {isEmpty(allChannelsData) && <ChannelListSkeleton />}
         </div>
       </div>
     </PopupContainer>
