@@ -17,3 +17,4 @@ export const forgotPasswordApi = "/forgot-password";
 export const resetPasswordApi = "/reset-password";
 export const createOrgApi = "/create-org";
 export const joinOrgApi = "/join-org";
+export const createChannelApi = "/create-channel";
