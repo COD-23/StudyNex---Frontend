@@ -1,12 +1,14 @@
 export const ApiUrl =
   process.env.NEXT_PUBLIC_APP_ENV == "production"
-    ? "https://study-nex-backend.vercel.app/"
+    ? "https://study-nex-backend.vercel.app/api"
     : "http://localhost:3001/api";
     
 //GET
 export const user = "/user";
 export const getOrg = "/get-org";
 export const getChannelList = "/fetch-all-channels";
+export const getChannel = "/fetch-channel";
+export const getChannelMembers = "/get-members";
 
 //POST 
 export const loginApi = "/login";
