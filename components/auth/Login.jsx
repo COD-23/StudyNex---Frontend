@@ -103,7 +103,7 @@ const LoginComponent = () => {
         <div className="input-group w-full">
           <input
             id="password"
-            type={type ? "password" : "text"}
+            type={type ? "text" : "password"}
             required
             className="input"
             {...register("password", { required: true })}

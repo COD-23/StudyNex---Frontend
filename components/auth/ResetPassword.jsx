@@ -12,7 +12,7 @@ import { postRequest } from "@/config/axiosInterceptor";
 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(true);
-  const [type, setType] = useState(true);
+  const [type, setType] = useState(false);
   const [confirmType, setConfirmType] = useState(true);
   const router = useRouter();
   const {
@@ -76,7 +76,7 @@ const ResetPassword = () => {
         <div className="input-group w-full">
           <input
             id="password"
-            type={type ? "password" : "text"}
+            type={type ? "text" : "password"}
             required
             className="input"
             {...register("password", {
@@ -109,7 +109,7 @@ const ResetPassword = () => {
         <div className="input-group w-full">
           <input
             id="confirm_password"
-            type={confirmType ? "password" : "text"}
+            type={confirmType ? "text" : "password"}
             required
             className="input"
             {...register("confirm_password", {

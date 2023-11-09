@@ -8,7 +8,6 @@ export const user = "/user";
 export const getOrg = "/get-org";
 export const getChannelList = "/fetch-all-channels";
 export const getChannel = "/fetch-channel";
-export const getChannelMembers = "/get-members";
 
 //POST 
 export const loginApi = "/login";
@@ -20,3 +19,4 @@ export const joinOrgApi = "/join-org";
 export const createChannelApi = "/create-channel";
 export const joinChannelApi = "/join-channel";
 export const channelListAPi = "/channel-list";
+export const getChannelMembers = "/get-members";

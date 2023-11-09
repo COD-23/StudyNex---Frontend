@@ -1,22 +1,23 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import RightContainer from "../../Layouts/RightContainer";
 import Image from "next/image";
 import { QuizLogo } from "../../Constants/imageContants";
-import SecondaryBtn from "../../Helpers/SecondaryBtn";
 import { BsSearch } from "react-icons/bs";
-import { MdOutlineLogout } from "react-icons/md";
+import { MdEdit, MdOutlineLogout } from "react-icons/md";
 import { channelProfileStore } from "@/store/channelProfileStore";
 import { CgClose } from "react-icons/cg";
 import { nameInitials } from "@/helperFunctions/nameInitials";
 import { channelStore } from "@/store/channelStore";
 import { format } from "date-fns";
-import { isEmpty } from "lodash";
-import { getRequest, getRequestv2 } from "@/config/axiosInterceptor";
+import { debounce, isEmpty } from "lodash";
+import {
+  getRequest,
+  getRequestv2,
+  postRequestV2,
+} from "@/config/axiosInterceptor";
 import { getChannelMembers } from "@/components/Constants/apiEndpoints";
 import { getCookie } from "cookies-next";
-import axios from "axios";
-
 const ChannelProfile = () => {
   const showChannelProfile = channelProfileStore(
     (state) => state.showChannelProfile
@@ -26,6 +27,9 @@ const ChannelProfile = () => {
   );
   const channelDetails = channelStore((state) => state.channelDetails);
   const [channelMembers, setChannelMembers] = useState([]);
+  const [isEditChannel, setIsEditChannel] = useState(false);
+  const [searchKey, setSearchKey] = useState("");
+  const [newChannelName,setNewChannelName] = useState("");
   const token = getCookie("token");
   // console.log(channelDetails);
   let createdDate;
@@ -38,21 +42,21 @@ const ChannelProfile = () => {
 
   useEffect(() => {
     if (!isEmpty(channelDetails)) {
+      setChannelMembers([]);
       const fetchChannelMembers = async () => {
         const body = {
           channelId: channelDetails?._id,
+          searchKey: searchKey,
         };
         try {
-          const response = await getRequestv2({
+          const response = await postRequestV2({
             url: getChannelMembers,
             body: body,
             token: token,
           });
-          const data = response.data;
-          console.log(data);
+          const data = response.data.data;
           if (response.status) {
-            console.log(data);
-            setChannelMembers((prev) => [...prev, data]);
+            setChannelMembers((prev) => [...prev, ...data]);
           }
         } catch (error) {
           toast.error("Something went wrong");
@@ -61,11 +65,22 @@ const ChannelProfile = () => {
       };
       fetchChannelMembers();
     }
-  }, [channelDetails]);
+  }, [channelDetails, searchKey]);
 
   useEffect(() => {
     console.log(channelMembers);
   }, [channelMembers]);
+
+  // useEffect(() => {
+  //   if(searchKey?.length > 2)
+  //     delayedQuery();
+  // }, [searchKey,delayedQuery])
+
+  const handleSearch = (e) => {
+    setSearchKey(e.target.value);
+  };
+
+  // const delayedQuery = useCallback(debounce(fetchChannelMembers,300),[searchKey]);
 
   // const channelUsers = useMemo(() => [
   //   {
@@ -109,7 +124,22 @@ const ChannelProfile = () => {
             className="w-24 h-24 rounded-full"
             alt="profile image"
           />
-          <p className="font-semibold text-lg">{channelDetails.name}</p>
+          {isEditChannel ? (
+            <input
+              type="text"
+              className="h-10 w-full text-gray-600 outline-none border border-gray-200 rounded-xl shadow-sm p-4 pr-12 placeholder:text-sm"
+              value={newChannelName}
+              onChange={(e) => setNewChannelName(e.target.value)}
+            />
+          ) : (
+            <div className="flex gap-3 justify-center">
+              <p className="font-semibold text-lg ">{channelDetails.name}</p>
+              <MdEdit
+                className="h-5 w-5 lg:cursor-pointer"
+                onClick={() => setIsEditChannel(!isEditChannel)}
+              />
+            </div>
+          )}
           <p className="text-sm text-gray-500">
             {channelDetails?.users?.length} participants
           </p>
@@ -137,11 +167,13 @@ const ChannelProfile = () => {
               type="text"
               className="h-10 w-full text-gray-600 outline-none border border-gray-200 rounded-xl shadow-sm p-4 pr-12 placeholder:text-sm"
               placeholder="Search participants"
+              value={searchKey}
+              onChange={(e) => handleSearch(e)}
             />
             <BsSearch className="h-6 w-6 absolute right-8 top-6 text-gray-500" />
           </div>
           <div className="p-4 overflow-scroll scrollbar-none ">
-            {channelDetails?.user?.map((item, index) => {
+            {channelMembers?.map((item, index) => {
               return (
                 <div
                   key={index}
@@ -149,11 +181,11 @@ const ChannelProfile = () => {
                 >
                   <div className="bg-nack px-3 py-1 rounded-full shadow-md">
                     <p className=" text-center">
-                      {nameInitials(item.username)}
+                      {nameInitials(item?.username)}
                     </p>
                   </div>
-                  <p className="text-sm">{item.username}</p>
-                  {item.isAdmin && (
+                  <p className="text-sm">{item?.username}</p>
+                  {item?.is_admin && (
                     <div className="p-1 rounded-md bg-nack absolute right-4 ">
                       <p className="text-xs italic ">Admin</p>
                     </div>
