@@ -1,37 +1,79 @@
-import Image from "next/image";
-import React from "react";
-import { StudentLogo } from "../Constants/imageContants";
+import React, { useState } from "react";
 import classNames from "classnames";
+import ImageViewer from "react-simple-image-viewer";
+import { BiDotsVerticalRounded } from "react-icons/bi";
+import MessageDropdown from "../popup/MessageDropdown";
+
+//blue-500 -blue
+//05716c - green
 
 const Message = ({ data }) => {
+  const isSender = data?.type === "sender";
+  const justifyClass = isSender ? "" : "justify-end";
+  const isImage = data?.msg_type === "image";
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <div>
-      <div
-        className={classNames(
-          `flex gap-1`,
-          data?.type !== "sender" && "justify-end"
-        )}
-      >
-        <div className="max-w-[60%]">
-          <div className={`flex gap-3 ${data?.type !== "sender" && "justify-end"}`}>
-            {data?.type === "sender" && (
-              <p className="text-xs mb-2">{data?.name}
-              </p>
-            )}
-            <p className="text-xs mb-2">19:47</p>
-          </div>
-          <p
-            className={classNames(
-              data?.type === "sender"
-                ? "bg-nack rounded-r-2xl rounded-bl-2xl"
-                : "bg-[#95A4FC] text-white rounded-l-2xl rounded-br-2xl",
-              `text-sm px-4 py-3 w-fit`
-            )}
-          >
-            {data?.message}
-          </p>
+    <div className={`flex gap-1 ${justifyClass}`}>
+      <div className="max-w-[60%]">
+        {/* time and name */}
+        <div className={`flex gap-3 ${justifyClass}`}>
+          {isSender && (
+            <>
+              <p className="text-xs mb-2">{data?.name}</p>
+              <BiDotsVerticalRounded
+                className="cursor-pointer relative"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              />
+            </>
+          )}
         </div>
+        {/* message and images */}
+        <p
+          className={classNames(
+            isSender
+              ? "bg-nack rounded-r-2xl rounded-bl-2xl"
+              : "gradient-text text-white rounded-l-2xl rounded-br-2xl",
+            "text-sm px-4 py-3 w-fit"
+          )}
+        >
+          {isImage && (
+            <img
+              src={data?.link}
+              alt=""
+              className="max-w-[300px] rounded-md mb-2 cursor-pointer"
+              onClick={() => setIsViewerOpen(true)}
+            />
+          )}
+          {data?.message.length > 15 ? (
+            <>
+              {data?.message}
+              <p className="text-[8px] flex justify-end">19:47</p>
+            </>
+          ) : (
+            <div className="flex gap-3">
+              {data?.message}
+              <p className="text-[8px] flex-1 text-end">19:47</p>
+            </div>
+          )}
+        </p>
       </div>
+
+      {isViewerOpen && (
+        <ImageViewer
+          src={[data?.link]}
+          disableScroll={false}
+          closeOnClickOutside={true}
+          onClose={() => setIsViewerOpen(false)}
+          backgroundStyle={{
+            zIndex: "999",
+            backdropFilter: "blur(2px)",
+            background: "rgb(0,0,0,0.7)",
+          }}
+        />
+      )}
+      {isMenuOpen && <MessageDropdown showMenu={isMenuOpen} />}
     </div>
   );
 };

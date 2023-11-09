@@ -6,7 +6,7 @@ import { BiDotsHorizontalRounded } from "react-icons/bi";
 
 const ChatNavbar = () => {
   return (
-    <div className="w-full bg-white flex px-4 py-3 justify-between items-center ">
+    <div className="w-full bg-white flex px-4 py-3 justify-between items-center z-50 shadow-sm">
       <div className="flex gap-3 items-center">
         <Image src={QuizLogo} alt="" className="w-12 h-12 rounded-full" />
         <div>

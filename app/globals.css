@@ -54,7 +54,7 @@
 }
 
 .gradient-text{
-  color:linear-gradient(to right, #4983f6, #a578f7, #3eb2ffda);
+  background:linear-gradient(to right, #4983f6, #a578f7);
 }
 
 .gradient-transition:hover {

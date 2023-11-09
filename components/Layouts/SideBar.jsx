@@ -61,7 +61,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5 }}
-      className="relative top-0 left-0 flex flex-col  w-3/4 lg:w-full h-screen  px-5 py-2 z-50 bg-white shadow-xl"
+      className="relative top-0 left-0 flex flex-col  w-3/4 lg:w-full h-screen  px-5 py-2 z-[51] bg-white shadow-xl"
     >
       {/* Header */}
       <motion.div
@@ -98,7 +98,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
               className={classNames(
                 "flex items-center gap-4 p-2 lg:cursor-pointer rounded-md hover:bg-gray-100",
                 activeTab == item.label &&
-                  "bg-[#95A4FC] text-white hover:bg-[#95A4FC]"
+                  "gradient-transition text-white hover:bg-[#232D3F]"
               )}
               onClick={() => setActiveTab(item.label)}
             >
@@ -151,7 +151,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
                 className={classNames(
                   "absolute left-8 right-0 flex gap-1 items-center p-2  lg:cursor-pointer rounded-md hover:bg-gray-100",
                   activeTab == item.name &&
-                    "bg-[#95A4FC] text-white hover:bg-[#95A4FC]"
+                    "bg-[#232D3F] text-white hover:bg-[#232D3F]"
                 )}
               >
                 <p
@@ -209,7 +209,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
             <p className="text-xs text-gray-400">{userDetails.username}</p>
           </div>
           <div
-            className="w-fit h-fit bg-[#95A4FC] text-white transition-all duration-200 p-2 rounded-full lg:cursor-pointer relative"
+            className="w-fit h-fit bg-[#232D3F] text-white transition-all duration-200 p-2 rounded-full lg:cursor-pointer relative"
             onClick={() => setShowMenu(!showMenu)}
           >
             <CgMenuGridR

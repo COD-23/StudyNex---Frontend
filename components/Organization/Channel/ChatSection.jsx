@@ -11,7 +11,7 @@ function ChatSection() {
     (state) => state.showChannelProfile
   );
   return (
-    <div className="flex-1 flex flex-col transition">
+    <div className="flex-1 flex flex-col transition h-screen">
       <ChatNavbar/>
       <Chat/>
       <ChatInput/>
