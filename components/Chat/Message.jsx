@@ -6,6 +6,7 @@ import MessageDropdown from "../popup/MessageDropdown";
 
 //blue-500 -blue
 //05716c - green
+//3C84AB
 
 const Message = ({ data }) => {
   const isSender = data?.type === "sender";
@@ -33,9 +34,9 @@ const Message = ({ data }) => {
         <p
           className={classNames(
             isSender
-              ? "bg-nack rounded-r-2xl rounded-bl-2xl"
-              : "gradient-text text-white rounded-l-2xl rounded-br-2xl",
-            "text-sm px-4 py-3 w-fit"
+              ? "bg-white border rounded-r-2xl rounded-bl-2xl"
+              : "bg-nack border rounded-l-2xl rounded-br-2xl",
+            "text-sm px-4 py-3 shadow-sm w-fit"
           )}
         >
           {isImage && (

@@ -98,7 +98,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
               className={classNames(
                 "flex items-center gap-4 p-2 lg:cursor-pointer rounded-md hover:bg-gray-100",
                 activeTab == item.label &&
-                  "gradient-transition text-white hover:bg-[#232D3F]"
+                  "gradient-transition text-white hover:bg-[#919eb7]"
               )}
               onClick={() => setActiveTab(item.label)}
             >
@@ -151,7 +151,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
                 className={classNames(
                   "absolute left-8 right-0 flex gap-1 items-center p-2  lg:cursor-pointer rounded-md hover:bg-gray-100",
                   activeTab == item.name &&
-                    "bg-[#232D3F] text-white hover:bg-[#232D3F]"
+                    "gradient-transition text-white hover:bg-[#919eb7]"
                 )}
               >
                 <p
@@ -188,7 +188,11 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
           transition={{ duration: 0.5 }}
           className="flex gap-3 items-center relative py-2 md:cursor-pointer"
         >
-          <MenuPopup showMenu={showMenu} setPopup={setPopup} setShowMenu={setShowMenu}/>
+          <MenuPopup
+            showMenu={showMenu}
+            setPopup={setPopup}
+            setShowMenu={setShowMenu}
+          />
           {userDetails.image ? (
             <Image
               src={userDetails.image}
@@ -209,7 +213,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
             <p className="text-xs text-gray-400">{userDetails.username}</p>
           </div>
           <div
-            className="w-fit h-fit bg-[#232D3F] text-white transition-all duration-200 p-2 rounded-full lg:cursor-pointer relative"
+            className="w-fit h-fit gradient-transition text-white transition-all duration-200 p-2 rounded-full lg:cursor-pointer relative"
             onClick={() => setShowMenu(!showMenu)}
           >
             <CgMenuGridR
