@@ -19,10 +19,16 @@ const ChatInput = () => {
           className="text-xl cursor-pointer"
           onClick={() => setEmojiPicker(false)}
         />
-        <IoImageOutline
-          className="text-xl cursor-pointer"
-          onClick={() => setEmojiPicker(false)}
-        />
+        <div className="cursor-pointer relative">
+          <input
+            type="file"
+            className="opacity-0 text-[0.4rem] absolute cursor-pointer"
+          />
+          <IoImageOutline
+            className="text-xl"
+            onClick={() => setEmojiPicker(false)}
+          />
+        </div>
         <BsEmojiSmile
           className="text-xl cursor-pointer"
           onClick={() => setEmojiPicker(!emojiPicker)}
