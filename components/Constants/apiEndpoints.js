@@ -8,6 +8,7 @@ export const user = "/user";
 export const getOrg = "/get-org";
 export const getChannelList = "/fetch-all-channels";
 export const getChannel = "/fetch-channel";
+export const renameChannel = "/rename-channel";
 
 //POST 
 export const loginApi = "/login";

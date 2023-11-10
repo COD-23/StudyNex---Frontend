@@ -67,8 +67,11 @@ export const postRequest = ({ url, params = "", body, token }) => {
   });
 };
 
-export const postRequestForImage = ({ url, params = "", body }) => {
-  return axiosDefaultInstance.post(`${CLOUDINARYURL + url + params}`, body, {
+export const putRequest = ({ url, body, token }) => {
+  return axiosDefaultInstance.put(`${BASEURL + url}`, body, {
     timeout: timeout,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 };

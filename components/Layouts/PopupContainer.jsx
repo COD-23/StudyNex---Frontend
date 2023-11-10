@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import stopOverflow from "../Helpers/stopOverflow";
 import classNames from "classnames";
 import { CgClose } from "react-icons/cg";
-import { useRouter } from "next/navigation";
 
 function PopupContainer({
   setPopup = void 0,
@@ -12,7 +11,6 @@ function PopupContainer({
   closeBtn,
   bgClose = true,
 }) {
-  const router = useRouter();
 
   useEffect(() => {
     const handlePopstate = function () {

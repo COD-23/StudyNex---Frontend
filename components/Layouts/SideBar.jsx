@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useMemo, useState } from "react";
-import { FaHashtag, FaPlus } from "react-icons/fa";
+import React, {  useMemo, useState } from "react";
+import {  FaPlus } from "react-icons/fa";
 import classNames from "classnames";
 import { MdGroups2, MdOutlineLogout, MdOutlineQuiz } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
@@ -135,7 +135,6 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{
-                // duration:0.6,
                 delay: 0.05 * index,
                 type: "keyframes",
               }}
