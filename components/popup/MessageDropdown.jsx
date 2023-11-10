@@ -1,9 +1,15 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React from 'react'
+import { BiDotsVerticalRounded } from "react-icons/bi";
 
-const MessageDropdown = ({showMenu}) => {
+const MessageDropdown = ({ showMenu, setIsMenuOpen }) => {
   return (
-    <AnimatePresence>
+    <div className="relative">
+      <div className="flex items-center">
+        <button onClick={() => setIsMenuOpen(!showMenu)}>
+          <BiDotsVerticalRounded className="cursor-pointer" />
+        </button>
+      </div>
       {showMenu && (
         <motion.div
           initial={{ opacity: 0, x: 0, scale: 0 }}
@@ -18,7 +24,7 @@ const MessageDropdown = ({showMenu}) => {
             duration: 0.5,
             type: "spring",
           }}
-          className="absolute left-[50px] grid gap-2 w-fit h-fit p-2 bg-white border border-gray-100 shadow-lg text-sm rounded-md"
+          className="absolute top-0 right-0 grid gap-2 origin-top-right w-fit h-fit p-2 bg-white border border-gray-100 shadow-lg text-sm rounded-md"
         >
           <div
             className="flex items-center gap-4 lg:cursor-pointer hover:bg-gray-100 px-2 py-2 transition-all"
@@ -42,8 +48,8 @@ const MessageDropdown = ({showMenu}) => {
           </div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </div>
   );
-}
+};
 
 export default MessageDropdown

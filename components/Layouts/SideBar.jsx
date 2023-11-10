@@ -61,7 +61,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5 }}
-      className="relative top-0 left-0 flex flex-col  w-3/4 lg:w-full h-screen  px-5 py-2 z-[51] bg-white shadow-xl"
+      className="relative top-0 left-0 flex flex-col  w-full h-screen  px-5 py-2 z-[51] bg-white shadow-xl"
     >
       {/* Header */}
       <motion.div

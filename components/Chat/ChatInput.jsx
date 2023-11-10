@@ -8,22 +8,22 @@ import EmojiPicker from "emoji-picker-react";
 const ChatInput = () => {
   const [emojiPicker, setEmojiPicker] = useState();
   return (
-    <div className="w-full bg-white flex px-4 py-2.5 justify-between items-center relative z-50 shadow-sm">
+    <div className="w-full bg-white flex lg:px-4 px-2 py-2.5 justify-between items-center relative z-50 shadow-sm">
       {emojiPicker && (
         <div className="absolute bottom-20">
           <EmojiPicker height={500} width={300} />
         </div>
       )}
-      <div className="bg-gray-100 flex gap-3 px-5 py-4 rounded-xl items-center w-full">
+      <div className="bg-gray-100 flex gap-3 lg:px-5 px-2 py-4 rounded-xl items-center w-full">
         <HiOutlineMicrophone
           className="text-xl cursor-pointer"
           onClick={() => setEmojiPicker(false)}
         />
         <div className="cursor-pointer relative">
-          <input
+          {/* <input
             type="file"
             className="opacity-0 text-[0.4rem] absolute cursor-pointer"
-          />
+          /> */}
           <IoImageOutline
             className="text-xl"
             onClick={() => setEmojiPicker(false)}
@@ -36,7 +36,7 @@ const ChatInput = () => {
         <input
           type="text"
           placeholder="Type message"
-          className=" flex-1 bg-transparent focus:outline-none text-gray-500 ml-2"
+          className="flex-1 lg:w-full w-1/2 bg-transparent focus:outline-none text-gray-500 lg:ml-2"
           onClick={() => setEmojiPicker(false)}
         />
         <VscSend className="text-2xl text-gray-500 cursor-pointer" />

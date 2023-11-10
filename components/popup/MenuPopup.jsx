@@ -21,7 +21,7 @@ const MenuPopup = ({showMenu,setPopup,setShowMenu}) => {
             duration: 0.5,
             type: "spring",
           }}
-          className="absolute right-[-10rem] -top-24 grid gap-2 w-fit h-fit p-2 bg-white border border-gray-100 shadow-lg"
+          className="absolute right-[-10rem] -top-24 origin-bottom-left grid gap-2 w-fit h-fit p-2 bg-white border border-gray-100 shadow-lg"
         >
           <div
             className="flex items-center gap-4 lg:cursor-pointer hover:bg-gray-100 px-2 py-2 transition-all"

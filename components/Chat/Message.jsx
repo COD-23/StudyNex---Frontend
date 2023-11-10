@@ -17,15 +17,15 @@ const Message = ({ data }) => {
 
   return (
     <div className={`flex gap-1 ${justifyClass}`}>
-      <div className="max-w-[60%]">
+      <div className="lg:max-w-[60%] max-w-[80%]">
         {/* time and name */}
         <div className={`flex gap-3 ${justifyClass}`}>
           {isSender && (
             <>
               <p className="text-xs mb-2">{data?.name}</p>
-              <BiDotsVerticalRounded
-                className="cursor-pointer relative"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              <MessageDropdown
+                showMenu={isMenuOpen}
+                setIsMenuOpen={setIsMenuOpen}
               />
             </>
           )}
@@ -74,7 +74,6 @@ const Message = ({ data }) => {
           }}
         />
       )}
-      {isMenuOpen && <MessageDropdown showMenu={isMenuOpen} />}
     </div>
   );
 };

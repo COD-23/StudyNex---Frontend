@@ -65,7 +65,7 @@ const Chat = () => {
   );
   return (
     <ScrollToBottom className="h-[calc(100vh-76px-72px)] relative w-full flex-1 bg-slate-100 overflow-y-scroll scrollbar-none">
-      <div className="p-4 flex flex-col gap-2">
+      <div className="p-4 overflow-x-hidden flex flex-col gap-2">
         <div>
           <p className="text-center text-xs text-gray-500 my-2">
             Today, 07-11-2023
