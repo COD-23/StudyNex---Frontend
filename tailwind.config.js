@@ -15,11 +15,11 @@ module.exports = {
         login: 'url("../public/Assets/Images/login-study.jpg")',
         students: 'url("../public/Assets/Images/teacher2.jpg")',
         instructors: 'url("../public/Assets/Images/teacher1.jpg")',
-        welcomePage:'url("../public/Assets/Images/study1.jpg")',
+        welcomePage: 'url("../public/Assets/Images/study1.jpg")',
       },
-      colors:{
-        nack:"#c4f4ea"
-      }
+      colors: {
+        nack: "#c4f4ea",
+      },
     },
   },
   plugins: [],

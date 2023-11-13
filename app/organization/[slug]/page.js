@@ -10,7 +10,7 @@ export default async function page() {
   const channelsData = await getChannels();
   return (
     <ParentContainer orgData={orgData} channelsData={channelsData}>
-      <div className="flex">
+      <div className="lg:flex">
         <ChatSection />
         <ChannelProfile />
       </div>

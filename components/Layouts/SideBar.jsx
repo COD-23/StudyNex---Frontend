@@ -1,12 +1,10 @@
 "use client";
 import Image from "next/image";
-import React, {  useMemo, useState } from "react";
-import {  FaPlus } from "react-icons/fa";
+import React, { useMemo, useState } from "react";
 import classNames from "classnames";
-import { MdGroups2, MdOutlineLogout, MdOutlineQuiz } from "react-icons/md";
-import { AnimatePresence, motion } from "framer-motion";
+import { MdGroups2, MdOutlineQuiz } from "react-icons/md";
+import { motion } from "framer-motion";
 import { CgMenuGridR } from "react-icons/cg";
-import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { channelProfileStore } from "@/store/channelProfileStore";
 import { orgStore } from "@/store/orgStore";
 import { getRequest } from "@/config/axiosInterceptor";
@@ -14,9 +12,9 @@ import { getChannel } from "../Constants/apiEndpoints";
 import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
 import { channelStore } from "@/store/channelStore";
-import { AvatarReg } from "../Constants/imageContants";
 import { userDetailsStore } from "@/store/userStore";
 import { nameInitials } from "@/helperFunctions/nameInitials";
+import MenuPopup from "../popup/MenuPopup";
 
 const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
   const setShowChannelProfile = channelProfileStore(
@@ -38,7 +36,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
       link: "About",
       icon: MdOutlineQuiz,
     },
-  ]);
+  ],[]);
 
   const loadChannelData = async (id) => {
     try {
@@ -63,7 +61,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5 }}
-      className="sticky top-0 left-0  w-3/4 lg:w-full h-screen  p-5 z-50 bg-white shadow-xl shadow-gray-400"
+      className="relative top-0 left-0 flex flex-col  w-full h-screen  px-5 py-2 z-[51] bg-white shadow-xl"
     >
       {/* Header */}
       <motion.div
@@ -82,7 +80,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
         />
         <h1 className="text-md font-bold line-clamp-2">{orgDetails?.name}</h1>
       </motion.div>
-      <hr className="absolute inset-x-0  bg-white h-[2px] mx-4" />
+      <hr className="bg-white h-[2px]" />
 
       {/* Common Section */}
       <ul className="grid gap-2 py-5">
@@ -99,7 +97,8 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
               key={index}
               className={classNames(
                 "flex items-center gap-4 p-2 lg:cursor-pointer rounded-md hover:bg-gray-100",
-                activeTab == item.label && "gradient-transition text-white"
+                activeTab == item.label &&
+                  "gradient-transition text-white hover:bg-[#919eb7]"
               )}
               onClick={() => setActiveTab(item.label)}
             >
@@ -115,17 +114,17 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
           );
         })}
       </ul>
-      <hr className="absolute inset-x-0  bg-white h-[2px] mx-4" />
+      <hr className="bg-white h-[2px]" />
 
       {/* Custom Section */}
-      <ul className="flex flex-col gap-2 mt-6 relative h-[calc(100vh-50vh)] overflow-scroll scrollbar-none">
+      <ul className="flex-1 flex flex-col gap-2 mt-6 relative h-[calc(100vh-370px)] overflow-scroll scrollbar-none">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
           className="flex justify-between items-center sticky top-0 z-50 bg-white"
         >
-          <div className="absolute border-2 top-10 border-r-gray-300 border-l-0 h-[calc(100vh-55vh)]" />
+          <div className="absolute border-2 top-10 border-r-gray-300 border-l-0 h-[calc(100vh-370px)]" />
           <p className="font-semibold text-lg">Your Channels</p>
         </motion.div>
 
@@ -150,7 +149,8 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
               <div
                 className={classNames(
                   "absolute left-8 right-0 flex gap-1 items-center p-2  lg:cursor-pointer rounded-md hover:bg-gray-100",
-                  activeTab == item.name && "gradient-transition text-white"
+                  activeTab == item.name &&
+                    "gradient-transition text-white hover:bg-[#919eb7]"
                 )}
               >
                 <p
@@ -173,8 +173,9 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
         })}
       </ul>
 
+      {/* Profile Section */}
       <motion.div
-        className="grid gap-4 py-5"
+        className="grid pt-5"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
@@ -186,55 +187,11 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
           transition={{ duration: 0.5 }}
           className="flex gap-3 items-center relative py-2 md:cursor-pointer"
         >
-          <AnimatePresence>
-            {showMenu && (
-              <motion.div
-                initial={{ opacity: 0, x: 0, scale: 0 }}
-                animate={{ opacity: 1, x: 100, scale: 1 }}
-                exit={{
-                  opacity: 0,
-                  x: 0,
-                  scale: 0,
-                  type: "spring",
-                }}
-                transition={{
-                  duration: 0.5,
-                  type: "spring",
-                }}
-                className="absolute right-[-10rem] -top-20 grid gap-2 w-fit h-fit p-2 bg-white border border-gray-100 shadow-lg"
-              >
-                <div
-                  className="flex items-center gap-4 lg:cursor-pointer hover:bg-gray-100 px-2 py-2 transition-all"
-                  onClick={() => {
-                    setPopup("create");
-                    setShowMenu(false);
-                    window.history.pushState("#", null, null);
-                  }}
-                >
-                  <FaPlus className="w-4 h-4" />
-                  <p className="">Create Channel</p>
-                </div>
-                <div
-                  className="flex items-center gap-4 lg:cursor-pointer hover:bg-gray-100 px-2 py-2 transition-all"
-                  onClick={() => {
-                    setPopup("join");
-                    setShowMenu(false);
-                    window.history.pushState("#", null, null);
-                  }}
-                >
-                  <AiOutlineUsergroupAdd className="w-4 h-4" />
-                  <p className="">Join Channel</p>
-                </div>
-                <div
-                  className="flex items-center gap-4 lg:cursor-pointer hover:bg-gray-100 px-2 py-2 text-red-500 transition-all"
-                  onClick={() => setPopup("join")}
-                >
-                  <MdOutlineLogout className=" w-6 h-6" />
-                  <p className="">Leave Organization</p>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <MenuPopup
+            showMenu={showMenu}
+            setPopup={setPopup}
+            setShowMenu={setShowMenu}
+          />
           {userDetails.image ? (
             <Image
               src={userDetails.image}
