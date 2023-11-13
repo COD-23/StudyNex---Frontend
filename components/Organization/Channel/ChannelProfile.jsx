@@ -1,19 +1,14 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import RightContainer from "../../Layouts/RightContainer";
-import Image from "next/image";
-import { QuizLogo } from "../../Constants/imageContants";
 import { BsSearch } from "react-icons/bs";
-import { MdDone, MdEdit, MdOutlineLogout } from "react-icons/md";
+import { MdDone, MdEdit } from "react-icons/md";
 import { channelProfileStore } from "@/store/channelProfileStore";
 import { CgClose } from "react-icons/cg";
-import { nameInitials } from "@/helperFunctions/nameInitials";
 import { channelStore } from "@/store/channelStore";
 import { format } from "date-fns";
 import { debounce, isEmpty } from "lodash";
 import {
-  getRequest,
-  getRequestv2,
   postRequestV2,
   putRequest,
 } from "@/config/axiosInterceptor";
@@ -26,6 +21,8 @@ import {
   ChannelMemberSkeleton,
   ChannelProfileSkeleton,
 } from "@/components/Layouts/Skeleton";
+import ChannelMember from "@/components/Channel/ChannelMember";
+import ChannelFooter from "@/components/Channel/ChannelFooter";
 const ChannelProfile = () => {
   const showChannelProfile = channelProfileStore(
     (state) => state.showChannelProfile
@@ -177,22 +174,7 @@ const ChannelProfile = () => {
                 {!isLoading ? (
                   channelMembers?.map((item, index) => {
                     return (
-                      <div
-                        key={index}
-                        className="flex gap-4 py-2 items-center relative"
-                      >
-                        <div className="bg-nack px-3 py-1 rounded-full shadow-md">
-                          <p className=" text-center">
-                            {nameInitials(item?.username)}
-                          </p>
-                        </div>
-                        <p className="text-sm">{item?.username}</p>
-                        {item?.is_admin && (
-                          <div className="p-1 rounded-md bg-nack absolute right-4 ">
-                            <p className="text-xs italic ">Admin</p>
-                          </div>
-                        )}
-                      </div>
+                      <ChannelMember data={item} key={index} />
                     );
                   })
                 ) : (
@@ -205,17 +187,7 @@ const ChannelProfile = () => {
               </div>
             </div>
             <hr className=" bg-white h-[2px] mx-4" />
-
-            <div className="text-sm">
-              <div className="flex items-center gap-4 lg:cursor-pointer p-4">
-                <MdOutlineLogout className="text-red-600 w-5 h-5" />
-                <p className="text-red-600">Leave Channel</p>
-              </div>
-              <div className="flex items-center gap-4 lg:cursor-pointer p-4">
-                <MdOutlineLogout className="text-red-600 w-5 h-5" />
-                <p className="text-red-600">Leave Organization</p>
-              </div>
-            </div>
+            <ChannelFooter/>
           </div>
         )}
       </RightContainer>

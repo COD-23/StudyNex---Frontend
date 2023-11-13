@@ -3,6 +3,7 @@ import classNames from "classnames";
 import ImageViewer from "react-simple-image-viewer";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import MessageDropdown from "../popup/MessageDropdown";
+import { nameInitials } from "@/helperFunctions/nameInitials";
 
 //blue-500 -blue
 //05716c - green
@@ -18,18 +19,6 @@ const Message = ({ data }) => {
   return (
     <div className={`flex gap-1 ${justifyClass}`}>
       <div className="lg:max-w-[60%] max-w-[80%]">
-        {/* time and name */}
-        <div className={`flex gap-3 ${justifyClass}`}>
-          {isSender && (
-            <>
-              <p className="text-xs mb-2">{data?.name}</p>
-              <MessageDropdown
-                showMenu={isMenuOpen}
-                setIsMenuOpen={setIsMenuOpen}
-              />
-            </>
-          )}
-        </div>
         {/* message and images */}
         <p
           className={classNames(
@@ -39,6 +28,25 @@ const Message = ({ data }) => {
             "text-sm px-4 py-3 shadow-sm w-fit"
           )}
         >
+          {/* time and name */}
+          <div className={`flex items-center justify-between pb-2 gap-4 ${justifyClass}`}>
+            {isSender && (
+              <>
+              <div className="flex gap-2 items-center">
+                <div className="gradient-transition text-white font-semibold px-3 py-1  rounded-full shadow-md">
+                  <p className="text-center">{nameInitials(data?.name)}</p>
+                </div>
+                <p className="text-xs  font-semibold text-gray-700 ">
+                  {data?.name}
+                </p>
+              </div>
+                <MessageDropdown
+                  showMenu={isMenuOpen}
+                  setIsMenuOpen={setIsMenuOpen}
+                />
+              </>
+            )}
+          </div>
           {isImage && (
             <img
               src={data?.link}
