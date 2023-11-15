@@ -5,11 +5,41 @@ import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { IoVideocamOutline } from "react-icons/io5";
 import { LuInfo } from "react-icons/lu";
 import { channelProfileStore } from "@/store/channelProfileStore";
-const ChannelMenuPopup = () => {
+import { getRequest } from "@/config/axiosInterceptor";
+import { getChannel } from "../Constants/apiEndpoints";
+import { channelStore } from "@/store/channelStore";
+import toast from "react-hot-toast";
+import { getCookie } from "cookies-next";
+const ChannelMenuPopup = ({ data }) => {
   const [active, setActive] = useState(false);
   const setShowChannelProfile = channelProfileStore(
     (state) => state.setShowChannelProfile
   );
+  const token = getCookie("token");
+  const setChannelDetails = channelStore((state) => state.setChannelDetails);
+
+  const handleChannelClick = () => {
+    setShowChannelProfile(true);
+    loadChannelData(data?._id);
+    setActive(false);
+  };
+
+  const loadChannelData = async (id) => {
+    try {
+      const response = await getRequest({
+        url: getChannel,
+        params: `/${id}`,
+        token: token,
+      });
+      const data = response.data.data;
+      if (response.status) {
+        setChannelDetails(data);
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error);
+    }
+  };
   return (
     <div className="relative inline-block text-left">
       <div className="flex items-center">
@@ -41,10 +71,7 @@ const ChannelMenuPopup = () => {
                     className={classNames(
                       "cursor-pointer text-gray-900 flex px-4 py-2 text-sm items-center gap-2 hover:bg-gray-100"
                     )}
-                    onClick={() => {
-                      setShowChannelProfile(true);
-                      setActive(false);
-                    }}
+                    onClick={handleChannelClick}
                   >
                     <LuInfo />
                     Channel info
