@@ -4,17 +4,20 @@ import ImageViewer from "react-simple-image-viewer";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import MessageDropdown from "../popup/MessageDropdown";
 import { nameInitials } from "@/helperFunctions/nameInitials";
+import { userDetailsStore } from "@/store/userStore";
 
 //blue-500 -blue
 //05716c - green
 //3C84AB
 
 const Message = ({ data }) => {
-  const isSender = data?.type === "sender";
+  const userDetails = userDetailsStore((state) => state.userDetails);
+  const isSender = data?._id === userDetails?._id;
   const justifyClass = isSender ? "" : "justify-end";
-  const isImage = data?.msg_type === "image";
+  const isImage = data?.type === "image";
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
 
   return (
     <div className={`flex gap-1 ${justifyClass}`}>
@@ -37,7 +40,7 @@ const Message = ({ data }) => {
                   <p className="text-center">{nameInitials(data?.name)}</p>
                 </div>
                 <p className="text-xs  font-semibold text-gray-700 ">
-                  {data?.name}
+                  {data?.sender?.name}
                 </p>
               </div>
                 <MessageDropdown
@@ -55,14 +58,14 @@ const Message = ({ data }) => {
               onClick={() => setIsViewerOpen(true)}
             />
           )}
-          {data?.message.length > 15 ? (
+          {data?.content?.length > 15 ? (
             <>
-              {data?.message}
+              {data?.content}
               <p className="text-[8px] flex justify-end">19:47</p>
             </>
           ) : (
             <div className="flex gap-3">
-              {data?.message}
+              {data?.content}
               <p className="text-[8px] flex-1 text-end">19:47</p>
             </div>
           )}

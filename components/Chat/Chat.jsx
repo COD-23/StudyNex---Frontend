@@ -6,6 +6,9 @@ import { fetchMessages } from "../Constants/apiEndpoints";
 import { channelStore } from "@/store/channelStore";
 import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
+import { chatStore } from "@/store/chatStore";
+import { messageStore } from "@/store/messageStore";
+import { isEmpty } from "lodash";
 
 const Chat = () => {
   // const messages = useMemo(
@@ -69,28 +72,8 @@ const Chat = () => {
   //   []
   // );
 
-  const [messages, setMessages] = useState([]);
-  const channelDetails = channelStore((state) => state.channelDetails);
-  const token = getCookie("token");
-  useEffect(() => {
-    const fetchMsg = async () => {
-      try {
-        const response = await getRequest({
-          url: fetchMessages,
-          params: channelDetails?._id,
-          token: token,
-        });
-        const data = response.data.data;
-        if (response.status) {
-          console.log(data);
-        }
-      } catch (error) {
-        console.log(error);
-        toast.error("There is a problem fetching messages");
-      }
-    };
-    fetchMsg();
-  }, []);
+  // const [messages, setMessages] = useState([]);
+  const messages = messageStore((state) => state.messages);
 
   return (
     <ScrollToBottom className="h-[calc(100vh-76px-72px)] relative w-full flex-1 bg-slate-100 overflow-y-scroll scrollbar-none">
@@ -100,9 +83,8 @@ const Chat = () => {
             Today, 07-11-2023
           </p>
         </div>
-        {messages.map((data, index) => (
-          <Message key={index} data={data} />
-        ))}
+        {!isEmpty(messages) &&
+          messages.map((data, index) => <Message key={index} data={data} />)}
       </div>
     </ScrollToBottom>
   );

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
 import { MdGroups2, MdOutlineQuiz } from "react-icons/md";
 import { motion } from "framer-motion";
@@ -8,7 +8,7 @@ import { CgMenuGridR } from "react-icons/cg";
 import { channelProfileStore } from "@/store/channelProfileStore";
 import { orgStore } from "@/store/orgStore";
 import { getRequest, postRequest } from "@/config/axiosInterceptor";
-import { accessChat, getChannel } from "../Constants/apiEndpoints";
+import { accessChat, fetchMessages, getChannel } from "../Constants/apiEndpoints";
 import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
 import { channelStore } from "@/store/channelStore";
@@ -17,14 +17,20 @@ import { nameInitials } from "@/helperFunctions/nameInitials";
 import MenuPopup from "../popup/MenuPopup";
 import { OrgChannels, UserChannels } from "../Organization/Channel/Channels";
 import { chatStore } from "@/store/chatStore";
+import { debounce } from "lodash";
+import { messageStore } from "@/store/messageStore";
 
 const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
   const orgDetails = orgStore((state) => state.orgDetails);
   const token = getCookie("token");
-  const channelDetails = channelStore((state) => state.channelDetails);
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
   const userDetails = userDetailsStore((state) => state.userDetails);
   const setChatDetails = chatStore((state) => state.setChatDetails);
+  const chatDetails = chatStore((state) => state.chatDetails);
+  const setMessages = messageStore((state) => state.setMessages);
+  const [showMenu, setShowMenu] = useState(false);
+
+
 
   const commonTabs = useMemo(
     () => [
@@ -72,7 +78,6 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
       });
       const data = response.data.data;
       if (response.status) {
-        console.log("chat initiated",data);
         setChatDetails(data);
       }
     } catch (error) {
@@ -81,7 +86,34 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
     }
   };
 
-  const [showMenu, setShowMenu] = useState(false);
+  const fetchMsg = async () => {
+    try {
+      const response = await getRequest({
+        url: fetchMessages,
+        params: `/${chatDetails?._id}`,
+        token: token,
+      });
+      const data = response.data.data;
+      if (response.status) {
+        setMessages(data);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("There is a problem fetching messages");
+    }
+  };
+
+  const delayedQuery = useCallback(debounce(fetchMsg, 1000), [
+    chatDetails,
+  ]);
+
+  useEffect(() => {
+    delayedQuery();
+  }, [chatDetails])
+  
+
+  
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -100 }}
@@ -147,6 +179,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
               setActiveTab={setActiveTab}
               loadChannelData={loadChannelData}
               initiateChat={initiateChat}
+              // fetchMessages={delayedQuery}
             />
           );
         })}

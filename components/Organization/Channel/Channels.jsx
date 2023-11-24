@@ -41,11 +41,13 @@ export const UserChannels = ({
   setActiveTab,
   loadChannelData,
   initiateChat,
+  // fetchMessages
 }) => {
   const handleChannelClick = () => {
     setActiveTab(data.name);
     loadChannelData(data?._id);
     initiateChat(data?.name,data?.users);
+    // fetchMessages();
   };
   return (
     <motion.li
