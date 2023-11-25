@@ -1,13 +1,21 @@
-import ParentContainer from '@/components/Layouts/ParentContainer'
-import ProfilePage from '@/components/Organization/ProfilePage'
-import React from 'react'
+import ParentContainer from "@/components/Layouts/ParentContainer";
+import ChannelProfile from "@/components/Organization/Channel/ChannelProfile";
+import ChatSection from "@/components/Organization/Channel/ChatSection";
+import getChannels from "@/lib/getChannelList";
+import getOrganization from "@/lib/getOrganization";
+import React from "react";
 
-const page = () => {
+export default async function page() {
+  const orgData = await getOrganization();
+  const channelsData = await getChannels();
   return (
-    <ParentContainer>
-      {/* <ProfilePage/> */}
+    <ParentContainer orgData={orgData} channelsData={channelsData}>
+      <div className="lg:flex">
+        <ChatSection />
+        <ChannelProfile />
+      </div>
     </ParentContainer>
-  )
+  );
 }
 
-export default page
+// export default page;

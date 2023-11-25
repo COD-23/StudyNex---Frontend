@@ -18,7 +18,7 @@ import Description from "../Helpers/Description";
 import { userDetailsStore } from "@/store/userStore";
 
 const RegisterComponent = () => {
-  const [type, setType] = useState(true);
+  const [type, setType] = useState(false);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const getUserDetails = userDetailsStore((state) => state.getUserDetails);
@@ -221,7 +221,7 @@ const RegisterComponent = () => {
         <div className="input-group w-full">
           <input
             id="password"
-            type={type ? "password" : "text"}
+            type={type ? "text" : "password"}
             required
             className="input"
             {...register("password", { required: true })}

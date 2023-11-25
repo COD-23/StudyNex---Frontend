@@ -172,7 +172,7 @@ export default function MainPage() {
   );
   return (
     <div>
-      <div className="landingHome overflow-x-hidden" id="Home">
+      <div className="bg-[#e9f8f5] lg:h-screen overflow-x-hidden" id="Home">
         {/* <Header activeSection={activeSection} /> */}
 
         {/* section1 */}
