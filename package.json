@@ -30,14 +30,15 @@
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
+    "react-fontawesome": "^1.7.1",
     "react-hook-form": "^7.47.0",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.11.0",
     "react-lottie": "^1.2.3",
     "react-scroll": "^1.9.0",
-    "sweetalert2": "^11.10.1",
     "react-scroll-to-bottom": "^4.2.0",
     "react-simple-image-viewer": "^1.2.2",
+    "sweetalert2": "^11.10.1",
     "zustand": "^4.4.4"
   },
   "devDependencies": {

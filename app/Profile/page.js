@@ -3,7 +3,7 @@ import React from 'react'
 
 const profile = () => {
   return (
-    <div>
+    <div className='overflow-y-hidden'>
         <Profile/>
     </div>
   )
