@@ -49,6 +49,7 @@ const CreateOrgPopup = ({ setPopup }) => {
       })
         .then((res) => res.json())
         .then((res) => {
+          // console.log(res);
           setValue("image", res.url.toString());
         });
     } else {
