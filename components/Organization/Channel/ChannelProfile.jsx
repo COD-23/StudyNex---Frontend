@@ -38,6 +38,7 @@ const ChannelProfile = () => {
   const [newChannelName, setNewChannelName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const token = getCookie("token");
+  
   let createdDate;
   if (!isEmpty(channelDetails)) {
     createdDate = format(

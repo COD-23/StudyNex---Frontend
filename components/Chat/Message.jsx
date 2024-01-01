@@ -36,7 +36,7 @@ const Message = ({ data }) => {
             {isSender && (
               <>
               <div className="flex gap-2 items-center">
-                <div className="gradient-transition text-white font-semibold px-3 py-1  rounded-full shadow-md">
+                <div className="gradient-transition text-white font-semibold w-5 h-5  rounded-full">
                   <p className="text-center">{nameInitials(data?.name)}</p>
                 </div>
                 <p className="text-xs  font-semibold text-gray-700 ">
