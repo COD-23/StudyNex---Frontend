@@ -86,30 +86,30 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
     }
   };
 
-  const fetchMsg = async () => {
-    try {
-      const response = await getRequest({
-        url: fetchMessages,
-        params: `/${chatDetails?._id}`,
-        token: token,
-      });
-      const data = response.data.data;
-      if (response.status) {
-        setMessages(data);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("There is a problem fetching messages");
-    }
-  };
+  // const fetchMsg = async () => {
+  //   try {
+  //     const response = await getRequest({
+  //       url: fetchMessages,
+  //       params: `/${chatDetails?._id}`,
+  //       token: token,
+  //     });
+  //     const data = response.data.data;
+  //     if (response.status) {
+  //       setMessages(data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error("There is a problem fetching messages");
+  //   }
+  // };
 
-  const delayedQuery = useCallback(debounce(fetchMsg, 1000), [
-    chatDetails,
-  ]);
+  // const delayedQuery = useCallback(debounce(fetchMsg, 1000), [
+  //   chatDetails,
+  // ]);
 
-  useEffect(() => {
-    delayedQuery();
-  }, [chatDetails])
+  // useEffect(() => {
+  //   delayedQuery();
+  // }, [chatDetails])
   
 
   

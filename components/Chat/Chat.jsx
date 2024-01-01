@@ -1,14 +1,15 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Message from "./Message";
 import ScrollToBottom from "react-scroll-to-bottom";
-import { getRequest } from "@/config/axiosInterceptor";
-import { fetchMessages } from "../Constants/apiEndpoints";
-import { channelStore } from "@/store/channelStore";
 import { getCookie } from "cookies-next";
-import toast from "react-hot-toast";
-import { chatStore } from "@/store/chatStore";
 import { messageStore } from "@/store/messageStore";
 import { isEmpty } from "lodash";
+import { userDetailsStore } from "@/store/userStore";
+import { getRequest } from "@/config/axiosInterceptor";
+import { fetchMessages } from "../Constants/apiEndpoints";
+import { chatStore } from "@/store/chatStore";
+import toast from "react-hot-toast";
+import socket from "@/lib/socketInstance";
 
 const Chat = () => {
   // const messages = useMemo(
@@ -74,6 +75,55 @@ const Chat = () => {
 
   // const [messages, setMessages] = useState([]);
   const messages = messageStore((state) => state.messages);
+  const [messageCopies, setMessageCopies] = useState([]);
+  const userDetails = userDetailsStore((state) => state.userDetails);
+  const [connectionStatus, setConnectionStatus] = useState(false);
+  const chatDetails = chatStore((state) => state.chatDetails);
+  const setMessages = messageStore((state) => state.setMessages);
+  const token = getCookie("token");
+  // let socket;
+
+  // Establishing connection
+  useEffect(() => {
+    socket.emit("setup", userDetails);
+    socket.on("connection", () => {
+      setConnectionStatus(!connectionStatus);
+    });
+  }, []);
+
+  // Message retrieval
+  // useEffect(() => {
+
+  // }, [])
+
+  useEffect(() => {
+    const fetchMsg = async () => {
+      try {
+        const response = await getRequest({
+          url: fetchMessages,
+          params: `/${chatDetails?._id}`,
+          token: token,
+        });
+        const data = response.data.data;
+        if (response.status) {
+          setMessages(data);
+          socket.emit("join chat", chatDetails?._id);
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("There is a problem fetching messages");
+      }
+    };
+    fetchMsg();
+    setMessageCopies(messages);
+  }, [chatDetails]);
+
+  useEffect(() => {
+    socket.on("message received", (newMessage) => {
+      if (messageCopies._id !== newMessage._id)
+        setMessages([...messages], newMessage);
+    });
+  });
 
   return (
     <ScrollToBottom className="h-[calc(100vh-76px-72px)] relative w-full flex-1 bg-slate-100 overflow-y-scroll scrollbar-none">

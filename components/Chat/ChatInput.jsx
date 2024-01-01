@@ -10,6 +10,7 @@ import { channelStore } from "@/store/channelStore";
 import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
 import { chatStore } from "@/store/chatStore";
+import socket from "@/lib/socketInstance";
 
 const ChatInput = () => {
   const [emojiPicker, setEmojiPicker] = useState();
@@ -33,8 +34,9 @@ const ChatInput = () => {
       });
       const data = response.data.data;
       if (data.status) {
-        console.log(data);
+        // console.log("Message",data);
         setMessageContent("");
+        socket.emit("text_message",data);
       }
     } catch (error) {
       console.log(error);

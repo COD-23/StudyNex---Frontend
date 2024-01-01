@@ -33,7 +33,7 @@ const ResetPassword = () => {
   }, [id]);
 
   const submitData = async (data) => {
-    console.log(data);
+    // console.log(data);
     try {
       setLoading(true);
       const response = await postRequest({

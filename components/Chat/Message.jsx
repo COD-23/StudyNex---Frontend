@@ -17,7 +17,8 @@ const Message = ({ data }) => {
   const isImage = data?.type === "image";
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  console.log(data);
+  console.log(userDetails);
 
   return (
     <div className={`flex gap-1 ${justifyClass}`}>
