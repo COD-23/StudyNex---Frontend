@@ -25,23 +25,27 @@ const Message = ({ data }) => {
         <p
           className={classNames(
             isSender
-            ? "bg-nack border rounded-l-2xl rounded-br-2xl"
+              ? "bg-nack border rounded-l-2xl rounded-br-2xl flex gap-2"
               : "bg-white border rounded-r-2xl rounded-bl-2xl",
-            "text-sm px-4 py-3 shadow-sm w-fit"
+            "text-sm px-4 py-2 shadow-sm w-fit "
           )}
         >
           {/* time and name */}
-          <div className={`flex items-center justify-between pb-2 gap-4 ${justifyClass}`}>
+          <div
+            className={`flex items-center justify-between pb-2 gap-4 ${justifyClass}`}
+          >
             {!isSender && (
               <>
-              <div className="flex gap-2 items-center">
-                <div className="gradient-transition text-white font-semibold w-5 h-5  rounded-full">
-                  <p className="text-center text-sm">{nameInitials(data?.sender?.name)}</p>
+                <div className="flex gap-2 items-center">
+                  <div className="gradient-transition text-white font-semibold w-5 h-5  rounded-full">
+                    <p className="text-center text-sm">
+                      {nameInitials(data?.sender?.name)}
+                    </p>
+                  </div>
+                  <p className="text-xs  font-semibold text-gray-700 ">
+                    {data?.sender?.name}
+                  </p>
                 </div>
-                <p className="text-xs  font-semibold text-gray-700 ">
-                  {data?.sender?.name}
-                </p>
-              </div>
                 <MessageDropdown
                   showMenu={isMenuOpen}
                   setIsMenuOpen={setIsMenuOpen}
@@ -59,13 +63,13 @@ const Message = ({ data }) => {
           )}
           {data?.content?.length > 15 ? (
             <>
-              {data?.content}
-              <p className="text-[8px] flex justify-end">19:47</p>
+              <p className="break-all">{data?.content}</p>
+              <p className="text-[8px] flex justify-end ">19:47</p>
             </>
           ) : (
             <div className="flex gap-3">
-              {data?.content}
-              <p className="text-[8px] flex-1 text-end">19:47</p>
+              <p className="break-all">{data?.content}</p>
+              <p className="text-[8px] flex-1 text-end pt-1">19:47</p>
             </div>
           )}
         </p>

@@ -11,9 +11,11 @@ import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
 import { chatStore } from "@/store/chatStore";
 import socket from "@/lib/socketInstance";
+import MediaPopup from "../popup/MediaPopup";
 
 const ChatInput = ({ setMessages }) => {
-  const [emojiPicker, setEmojiPicker] = useState();
+  const [emojiPicker, setEmojiPicker] = useState(false);
+  const [mediaPicker, setMediaPicker] = useState(false);
   const chatDetails = chatStore((state) => state.chatDetails);
   const channelDetails = channelStore((state) => state.channelDetails);
   const [messageContent, setMessageContent] = useState("");
@@ -57,13 +59,14 @@ const ChatInput = ({ setMessages }) => {
           onClick={() => setEmojiPicker(false)}
         />
         <div className="cursor-pointer relative">
-          {/* <input
-            type="file"
-            className="opacity-0 text-[0.4rem] absolute cursor-pointer"
-          /> */}
+          <MediaPopup
+            mediaPicker={mediaPicker}
+            // setPopup={setPopup}
+            setMediaPicker={setMediaPicker}
+          />
           <IoImageOutline
             className="text-xl"
-            onClick={() => setEmojiPicker(false)}
+            onClick={() => setMediaPicker(!mediaPicker)}
           />
         </div>
         <BsEmojiSmile

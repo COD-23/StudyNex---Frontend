@@ -1,11 +1,10 @@
 "use client";
 import Image from "next/image";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import classNames from "classnames";
 import { MdGroups2, MdOutlineQuiz } from "react-icons/md";
 import { motion } from "framer-motion";
 import { CgMenuGridR } from "react-icons/cg";
-import { channelProfileStore } from "@/store/channelProfileStore";
 import { orgStore } from "@/store/orgStore";
 import { getRequest, postRequest } from "@/config/axiosInterceptor";
 import { accessChat, fetchMessages, getChannel } from "../Constants/apiEndpoints";
@@ -17,7 +16,6 @@ import { nameInitials } from "@/helperFunctions/nameInitials";
 import MenuPopup from "../popup/MenuPopup";
 import { OrgChannels, UserChannels } from "../Organization/Channel/Channels";
 import { chatStore } from "@/store/chatStore";
-import { debounce } from "lodash";
 
 const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
   const orgDetails = orgStore((state) => state.orgDetails);
@@ -25,7 +23,6 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
   const userDetails = userDetailsStore((state) => state.userDetails);
   const setChatDetails = chatStore((state) => state.setChatDetails);
-  const chatDetails = chatStore((state) => state.chatDetails);
   const [showMenu, setShowMenu] = useState(false);
 
 
@@ -82,35 +79,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
       toast.error("Couldn't iniate chat");
       console.log(error);
     }
-  };
-
-  // const fetchMsg = async () => {
-  //   try {
-  //     const response = await getRequest({
-  //       url: fetchMessages,
-  //       params: `/${chatDetails?._id}`,
-  //       token: token,
-  //     });
-  //     const data = response.data.data;
-  //     if (response.status) {
-  //       setMessages(data);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error("There is a problem fetching messages");
-  //   }
-  // };
-
-  // const delayedQuery = useCallback(debounce(fetchMsg, 1000), [
-  //   chatDetails,
-  // ]);
-
-  // useEffect(() => {
-  //   delayedQuery();
-  // }, [chatDetails])
-  
-
-  
+  };  
 
   return (
     <motion.div
@@ -177,7 +146,6 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
               setActiveTab={setActiveTab}
               loadChannelData={loadChannelData}
               initiateChat={initiateChat}
-              // fetchMessages={delayedQuery}
             />
           );
         })}
