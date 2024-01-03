@@ -18,7 +18,6 @@ import MenuPopup from "../popup/MenuPopup";
 import { OrgChannels, UserChannels } from "../Organization/Channel/Channels";
 import { chatStore } from "@/store/chatStore";
 import { debounce } from "lodash";
-import { messageStore } from "@/store/messageStore";
 
 const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
   const orgDetails = orgStore((state) => state.orgDetails);
@@ -27,7 +26,6 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
   const userDetails = userDetailsStore((state) => state.userDetails);
   const setChatDetails = chatStore((state) => state.setChatDetails);
   const chatDetails = chatStore((state) => state.chatDetails);
-  const setMessages = messageStore((state) => state.setMessages);
   const [showMenu, setShowMenu] = useState(false);
 
 

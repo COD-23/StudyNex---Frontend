@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 import { chatStore } from "@/store/chatStore";
 import socket from "@/lib/socketInstance";
 
-const ChatInput = () => {
+const ChatInput = ({ setMessages }) => {
   const [emojiPicker, setEmojiPicker] = useState();
   const chatDetails = chatStore((state) => state.chatDetails);
   const channelDetails = channelStore((state) => state.channelDetails);
@@ -33,10 +33,11 @@ const ChatInput = () => {
         token: token,
       });
       const data = response.data.data;
-      if (data.status) {
-        // console.log("Message",data);
+      if (data) {
+        console.log(data);
+        setMessages((prev) => [...prev, data]);
         setMessageContent("");
-        socket.emit("text_message",data);
+        socket.emit("text_message", data);
       }
     } catch (error) {
       console.log(error);

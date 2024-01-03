@@ -12,13 +12,11 @@ import { userDetailsStore } from "@/store/userStore";
 
 const Message = ({ data }) => {
   const userDetails = userDetailsStore((state) => state.userDetails);
-  const isSender = data?._id === userDetails?._id;
-  const justifyClass = isSender ? "" : "justify-end";
+  const isSender = data?.sender?._id === userDetails?._id;
+  const justifyClass = isSender ? "justify-end" : "";
   const isImage = data?.type === "image";
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  console.log(data);
-  console.log(userDetails);
 
   return (
     <div className={`flex gap-1 ${justifyClass}`}>
@@ -27,18 +25,18 @@ const Message = ({ data }) => {
         <p
           className={classNames(
             isSender
-              ? "bg-white border rounded-r-2xl rounded-bl-2xl"
-              : "bg-nack border rounded-l-2xl rounded-br-2xl",
+            ? "bg-nack border rounded-l-2xl rounded-br-2xl"
+              : "bg-white border rounded-r-2xl rounded-bl-2xl",
             "text-sm px-4 py-3 shadow-sm w-fit"
           )}
         >
           {/* time and name */}
           <div className={`flex items-center justify-between pb-2 gap-4 ${justifyClass}`}>
-            {isSender && (
+            {!isSender && (
               <>
               <div className="flex gap-2 items-center">
                 <div className="gradient-transition text-white font-semibold w-5 h-5  rounded-full">
-                  <p className="text-center">{nameInitials(data?.name)}</p>
+                  <p className="text-center text-sm">{nameInitials(data?.sender?.name)}</p>
                 </div>
                 <p className="text-xs  font-semibold text-gray-700 ">
                   {data?.sender?.name}
