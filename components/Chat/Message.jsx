@@ -1,20 +1,17 @@
 import React, { useState } from "react";
 import classNames from "classnames";
 import ImageViewer from "react-simple-image-viewer";
-import { BiDotsVerticalRounded } from "react-icons/bi";
 import MessageDropdown from "../popup/MessageDropdown";
 import { nameInitials } from "@/helperFunctions/nameInitials";
 import { userDetailsStore } from "@/store/userStore";
-
-//blue-500 -blue
-//05716c - green
-//3C84AB
+import { isEmpty } from "lodash";
+import "video-react/dist/video-react.css";
+import { Player } from "video-react";
 
 const Message = ({ data }) => {
   const userDetails = userDetailsStore((state) => state.userDetails);
   const isSender = data?.sender?._id === userDetails?._id;
   const justifyClass = isSender ? "justify-end" : "";
-  const isImage = data?.type === "image";
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -25,7 +22,7 @@ const Message = ({ data }) => {
         <p
           className={classNames(
             isSender
-              ? "bg-nack border rounded-l-2xl rounded-br-2xl flex gap-2"
+              ? "bg-nack border rounded-l-2xl rounded-br-2xl "
               : "bg-white border rounded-r-2xl rounded-bl-2xl",
             "text-sm px-4 py-2 shadow-sm w-fit "
           )}
@@ -53,14 +50,23 @@ const Message = ({ data }) => {
               </>
             )}
           </div>
-          {isImage && (
-            <img
-              src={data?.link}
-              alt=""
-              className="max-w-[300px] rounded-md mb-2 cursor-pointer"
-              onClick={() => setIsViewerOpen(true)}
-            />
-          )}
+          {!isEmpty(data?.mediaContent) &&
+            (data?.type === "Image" ? (
+              <img
+                src={data?.mediaContent}
+                alt=""
+                className="md:max-w-[400px] md:max-w-[300px] rounded-md mb-2 cursor-pointer"
+                onClick={() => setIsViewerOpen(true)}
+              />
+            ) : data?.type === "Video" ? (
+              <Player
+                fluid={false}
+                src={data?.mediaContent}
+                aspectRatio="3:2"
+              />
+            ) : data?.type === "Document" ? (
+              <p>ccjeskbdcjsdg</p>
+            ) : null)}
           {data?.content?.length > 15 ? (
             <>
               <p className="break-all">{data?.content}</p>
@@ -77,7 +83,7 @@ const Message = ({ data }) => {
 
       {isViewerOpen && (
         <ImageViewer
-          src={[data?.link]}
+          src={[data?.mediaContent]}
           disableScroll={false}
           closeOnClickOutside={true}
           onClose={() => setIsViewerOpen(false)}

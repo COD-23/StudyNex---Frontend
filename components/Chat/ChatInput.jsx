@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BsEmojiSmile } from "react-icons/bs";
 import { HiOutlineMicrophone } from "react-icons/hi";
 import { IoImageOutline } from "react-icons/io5";
@@ -12,6 +12,9 @@ import toast from "react-hot-toast";
 import { chatStore } from "@/store/chatStore";
 import socket from "@/lib/socketInstance";
 import MediaPopup from "../popup/MediaPopup";
+import { motion } from "framer-motion";
+import "video-react/dist/video-react.css";
+import { Player } from "video-react";
 
 const ChatInput = ({ setMessages }) => {
   const [emojiPicker, setEmojiPicker] = useState(false);
@@ -19,13 +22,26 @@ const ChatInput = ({ setMessages }) => {
   const chatDetails = chatStore((state) => state.chatDetails);
   const channelDetails = channelStore((state) => state.channelDetails);
   const [messageContent, setMessageContent] = useState("");
+  const [fileContent, setFileContent] = useState("");
+  const [fileType, setFileType] = useState("");
+  const [filePreview, setFilePreview] = useState();
   const token = getCookie("token");
+  const sendBtn = useRef(null);
 
   const sendMsg = async () => {
+    let contentType;
+    if (messageContent && fileContent) contentType = "Hybrid";
+    else if (messageContent) contentType = "Text";
+    else if (fileContent) {
+      if (fileType === "image") contentType = "Image";
+      else if (fileType === "video") contentType = "Video";
+      else contentType = "Document";
+    } else return;
     const body = {
-      type: "Text",
+      type: contentType,
       receiver: channelDetails.users,
       content: messageContent,
+      mediaContent: fileContent,
       chat: chatDetails._id,
     };
     try {
@@ -40,10 +56,18 @@ const ChatInput = ({ setMessages }) => {
         setMessages((prev) => [...prev, data]);
         setMessageContent("");
         socket.emit("text_message", data);
+        setFilePreview(null);
       }
     } catch (error) {
       console.log(error);
       toast.error("Oops!! Can't send message");
+    }
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      console.log("Hello");
+      sendBtn.current.click();
     }
   };
   return (
@@ -53,6 +77,25 @@ const ChatInput = ({ setMessages }) => {
           <EmojiPicker height={500} width={300} />
         </div>
       )}
+      {filePreview && fileType && (
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="absolute inset-0 flex justify-center items-center -top-[30rem] bottom-20 shadow-lg bg-gray-200"
+        >
+          {fileType === "image" ? (
+            <img
+              className="h-96 bg-transparent focus:outline-none text-gray-500 rounded-xl shadow-2xl"
+              src={filePreview}
+            />
+          ) : fileType === "video" ? (
+            <Player fluid={false} src={filePreview} aspectRatio="4:3" />
+          ) : fileType === "pdf" ? (
+            <p>ccjeskbdcjsdg</p>
+          ) : null}
+        </motion.div>
+      )}
       <div className="bg-gray-100 flex gap-3 lg:px-5 px-2 py-4 rounded-xl items-center w-full">
         <HiOutlineMicrophone
           className="text-xl cursor-pointer"
@@ -61,8 +104,11 @@ const ChatInput = ({ setMessages }) => {
         <div className="cursor-pointer relative">
           <MediaPopup
             mediaPicker={mediaPicker}
-            // setPopup={setPopup}
+            setFileContent={setFileContent}
             setMediaPicker={setMediaPicker}
+            filePreview={filePreview}
+            setFilePreview={setFilePreview}
+            setFileType={setFileType}
           />
           <IoImageOutline
             className="text-xl"
@@ -80,11 +126,14 @@ const ChatInput = ({ setMessages }) => {
           onClick={() => setEmojiPicker(false)}
           value={messageContent}
           onChange={(e) => setMessageContent(e.target.value)}
+          onKeyDown={handleKeyPress}
         />
-        <VscSend
-          className="text-2xl text-gray-500 cursor-pointer"
-          onClick={sendMsg}
-        />
+        <button ref={sendBtn} onClick={sendMsg}>
+          <VscSend
+            className="text-2xl text-gray-500 cursor-pointer"
+            onClick={sendMsg}
+          />
+        </button>
       </div>
     </div>
   );
