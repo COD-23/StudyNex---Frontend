@@ -11,7 +11,7 @@ const MediaPopup = ({
   setFilePreview,
   filePreview,
   setMediaPicker,
-  setFileType
+  setFileType,
 }) => {
   const uploadDocument = (file) => {
     if (file === undefined) {
@@ -30,7 +30,8 @@ const MediaPopup = ({
         .then((res) => res.json())
         .then((res) => {
           setMediaPicker(false);
-          setFileType(res?.resource_type?.toString());
+          if (res?.format === "pdf") setFileType("document");
+          else setFileType(res?.resource_type?.toString());
           setFileContent(res?.url?.toString());
         })
         .catch((err) => {

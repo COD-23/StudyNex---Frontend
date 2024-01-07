@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { BsEmojiSmile } from "react-icons/bs";
 import { HiOutlineMicrophone } from "react-icons/hi";
 import { IoImageOutline } from "react-icons/io5";
@@ -28,21 +28,39 @@ const ChatInput = ({ setMessages }) => {
   const token = getCookie("token");
   const sendBtn = useRef(null);
 
+  const returnMediaType = () => {
+    let mediaType = "";
+    switch (fileType) {
+      case "image":
+        mediaType = "Image";
+        break;
+      case "video":
+        mediaType = "Video";
+        break;
+      case "document":
+        mediaType = "Document";
+        break;
+      default:
+        mediaType = "Unknown";
+        break;
+    }
+    return mediaType;
+  };
   const sendMsg = async () => {
     let contentType;
+
     if (messageContent && fileContent) contentType = "Hybrid";
     else if (messageContent) contentType = "Text";
-    else if (fileContent) {
-      if (fileType === "image") contentType = "Image";
-      else if (fileType === "video") contentType = "Video";
-      else contentType = "Document";
-    } else return;
+    else if (fileContent) contentType = "Media";
+    else return;
+
     const body = {
       type: contentType,
-      receiver: channelDetails.users,
+      receiver: channelDetails?.users,
       content: messageContent,
-      mediaContent: fileContent,
-      chat: chatDetails._id,
+      attachments: fileContent,
+      chat: chatDetails?._id,
+      mediaType: returnMediaType(),
     };
     try {
       const response = await postRequest({
@@ -52,10 +70,9 @@ const ChatInput = ({ setMessages }) => {
       });
       const data = response.data.data;
       if (data) {
-        console.log(data);
         setMessages((prev) => [...prev, data]);
         setMessageContent("");
-        socket.emit("text_message", data);
+        socket.emit("new_message", data);
         setFilePreview(null);
       }
     } catch (error) {
@@ -70,11 +87,19 @@ const ChatInput = ({ setMessages }) => {
       sendBtn.current.click();
     }
   };
+
+  const handleEmojiInput = (e) => {
+    setMessageContent((prev) => prev + e.emoji);
+  };
   return (
     <div className="w-full bg-white flex lg:px-4 px-2 py-3 justify-between items-center relative z-50 shadow-sm">
       {emojiPicker && (
         <div className="absolute bottom-20">
-          <EmojiPicker height={500} width={300} />
+          <EmojiPicker
+            height={500}
+            width={300}
+            onEmojiClick={(e) => handleEmojiInput(e)}
+          />
         </div>
       )}
       {filePreview && fileType && (
@@ -82,7 +107,7 @@ const ChatInput = ({ setMessages }) => {
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="absolute inset-0 flex justify-center items-center -top-[30rem] bottom-20 shadow-lg bg-gray-200"
+          className="absolute inset-0 flex justify-center items-center -top-[30rem] bottom-20 shadow-lg bg-black bg-opacity-70"
         >
           {fileType === "image" ? (
             <img
@@ -91,8 +116,13 @@ const ChatInput = ({ setMessages }) => {
             />
           ) : fileType === "video" ? (
             <Player fluid={false} src={filePreview} aspectRatio="4:3" />
-          ) : fileType === "pdf" ? (
-            <p>ccjeskbdcjsdg</p>
+          ) : fileType === "document" ? (
+            <iframe
+              className="bg-transparent focus:outline-none text-gray-500 rounded-xl shadow-2xl"
+              src={`${filePreview}#page=1&w=200&h=300`}
+              width={400}
+              height={400}
+            />
           ) : null}
         </motion.div>
       )}
@@ -129,10 +159,7 @@ const ChatInput = ({ setMessages }) => {
           onKeyDown={handleKeyPress}
         />
         <button ref={sendBtn} onClick={sendMsg}>
-          <VscSend
-            className="text-2xl text-gray-500 cursor-pointer"
-            onClick={sendMsg}
-          />
+          <VscSend className="text-2xl text-gray-500 cursor-pointer" />
         </button>
       </div>
     </div>

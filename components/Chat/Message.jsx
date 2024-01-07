@@ -7,6 +7,8 @@ import { userDetailsStore } from "@/store/userStore";
 import { isEmpty } from "lodash";
 import "video-react/dist/video-react.css";
 import { Player } from "video-react";
+import Head from "next/head";
+import Link from "next/link";
 
 const Message = ({ data }) => {
   const userDetails = userDetailsStore((state) => state.userDetails);
@@ -14,6 +16,9 @@ const Message = ({ data }) => {
   const justifyClass = isSender ? "justify-end" : "";
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const linkRegex = /(https?:\/\/[^\s]+)/g;
+  const partMessage = data?.content.split(linkRegex);
 
   return (
     <div className={`flex gap-1 ${justifyClass}`}>
@@ -24,7 +29,7 @@ const Message = ({ data }) => {
             isSender
               ? "bg-nack border rounded-l-2xl rounded-br-2xl "
               : "bg-white border rounded-r-2xl rounded-bl-2xl",
-            "text-sm px-4 py-2 shadow-sm w-fit "
+            "text-sm px-4 py-2 shadow-sm w-fit relative"
           )}
         >
           {/* time and name */}
@@ -50,40 +55,53 @@ const Message = ({ data }) => {
               </>
             )}
           </div>
-          {!isEmpty(data?.mediaContent) &&
-            (data?.type === "Image" ? (
+          {!isEmpty(data?.attachments) &&
+            (data?.mediaType === "Image" ? (
               <img
-                src={data?.mediaContent}
-                alt=""
-                className="md:max-w-[400px] md:max-w-[300px] rounded-md mb-2 cursor-pointer"
+                src={data?.attachments}
+                className="md:max-w-[400px] max-w-[300px] rounded-md mb-2 cursor-pointer pb-2"
                 onClick={() => setIsViewerOpen(true)}
               />
-            ) : data?.type === "Video" ? (
+            ) : data?.mediaType === "Video" ? (
               <Player
                 fluid={false}
-                src={data?.mediaContent}
-                aspectRatio="3:2"
+                src={data?.attachments}
+                width={250}
+                height={250}
               />
-            ) : data?.type === "Document" ? (
-              <p>ccjeskbdcjsdg</p>
+            ) : data?.mediaType === "Document" ? (
+              <iframe
+                className="bg-transparent w-[250px] h-[300px] md:w-[400px] md:h-[400px] focus:outline-none text-gray-500 rounded-xl shadow-lg mb-4"
+                src={data?.attachments}
+              />
             ) : null)}
-          {data?.content?.length > 15 ? (
-            <>
-              <p className="break-all">{data?.content}</p>
-              <p className="text-[8px] flex justify-end ">19:47</p>
-            </>
-          ) : (
-            <div className="flex gap-3">
-              <p className="break-all">{data?.content}</p>
-              <p className="text-[8px] flex-1 text-end pt-1">19:47</p>
+          <div className="flex gap-4">
+            <div>
+              {partMessage.map((message, index) =>
+                message.match(linkRegex) ? (
+                  <Link
+                    href={message.trim()}
+                    target="_blank"
+                    key={index}
+                    className="break-all text-blue-600 pr-4"
+                  >
+                    {message.trim()}
+                  </Link>
+                ) : (
+                  <p className="break-all pr-3 text-justify" key={index}>
+                    {message}
+                  </p>
+                )
+              )}
             </div>
-          )}
+            <p className="text-[8px] flex text-end absolute bottom-2 right-2 pt-1 ">19:47</p>
+          </div>
         </p>
       </div>
 
       {isViewerOpen && (
         <ImageViewer
-          src={[data?.mediaContent]}
+          src={[data?.attachments]}
           disableScroll={false}
           closeOnClickOutside={true}
           onClose={() => setIsViewerOpen(false)}

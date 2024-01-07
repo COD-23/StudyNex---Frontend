@@ -20,26 +20,26 @@ const ChannelMenuPopup = ({ data }) => {
 
   const handleChannelClick = () => {
     setShowChannelProfile(true);
-    loadChannelData(data?._id);
+    // loadChannelData(data?._id);
     setActive(false);
   };
 
-  const loadChannelData = async (id) => {
-    try {
-      const response = await getRequest({
-        url: getChannel,
-        params: `/${id}`,
-        token: token,
-      });
-      const data = response.data.data;
-      if (response.status) {
-        setChannelDetails(data);
-      }
-    } catch (error) {
-      toast.error("Something went wrong");
-      console.log(error);
-    }
-  };
+  // const loadChannelData = async (id) => {
+  //   try {
+  //     const response = await getRequest({
+  //       url: getChannel,
+  //       params: `/${id}`,
+  //       token: token,
+  //     });
+  //     const data = response.data.data;
+  //     if (response.status) {
+  //       setChannelDetails(data);
+  //     }
+  //   } catch (error) {
+  //     toast.error("Something went wrong");
+  //     console.log(error);
+  //   }
+  // };
   return (
     <div className="relative inline-block text-left">
       <div className="flex items-center">

@@ -49,7 +49,7 @@ export const UserChannels = ({
     initiateChat(data?.name,data?.users);
     // fetchMessages();
   };
-  return (
+  return data?.name !== "General" && (
     <motion.li
       initial={{ opacity: 0, x: -50 }}
       animate={{ opacity: 1, x: 0 }}
@@ -58,7 +58,7 @@ export const UserChannels = ({
         type: "keyframes",
       }}
       key={index}
-      className={classNames("flex datas-center relative py-5")}
+      className="flex items-center relative py-5"
       onClick={handleChannelClick}
     >
       <div className="border-2 border-t-gray-300 border-b-0 w-5" />
@@ -73,7 +73,7 @@ export const UserChannels = ({
           #
         </p>
         <p className={classNames(activeTab == data.name && "font-semibold")}>
-          {data.name}
+          {data?.name}
         </p>
       </div>
     </motion.li>

@@ -8,7 +8,7 @@ import PrimaryBtn from "../Helpers/PrimaryBtn";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { postRequest } from "@/config/axiosInterceptor";
-import { createOrgApi } from "../Constants/apiEndpoints";
+import { createChannelApi, createOrgApi } from "../Constants/apiEndpoints";
 import { useRouter } from "next/navigation";
 import { getCookie, setCookie } from "cookies-next";
 import { userDetailsStore } from "@/store/userStore";
@@ -56,6 +56,31 @@ const CreateOrgPopup = ({ setPopup }) => {
     }
   };
 
+  const createGeneralChannel = async (orgData) => {
+    console.log("Org data in create channel",orgData);
+    const data = {
+      name: "General",
+      description:
+        "General channel for entire organization's members to interact",
+      org_id: orgData?._id,
+    };
+    try {
+      const response = await postRequest({
+        url: createChannelApi,
+        body: data,
+        token: getCookie("token"),
+      });
+      if (response?.data?.status) {
+        console.log("Channel created successfully");
+      } else {
+        toast.error(response?.data?.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong!");
+    }
+  };
+
   const submit = async (data) => {
     try {
       setLoading(true);
@@ -68,8 +93,9 @@ const CreateOrgPopup = ({ setPopup }) => {
         reset();
         toast.success("Organization created Successfully!");
         getUserDetails();
+        createGeneralChannel(response?.data?.data);
         setCookie("org", response?.data?.data?.slug);
-        router.push("/organization/"+response?.data?.data?.slug);
+        router.push("/organization/" + response?.data?.data?.slug);
         setLoading(false);
       } else {
         toast.error(response?.data?.message);
@@ -127,7 +153,9 @@ const CreateOrgPopup = ({ setPopup }) => {
               Organization Name
             </label>
             {errors.name && errors.name.type === "required" && (
-              <span className="text-red-600 text-xs">Organization name is required</span>
+              <span className="text-red-600 text-xs">
+                Organization name is required
+              </span>
             )}
           </div>
           <PrimaryBtn label="Create" type="submit" className="mb-4" />

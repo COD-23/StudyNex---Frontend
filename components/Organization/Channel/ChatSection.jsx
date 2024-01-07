@@ -7,9 +7,6 @@ import classNames from "classnames";
 import React, { useState } from "react";
 
 function ChatSection() {
-  const showChannelProfile = channelProfileStore(
-    (state) => state.showChannelProfile
-  );
   const [messages, setMessages] = useState([]);
   return (
     <div className={classNames(`flex-1  md:flex flex-col transition h-screen`)}>

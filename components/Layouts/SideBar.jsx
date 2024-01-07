@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
 import { MdGroups2, MdOutlineQuiz } from "react-icons/md";
 import { motion } from "framer-motion";
@@ -24,6 +24,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
   const userDetails = userDetailsStore((state) => state.userDetails);
   const setChatDetails = chatStore((state) => state.setChatDetails);
   const [showMenu, setShowMenu] = useState(false);
+  const [generalChannel,setGeneralChannel] = useState(channelsData[0]);
 
 
 
@@ -81,6 +82,20 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
     }
   };  
 
+  useEffect(() => {
+    const data = channelsData[0];
+    loadChannelData(data?._id);
+    initiateChat(data?.name,data?.users);
+    // console.log(channelsData);
+  }, [channelsData[0]])
+
+  useEffect(() => {
+    loadChannelData(generalChannel?._id);
+    initiateChat(generalChannel?.name,generalChannel?.users);
+    // console.log(channelsData);
+  }, [])
+  
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -100 }}
@@ -132,7 +147,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
           transition={{ duration: 0.5 }}
           className="flex justify-between items-center sticky top-0 z-50 bg-white"
         >
-          <div className="absolute border-2 top-10 border-r-gray-300 border-l-0 h-[calc(100vh-370px)]" />
+          <div className="absolute border-2 top-10 border-r-gray-300 border-l-0 h-[calc(100vh-360px)]" />
           <p className="font-semibold text-lg">Your Channels</p>
         </motion.div>
 
@@ -153,7 +168,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
 
       {/* Profile Section */}
       <motion.div
-        className="grid pt-5"
+        className="grid"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
@@ -163,7 +178,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="flex gap-3 items-center relative py-2 md:cursor-pointer"
+          className=" flex-row-reverse flex md:flex-row gap-3 items-center relative py-2 md:cursor-pointer"
         >
           <MenuPopup
             showMenu={showMenu}
@@ -185,7 +200,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
               </p>
             </div>
           )}
-          <div className="line-clamp-2 text-left flex-1">
+          <div className="line-clamp-2 flex flex-col items-end md:block text-left flex-1">
             <p className="text-md font-bold">{userDetails.name}</p>
             <p className="text-xs text-gray-400">{userDetails.username}</p>
           </div>
