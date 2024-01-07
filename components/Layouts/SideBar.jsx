@@ -82,18 +82,18 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
     }
   };  
 
-  useEffect(() => {
-    const data = channelsData[0];
-    loadChannelData(data?._id);
-    initiateChat(data?.name,data?.users);
-    // console.log(channelsData);
-  }, [channelsData[0]])
+  // useEffect(() => {
+  //   const data = channelsData[0];
+  //   loadChannelData(data?._id);
+  //   initiateChat(data?.name,data?.users);
+  //   // console.log(channelsData);
+  // }, [channelsData[0]])
 
-  useEffect(() => {
-    loadChannelData(generalChannel?._id);
-    initiateChat(generalChannel?.name,generalChannel?.users);
-    // console.log(channelsData);
-  }, [])
+  // useEffect(() => {
+  //   loadChannelData(generalChannel?._id);
+  //   initiateChat(generalChannel?.name,generalChannel?.users);
+  //   // console.log(channelsData);
+  // }, [])
   
 
   return (

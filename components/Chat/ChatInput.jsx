@@ -72,6 +72,8 @@ const ChatInput = ({ setMessages }) => {
       if (data) {
         setMessages((prev) => [...prev, data]);
         setMessageContent("");
+        setFileContent("");
+        setFileType("");
         socket.emit("new_message", data);
         setFilePreview(null);
       }

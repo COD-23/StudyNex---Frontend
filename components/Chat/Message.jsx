@@ -88,13 +88,13 @@ const Message = ({ data }) => {
                     {message.trim()}
                   </Link>
                 ) : (
-                  <p className="break-all pr-3 text-justify" key={index}>
+                  <p className="break-all text-justify pr-4 py-2" key={index}>
                     {message}
                   </p>
                 )
               )}
             </div>
-            <p className="text-[8px] flex text-end absolute bottom-2 right-2 pt-1 ">19:47</p>
+            <p className="text-[8px] flex text-end absolute bottom-2 right-2 pt-1 pl-4 ">19:47</p>
           </div>
         </p>
       </div>
