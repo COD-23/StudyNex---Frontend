@@ -49,7 +49,7 @@ const CreateOrgPopup = ({ setPopup }) => {
       })
         .then((res) => res.json())
         .then((res) => {
-          setValue("image", res.url.toString());
+          setValue("image", res?.secure_url?.toString());
         });
     } else {
       toast.error("Invalid Image!");

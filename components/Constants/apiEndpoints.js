@@ -25,3 +25,4 @@ export const channelListAPi = "/channel-list";
 export const getChannelMembers = "/get-members";
 export const accessChat = "/access-chat";
 export const sendMessage = "/send-message";
+export const deleteMessage = "/delete-message";

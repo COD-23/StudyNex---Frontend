@@ -84,7 +84,14 @@ const Chat = ({ messages, setMessages }) => {
           </p>
         </div>
         {!isEmpty(messages) &&
-          messages.map((data, index) => <Message key={index} data={data} />)}
+          messages.map((data, index) => (
+            <Message
+              key={index}
+              data={data}
+              messages={messages}
+              setMessages={setMessages}
+            />
+          ))}
       </div>
     </ScrollToBottom>
   );

@@ -80,7 +80,7 @@ const RegisterComponent = () => {
         .then((res) => res.json())
         .then((res) => {
           // console.log(res.url);
-          setValue("image", res.url.toString());
+          setValue("image", res?.secure_url?.toString());
         });
     } else {
       toast.error("Invalid Image!");

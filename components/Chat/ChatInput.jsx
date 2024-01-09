@@ -85,7 +85,6 @@ const ChatInput = ({ setMessages }) => {
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      console.log("Hello");
       sendBtn.current.click();
     }
   };

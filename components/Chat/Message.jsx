@@ -10,7 +10,7 @@ import { Player } from "video-react";
 import Head from "next/head";
 import Link from "next/link";
 
-const Message = ({ data }) => {
+const Message = ({ data, setMessages, messages }) => {
   const userDetails = userDetailsStore((state) => state.userDetails);
   const isSender = data?.sender?._id === userDetails?._id;
   const justifyClass = isSender ? "justify-end" : "";
@@ -49,8 +49,11 @@ const Message = ({ data }) => {
                   </p>
                 </div>
                 <MessageDropdown
+                  data={data}
                   showMenu={isMenuOpen}
                   setIsMenuOpen={setIsMenuOpen}
+                  messages={messages}
+                  setMessages={setMessages}
                 />
               </>
             )}
@@ -94,7 +97,9 @@ const Message = ({ data }) => {
                 )
               )}
             </div>
-            <p className="text-[8px] flex text-end absolute bottom-2 right-2 pt-1 pl-4 ">19:47</p>
+            <p className="text-[8px] flex text-end absolute bottom-2 right-2 pt-1 pl-4 ">
+              19:47
+            </p>
           </div>
         </p>
       </div>

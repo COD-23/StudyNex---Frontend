@@ -64,7 +64,7 @@ const ChannelMenuPopup = ({ data }) => {
               type: "spring",
             }}
           >
-            <ul className="absolute top-2 right-[6rem] z-10 mt-2 w-[160px] origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <ul className="absolute top-2 right-[6rem] z-50 mt-2 w-[160px] origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="py-1">
                 <li>
                   <p

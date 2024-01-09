@@ -1,8 +1,41 @@
 import { AnimatePresence, motion } from "framer-motion";
-import React from 'react'
+import React from "react";
 import { BiDotsVerticalRounded } from "react-icons/bi";
+import { deleteMessage } from "../Constants/apiEndpoints";
+import { postRequest } from "@/config/axiosInterceptor";
+import { getCookie } from "cookies-next";
 
-const MessageDropdown = ({ showMenu, setIsMenuOpen }) => {
+const MessageDropdown = ({
+  showMenu,
+  setIsMenuOpen,
+  data,
+  setMessages,
+  messages,
+}) => {
+  const token = getCookie("token");
+  const deleteMsg = async () => {
+    const body = {
+      messageId: data?._id,
+    };
+    try {
+      const response = await postRequest({
+        url: deleteMessage,
+        body: body,
+        token: token,
+      });
+      const data = response.data.data;
+      if (response.status) {
+        const updatedMessages = messages.filter(
+          (message) => message._id !== data?._id
+        );
+        setMessages(updatedMessages);
+        setIsMenuOpen(!showMenu);
+      }
+    } catch (error) {
+      console.log(error);
+      // toast.error("There is a problem deleting message");
+    }
+  };
   return (
     <div className="relative">
       <div className="flex items-center">
@@ -24,25 +57,11 @@ const MessageDropdown = ({ showMenu, setIsMenuOpen }) => {
             duration: 0.5,
             type: "spring",
           }}
-          className="absolute top-0 right-0 grid gap-2 origin-top-right w-fit h-fit p-2 bg-white border border-gray-100 shadow-lg text-sm rounded-md"
+          className="absolute top-0 -right-[50px] grid  origin-top-right w-max z-50 h-fit p-2 bg-white border border-gray-100 shadow-lg text-sm rounded-md"
         >
           <div
             className="flex items-center gap-4 lg:cursor-pointer hover:bg-gray-100 px-2 py-2 transition-all"
-            onClick={() => {
-              setPopup("create");
-              setShowMenu(false);
-              window.history.pushState("#", null, null);
-            }}
-          >
-            <p className="">Reply</p>
-          </div>
-          <div
-            className="flex items-center gap-4 lg:cursor-pointer hover:bg-gray-100 px-2 py-2 transition-all"
-            onClick={() => {
-              setPopup("join");
-              setShowMenu(false);
-              window.history.pushState("#", null, null);
-            }}
+            onClick={deleteMsg}
           >
             <p className="">Delete message</p>
           </div>
@@ -52,4 +71,4 @@ const MessageDropdown = ({ showMenu, setIsMenuOpen }) => {
   );
 };
 
-export default MessageDropdown
+export default MessageDropdown;

@@ -32,7 +32,7 @@ const MediaPopup = ({
           setMediaPicker(false);
           if (res?.format === "pdf") setFileType("document");
           else setFileType(res?.resource_type?.toString());
-          setFileContent(res?.url?.toString());
+          setFileContent(res?.secure_url?.toString());
         })
         .catch((err) => {
           console.error(err);
