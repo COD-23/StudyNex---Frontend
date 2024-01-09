@@ -13,7 +13,10 @@ const ChatNavbar = () => {
     <div className="w-full bg-white flex px-4 py-3 justify-between items-center z-50 shadow-sm">
       <div
         className="flex gap-3 items-center cursor-pointer"
-        onClick={() => setShowChannelProfile(true)}
+        onClick={() => {
+          window.history.pushState("#",null,null);
+          setShowChannelProfile(true);
+        }}
       >
         <Image src={QuizLogo} alt="" className="w-12 h-12 rounded-full" />
         <div>

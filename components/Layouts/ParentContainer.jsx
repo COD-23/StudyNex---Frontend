@@ -6,11 +6,14 @@ import CreateChannel from "../popup/CreateChannel";
 import JoinChannel from "../popup/JoinChannel";
 import { isEmpty } from "lodash";
 import { userDetailsStore } from "@/store/userStore";
+import { channelStore } from "@/store/channelStore";
 
 const ParentContainer = ({ children, orgData, channelsData }) => {
   const setOrgDetails = orgStore((state) => state.setOrgDetails);
   const userDetails = userDetailsStore((state) => state.userDetails);
   const getUserDetails = userDetailsStore((state) => state.getUserDetails);
+  const isActiveMobile = channelStore((state) => state.isActiveMobile);
+  const setActiveMobile = channelStore((state) => state.setActiveMobile);
   const [activeTab, setActiveTab] = useState("General");
 
   useEffect(() => {
@@ -26,6 +29,8 @@ const ParentContainer = ({ children, orgData, channelsData }) => {
         setPopup={setPopup}
         setActiveTab={setActiveTab}
         activeTab={activeTab}
+        setActiveMobile={setActiveMobile}
+        isActiveMobile={isActiveMobile}
       />
       {popup == "create" && (
         <CreateChannel
@@ -33,6 +38,7 @@ const ParentContainer = ({ children, orgData, channelsData }) => {
           channelsData={channelsData}
           setPopup={setPopup}
           setActiveTab={setActiveTab}
+          activeTab={activeTab}
         />
       )}
       {popup == "join" && (
@@ -41,6 +47,7 @@ const ParentContainer = ({ children, orgData, channelsData }) => {
           channelsData={channelsData}
           setPopup={setPopup}
           setActiveTab={setActiveTab}
+          activeTab={activeTab}
         />
       )}
       {children}

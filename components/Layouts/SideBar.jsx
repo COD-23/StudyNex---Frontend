@@ -16,44 +16,52 @@ import { userDetailsStore } from "@/store/userStore";
 import { nameInitials } from "@/helperFunctions/nameInitials";
 import MenuPopup from "../popup/MenuPopup";
 
-const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
+const SideBar = ({
+  channelsData,
+  setPopup,
+  setActiveTab,
+  activeTab,
+  setActiveMobile,
+  isActiveMobile,
+}) => {
+  const orgDetails = orgStore((state) => state.orgDetails);
+  const userDetails = userDetailsStore((state) => state.userDetails);
   const setShowChannelProfile = channelProfileStore(
     (state) => state.setShowChannelProfile
   );
-  const orgDetails = orgStore((state) => state.orgDetails);
-  const token = getCookie("token");
-  const setChannelDetails = channelStore((state) => state.setChannelDetails);
-  const userDetails = userDetailsStore((state) => state.userDetails);
 
-  const commonTabs = useMemo(() => [
-    {
-      label: "General",
-      link: "/Home",
-      icon: MdGroups2,
-    },
-    {
-      label: "Assessments",
-      link: "About",
-      icon: MdOutlineQuiz,
-    },
-  ],[]);
+  const commonTabs = useMemo(
+    () => [
+      {
+        label: "General",
+        link: "/Home",
+        icon: MdGroups2,
+      },
+      {
+        label: "Assessments",
+        link: "About",
+        icon: MdOutlineQuiz,
+      },
+    ],
+    []
+  );
 
-  const loadChannelData = async (id) => {
-    try {
-      const response = await getRequest({
-        url: getChannel,
-        params: `/${id}`,
-        token: token,
-      });
-      const data = response.data.data;
-      if (response.status) {
-        setChannelDetails(data);
-      }
-    } catch (error) {
-      toast.error("Something went wrong");
-      console.log(error);
-    }
-  };
+  // const loadChannelData = async (id) => {
+  //   try {
+  //     const response = await getRequest({
+  //       url: getChannel,
+  //       params: `/${id}`,
+  //       token: token,
+  //     });
+  //     const data = response.data.data;
+  //     if (response.status) {
+  //       setChannelDetails(data);
+  //     }
+  //   } catch (error) {
+  //     toast.error("Something went wrong");
+  //     console.log(error);
+  //   }
+  // };
 
   const [showMenu, setShowMenu] = useState(false);
   return (
@@ -61,7 +69,10 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5 }}
-      className="relative top-0 left-0 flex flex-col  w-full h-screen  px-5 py-2 z-[51] bg-white shadow-xl"
+      className={classNames(
+        isActiveMobile ? "md:flex hidden" : "flex",
+        `relative top-0 left-0 flex flex-col  w-full h-screen  px-5 py-2 z-[51] bg-white shadow-xl`
+      )}
     >
       {/* Header */}
       <motion.div
@@ -100,7 +111,11 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
                 activeTab == item.label &&
                   "gradient-transition text-white hover:bg-[#919eb7]"
               )}
-              onClick={() => setActiveTab(item.label)}
+              onClick={() => {
+                setActiveTab(item.label);
+                window.history.pushState("#", null, null);
+                setActiveMobile(true);
+              }}
             >
               <Icon className="h-6 w-6" />
               <p
@@ -141,8 +156,10 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
               className={classNames("flex items-center relative py-5")}
               onClick={() => {
                 setActiveTab(item.name);
-                setShowChannelProfile(true);
-                loadChannelData(item?._id);
+                window.history.pushState("#", null, null);
+                setActiveMobile(true);
+                // setShowChannelProfile(true);
+                // loadChannelData(item?._id);
               }}
             >
               <div className="border-2 border-t-gray-300 border-b-0 w-5" />
