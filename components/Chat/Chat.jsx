@@ -9,6 +9,7 @@ import { fetchMessages } from "../Constants/apiEndpoints";
 import { chatStore } from "@/store/chatStore";
 import toast from "react-hot-toast";
 import socket from "@/lib/socketInstance";
+import { differenceInHours, formatDistance, formatRelative } from "date-fns";
 
 const Chat = ({ messages, setMessages }) => {
   const [messageCopies, setMessageCopies] = useState([]);
@@ -16,6 +17,9 @@ const Chat = ({ messages, setMessages }) => {
   const [connectionStatus, setConnectionStatus] = useState(false);
   const chatDetails = chatStore((state) => state.chatDetails);
   const token = getCookie("token");
+  // const postedDate = new Date(data?.createdAt);
+  const currentDate = new Date();
+  const [formattedDate, setFormattedDate] = useState("");
 
   // Establishing connection
   useEffect(() => {
@@ -25,11 +29,6 @@ const Chat = ({ messages, setMessages }) => {
       console.log("Connected to socket");
     });
   }, []);
-
-  // Message retrieval
-  // useEffect(() => {
-
-  // }, [])
 
   useEffect(() => {
     const fetchMsg = async () => {
@@ -75,22 +74,43 @@ const Chat = ({ messages, setMessages }) => {
     };
   }, [messages]);
 
+  const checkDateHeader = (postedDate) => {
+    // if (differenceInHours(currentDate, postedDate) >= 1) {
+    //   console.log("Hourssss");
+    //   return formatRelative(postedDate, currentDate);
+    //   // setFormattedDate(formatRelative(postedDate, currentDate));
+    // } else {
+    //   console.log("distance");
+    //   return formatDistance(postedDate, currentDate);
+    //   // setFormattedDate();
+    // }
+    return formatRelative(postedDate, currentDate);
+
+  };
+
   return (
     <ScrollToBottom className="h-[calc(100vh-76px-72px)] relative w-full flex-1 bg-slate-100 overflow-y-scroll scrollbar-none">
       <div className="p-4 overflow-x-hidden flex flex-col gap-2">
-        <div>
+        {/* <div>
           <p className="text-center text-xs text-gray-500 my-2">
             Today, 07-11-2023
           </p>
-        </div>
+        </div> */}
         {!isEmpty(messages) &&
           messages.map((data, index) => (
-            <Message
-              key={index}
-              data={data}
-              messages={messages}
-              setMessages={setMessages}
-            />
+            <React.Fragment key={index}>
+              <div>
+                <p className="text-center text-xs text-gray-500 my-2">
+                  {checkDateHeader(new Date(data?.createdAt))}
+                </p>
+              </div>
+              <Message
+                key={index}
+                data={data}
+                messages={messages}
+                setMessages={setMessages}
+              />
+            </React.Fragment>
           ))}
       </div>
     </ScrollToBottom>

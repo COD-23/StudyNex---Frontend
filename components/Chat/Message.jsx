@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import ImageViewer from "react-simple-image-viewer";
 import MessageDropdown from "../popup/MessageDropdown";
@@ -9,6 +9,7 @@ import "video-react/dist/video-react.css";
 import { Player } from "video-react";
 import Head from "next/head";
 import Link from "next/link";
+import { differenceInHours, format, formatDistance, formatRelative } from "date-fns";
 
 const Message = ({ data, setMessages, messages }) => {
   const userDetails = userDetailsStore((state) => state.userDetails);
@@ -16,9 +17,22 @@ const Message = ({ data, setMessages, messages }) => {
   const justifyClass = isSender ? "justify-end" : "";
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // const currentDate = new Date();
+  const [formattedDate, setFormattedDate] = useState("");
 
   const linkRegex = /(https?:\/\/[^\s]+)/g;
   const partMessage = data?.content.split(linkRegex);
+
+  useEffect(() => {
+      // if (differenceInHours(currentDate, postedDate) >= 1) {
+      //   setFormattedDate(formatRelative(postedDate, currentDate));
+      // } else {
+      //   setFormattedDate(
+      //     formatDistance(postedDate, currentDate, { addSuffix: true })
+      //   );
+      // }
+      setFormattedDate(format(new Date(data?.createdAt),"HH:mm"));
+  }, []);
 
   return (
     <div className={`flex gap-1 ${justifyClass}`}>
@@ -98,7 +112,7 @@ const Message = ({ data, setMessages, messages }) => {
               )}
             </div>
             <p className="text-[8px] flex text-end absolute bottom-2 right-2 pt-1 pl-4 ">
-              19:47
+              {formattedDate}
             </p>
           </div>
         </p>
