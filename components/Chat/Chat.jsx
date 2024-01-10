@@ -54,6 +54,7 @@ const Chat = ({ messages, setMessages }) => {
 
   useEffect(() => {
     const handleReceivedMessage = (newMessage) => {
+      console.log("socket message received: " + newMessage);
       const lastMessage = messages[messages.length - 1];
       if (!lastMessage || lastMessage._id !== newMessage._id) {
         setMessages((prev) => [...prev, newMessage]);
