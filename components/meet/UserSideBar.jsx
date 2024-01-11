@@ -41,7 +41,7 @@ const UserSideBar = ({ players, setShow,show }) => {
             style={{ cursor: "pointer" }}
           /> */}
         </div>
-        <div className="my-6 flex flex-col gap-2">
+        <div className="my-6 flex flex-col gap-4">
           {Object.keys(players).map((playerId) => {
             const { playing, muted, name, isHost } = players[playerId];
             return (
