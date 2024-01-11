@@ -32,7 +32,7 @@ const Room = () => {
       peer.on("open", (id) => {
         console.log("Your peer id is " + id);
         setMyPeer(id);
-        socket.emit("join-room", roomId, id, name);
+        socket.emit("join-room", roomId, id, userDetails?.name,userDetails?.image);
       });
 
       peer.on("call", (call) => {
@@ -47,12 +47,16 @@ const Room = () => {
                 playing: true,
                 muted: true,
                 name: userDetails.name,
+                image: userDetails.image,
               },
             }));
             call.answer(stream);
             setPeerCall(call);
             call.on("stream", (incomingStream) => {
               const userName = call.metadata.name;
+              const nTime = call.metadata.time;
+              const nImage = call.metadata.image;
+              setTime(nTime);
               console.log("Incoming Stream: ", incomingStream);
               setPlayers((prev) => ({
                 ...prev,
@@ -61,6 +65,7 @@ const Room = () => {
                   playing: true,
                   muted: true,
                   name: userName,
+                  image: nImage,
                 },
               }));
               setUser((prev) => ({
@@ -81,9 +86,13 @@ const Room = () => {
       return peer;
     };
 
-    const connectToNewUser = (userId, stream, peer, userName) => {
+    const connectToNewUser = (userId, stream, peer, userName, image) => {
       const call = peer.call(userId, stream, {
-        metadata: { name: userDetails.name },
+        metadata: {
+          name: userDetails.name,
+          time: time,
+          image: userDetails.image,
+        },
       });
 
       if (call) {
@@ -97,6 +106,7 @@ const Room = () => {
               playing: true,
               muted: true,
               name: userName,
+              image: image,
             },
           }));
           setUser((prev) => ({
@@ -123,10 +133,11 @@ const Room = () => {
             playing: true,
             muted: true,
             name: userDetails.name,
+            image: userDetails.image,
           },
         }));
-        socket.on("user-connected", (userId, userName) => {
-          connectToNewUser(userId, stream, peerInstance, userName);
+        socket.on("user-connected", (userId, userName, image) => {
+          connectToNewUser(userId, stream, peerInstance, userName, image);
         });
       })
       .catch((err) =>
