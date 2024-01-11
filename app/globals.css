@@ -97,3 +97,9 @@
   color: gray;
   /* background: #fff; */
 }
+
+video{
+  object-fit: cover;
+  border-radius: 2%;
+  border: 1px solid black;
+}

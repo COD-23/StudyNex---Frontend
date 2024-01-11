@@ -9,6 +9,7 @@ import { fetchMessages } from "../Constants/apiEndpoints";
 import { chatStore } from "@/store/chatStore";
 import toast from "react-hot-toast";
 import socket from "@/lib/socketInstance";
+import { MessageSkeleton } from "../Layouts/Skeleton";
 
 const Chat = ({ messages, setMessages }) => {
   const [messageCopies, setMessageCopies] = useState([]);
@@ -83,15 +84,16 @@ const Chat = ({ messages, setMessages }) => {
             Today, 07-11-2023
           </p>
         </div>
-        {!isEmpty(messages) &&
-          messages.map((data, index) => (
-            <Message
-              key={index}
-              data={data}
-              messages={messages}
-              setMessages={setMessages}
-            />
-          ))}
+        {!isEmpty(messages)
+          ? messages.map((data, index) => (
+              <Message
+                key={index}
+                data={data}
+                messages={messages}
+                setMessages={setMessages}
+              />
+            ))
+          : <MessageSkeleton/>}
       </div>
     </ScrollToBottom>
   );
