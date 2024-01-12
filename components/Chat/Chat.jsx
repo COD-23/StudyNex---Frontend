@@ -10,6 +10,7 @@ import { chatStore } from "@/store/chatStore";
 import toast from "react-hot-toast";
 import socket from "@/lib/socketInstance";
 import { MessageSkeleton } from "../Layouts/Skeleton";
+import { format, isToday, isYesterday } from "date-fns";
 
 const Chat = ({ messages, setMessages }) => {
   const [messageCopies, setMessageCopies] = useState([]);
@@ -17,6 +18,10 @@ const Chat = ({ messages, setMessages }) => {
   const [connectionStatus, setConnectionStatus] = useState(false);
   const chatDetails = chatStore((state) => state.chatDetails);
   const token = getCookie("token");
+  // const postedDate = new Date(data?.createdAt);
+  const currentDate = new Date();
+  let lastFormattedDate;
+  let dateHeading;
 
   // Establishing connection
   useEffect(() => {
@@ -26,11 +31,6 @@ const Chat = ({ messages, setMessages }) => {
       console.log("Connected to socket");
     });
   }, []);
-
-  // Message retrieval
-  // useEffect(() => {
-
-  // }, [])
 
   useEffect(() => {
     const fetchMsg = async () => {
@@ -56,6 +56,7 @@ const Chat = ({ messages, setMessages }) => {
 
   useEffect(() => {
     const handleReceivedMessage = (newMessage) => {
+      console.log("socket message received: " + newMessage);
       const lastMessage = messages[messages.length - 1];
       if (!lastMessage || lastMessage._id !== newMessage._id) {
         setMessages((prev) => [...prev, newMessage]);
@@ -76,24 +77,37 @@ const Chat = ({ messages, setMessages }) => {
     };
   }, [messages]);
 
+  const checkDateHeader = (postedDate) => {
+    lastFormattedDate = dateHeading;
+    if (isToday(postedDate)) {
+      dateHeading = "Today";
+    } else if (isYesterday(postedDate)) dateHeading = "Yesterday";
+    else {
+      dateHeading = format(postedDate, "dd/MM/yyyy");
+    }
+
+    return lastFormattedDate !== dateHeading ? dateHeading : null;
+  };
+
   return (
     <ScrollToBottom className="h-[calc(100vh-76px-72px)] relative w-full flex-1 bg-slate-100 overflow-y-scroll scrollbar-none">
       <div className="p-4 overflow-x-hidden flex flex-col gap-2">
-        <div>
-          <p className="text-center text-xs text-gray-500 my-2">
-            Today, 07-11-2023
-          </p>
-        </div>
-        {!isEmpty(messages)
-          ? messages.map((data, index) => (
+        {!isEmpty(messages) ?
+          messages.map((data, index) => (
+            <React.Fragment key={index}>
+              <div>
+                <p className="text-center text-xs text-gray-500 my-2">
+                  {checkDateHeader(new Date(data?.createdAt))}
+                </p>
+              </div>
               <Message
                 key={index}
                 data={data}
                 messages={messages}
                 setMessages={setMessages}
               />
-            ))
-          : <MessageSkeleton/>}
+            </React.Fragment>
+          )) : <MessageSkeleton/>}
       </div>
     </ScrollToBottom>
   );
