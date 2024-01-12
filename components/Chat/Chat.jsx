@@ -9,7 +9,7 @@ import { fetchMessages } from "../Constants/apiEndpoints";
 import { chatStore } from "@/store/chatStore";
 import toast from "react-hot-toast";
 import socket from "@/lib/socketInstance";
-import { differenceInHours, formatDistance, formatRelative } from "date-fns";
+import { format, isToday, isYesterday } from "date-fns";
 
 const Chat = ({ messages, setMessages }) => {
   const [messageCopies, setMessageCopies] = useState([]);
@@ -19,7 +19,8 @@ const Chat = ({ messages, setMessages }) => {
   const token = getCookie("token");
   // const postedDate = new Date(data?.createdAt);
   const currentDate = new Date();
-  const [formattedDate, setFormattedDate] = useState("");
+  let lastFormattedDate;
+  let dateHeading;
 
   // Establishing connection
   useEffect(() => {
@@ -76,27 +77,20 @@ const Chat = ({ messages, setMessages }) => {
   }, [messages]);
 
   const checkDateHeader = (postedDate) => {
-    // if (differenceInHours(currentDate, postedDate) >= 1) {
-    //   console.log("Hourssss");
-    //   return formatRelative(postedDate, currentDate);
-    //   // setFormattedDate(formatRelative(postedDate, currentDate));
-    // } else {
-    //   console.log("distance");
-    //   return formatDistance(postedDate, currentDate);
-    //   // setFormattedDate();
-    // }
-    return formatRelative(postedDate, currentDate);
+    lastFormattedDate = dateHeading;
+    if (isToday(postedDate)) {
+      dateHeading = "Today";
+    } else if (isYesterday(postedDate)) dateHeading = "Yesterday";
+    else {
+      dateHeading = format(postedDate, "dd/MM/yyyy");
+    }
 
+    return lastFormattedDate !== dateHeading ? dateHeading : null;
   };
 
   return (
     <ScrollToBottom className="h-[calc(100vh-76px-72px)] relative w-full flex-1 bg-slate-100 overflow-y-scroll scrollbar-none">
       <div className="p-4 overflow-x-hidden flex flex-col gap-2">
-        {/* <div>
-          <p className="text-center text-xs text-gray-500 my-2">
-            Today, 07-11-2023
-          </p>
-        </div> */}
         {!isEmpty(messages) &&
           messages.map((data, index) => (
             <React.Fragment key={index}>

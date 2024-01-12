@@ -48,6 +48,9 @@ const ChatInput = ({ setMessages }) => {
   };
   const sendMsg = async () => {
     let contentType;
+    setMessageContent("");
+    setFileContent("");
+    setFileType("");
 
     if (messageContent && fileContent) contentType = "Hybrid";
     else if (messageContent) contentType = "Text";
@@ -71,9 +74,6 @@ const ChatInput = ({ setMessages }) => {
       const data = response.data.data;
       if (data) {
         setMessages((prev) => [...prev, data]);
-        setMessageContent("");
-        setFileContent("");
-        setFileType("");
         socket.emit("new_message", data);
         setFilePreview(null);
       }

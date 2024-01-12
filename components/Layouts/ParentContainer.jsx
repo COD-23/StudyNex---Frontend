@@ -6,6 +6,7 @@ import CreateChannel from "../popup/CreateChannel";
 import JoinChannel from "../popup/JoinChannel";
 import { isEmpty } from "lodash";
 import { userDetailsStore } from "@/store/userStore";
+import GetOrgCode from "../popup/GetOrgCodePopup";
 
 const ParentContainer = ({ children, orgData, channelsData }) => {
   const setOrgDetails = orgStore((state) => state.setOrgDetails);
@@ -41,6 +42,13 @@ const ParentContainer = ({ children, orgData, channelsData }) => {
           channelsData={channelsData}
           setPopup={setPopup}
           setActiveTab={setActiveTab}
+        />
+      )}
+      {popup == "getOrgCode" && (
+        <GetOrgCode
+          orgDetails={orgData.data}
+          channelsData={channelsData}
+          setPopup={setPopup}
         />
       )}
       {children}
