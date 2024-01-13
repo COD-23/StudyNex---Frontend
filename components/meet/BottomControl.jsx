@@ -12,6 +12,7 @@ import {
 import { twMerge } from "tailwind-merge";
 import { useParams } from "next/navigation";
 import CopyToClipboard from "react-copy-to-clipboard";
+import toast from "react-hot-toast";
 
 const BottomControl = ({
   muted,
@@ -28,7 +29,10 @@ const BottomControl = ({
     <div className="flex relative gap-8 justify-center z-50 bg-[#121B21] shadow-sm p-4 border border-gray-800">
       <div className="absolute left-5 top-2 text-white text-sm">
         <p>Room Code </p>
-        <CopyToClipboard text={useParams().id}>
+        <CopyToClipboard
+          text={useParams().id}
+          onCopy={() => toast.success("Code copied")}
+        >
           <p className="flex gap-2 items-center p-2 bg-[#27303F] rounded-md cursor-pointer">
             {useParams().id} <Copy size={15} />
           </p>

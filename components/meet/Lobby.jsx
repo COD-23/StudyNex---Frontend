@@ -58,7 +58,7 @@ const Lobby = () => {
           {!playing && (
             <div className="absolute w-[600px] h-[400px] bg-black rounded-lg"></div>
           )}
-          <div className="absolute top-5 left-5 text-white text-sm">
+          <div className="absolute top-5 left-10 text-white text-sm">
             {userDetails?.name}
           </div>
           <div className="absolute flex gap-4 bottom-5">

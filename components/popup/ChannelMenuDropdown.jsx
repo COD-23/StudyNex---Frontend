@@ -14,8 +14,8 @@ const ChannelMenuPopup = ({ data }) => {
     (state) => state.setShowChannelProfile
   );
   const channelDetails = channelStore((state) => state.channelDetails);
-    const router = useRouter();
-    
+  const router = useRouter();
+
   const handleChannelClick = () => {
     setShowChannelProfile(true);
     setActive(false);
@@ -63,7 +63,9 @@ const ChannelMenuPopup = ({ data }) => {
                     className={classNames(
                       "cursor-pointer text-gray-900 flex px-4 py-2 text-sm items-center gap-2 hover:bg-gray-100"
                     )}
-                    onClick={()=>router.push(`/lobby?id=${channelDetails._id}`)}
+                    onClick={() =>
+                      router.push(`/lobby?id=${channelDetails._id}`)
+                    }
                   >
                     <IoVideocamOutline className="text-lg" />
                     Start a meet

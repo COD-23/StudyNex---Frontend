@@ -1,7 +1,5 @@
 "use client";
-import { MicOff, Radio, ShieldCheck, VideoOff } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import ReactPlayer from "react-player";
 import usePlayer from "./usePlayer";
 import socket from "@/lib/socketInstance";
 import { useParams } from "next/navigation";
@@ -16,10 +14,18 @@ import MeetHeader from "./MeetHeader";
 const Room = () => {
   const [myPeer, setMyPeer] = useState(null);
   const [peerIns, setPeerIns] = useState(null);
+  const [message, setMessage] = useState("");
+  const [messageList, setMessageList] = useState([]);
   const [myStream, setMyStream] = useState(null);
   const roomId = useParams().id;
-  const { players, setPlayers, toggleAudio, toggleVideo, leaveRoom } =
-    usePlayer(myPeer, peerIns);
+  const {
+    players,
+    setPlayers,
+    toggleAudio,
+    toggleVideo,
+    leaveRoom,
+    sendMessage,
+  } = usePlayer(myPeer, peerIns, message);
   const [users, setUser] = useState([]);
   const [show, setShow] = useState(false);
   const [peerCall, setPeerCall] = useState(null);
@@ -32,7 +38,13 @@ const Room = () => {
       peer.on("open", (id) => {
         console.log("Your peer id is " + id);
         setMyPeer(id);
-        socket.emit("join-room", roomId, id, userDetails?.name,userDetails?.image);
+        socket.emit(
+          "join-room",
+          roomId,
+          id,
+          userDetails?.name,
+          userDetails?.image
+        );
       });
 
       peer.on("call", (call) => {
@@ -154,6 +166,7 @@ const Room = () => {
 
   useEffect(() => {
     const handleToggleAudio = (userId) => {
+      console.log("Mic muted");
       setPlayers((prev) => {
         const copy = cloneDeep(prev);
         copy[userId].muted = !copy[userId].muted;
@@ -177,12 +190,21 @@ const Room = () => {
       });
     };
 
+    const handleMessageEvent = ({ userId, message }) => {
+      console.log("name",players);
+      console.log(message);
+      setMessage("");
+      setMessageList((prev) => [...prev, message]);
+    };
+
     socket.on("user-toggle-audio", handleToggleAudio);
     socket.on("user-toggle-video", handleToggleVideo);
+    socket.on("user-send-message", handleMessageEvent);
     socket.on("user-leave", handleUserLeave);
     return () => {
       socket.off("user-toggle-audio", handleToggleAudio);
       socket.off("user-toggle-video", handleToggleVideo);
+      socket.off("user-send-message", handleMessageEvent);
       socket.off("user-leave", handleUserLeave);
     };
   }, []);
@@ -207,7 +229,7 @@ const Room = () => {
 
         <div className="rounded-md flex flex-col gap-3 h-[calc(100vh-68px)]">
           {/* Video Component */}
-          <VideoComponent players={players} userDetails={userDetails} />
+          <VideoComponent players={players} />
 
           {/* BottomControl */}
           {!isEmpty(players) && (
@@ -225,7 +247,14 @@ const Room = () => {
       </div>
 
       {/* Sidebar */}
-      <UserSideBar players={players} setShow={setShow} show={show} />
+      <UserSideBar
+        players={players}
+        setShow={setShow}
+        show={show}
+        sendMessage={sendMessage}
+        setMessage={setMessage}
+        messageList={messageList}
+      />
     </div>
   );
 };
