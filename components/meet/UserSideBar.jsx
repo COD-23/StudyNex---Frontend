@@ -23,7 +23,7 @@ const UserSideBar = ({
   messageDetails,
   setMessageDetails,
 }) => {
-  const [selectedTab, setSelectedTab] = useState("Chats");
+  const [selectedTab, setSelectedTab] = useState("People");
   const [message, setMessage] = useState("");
   const sendBtn = useRef(null);
   const roomId = useParams().id;
