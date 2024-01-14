@@ -74,7 +74,7 @@ const ChatInput = ({ setMessages }) => {
       const data = response.data.data;
       if (data) {
         setMessages((prev) => [...prev, data]);
-        socket.emit("new_message", data);
+        socket.emit("new_message", data, chatDetails?._id);
         setFilePreview(null);
       }
     } catch (error) {

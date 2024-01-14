@@ -68,11 +68,11 @@ const Chat = ({ messages, setMessages }) => {
     };
 
     if (!isEmpty(messages)) {
-      socket.on("message_received", handleReceivedMessage);
+      socket.on("new_message", handleReceivedMessage);
       socket.on("error", handleError);
     }
     return () => {
-      socket.off("message_received", handleReceivedMessage);
+      socket.off("new_message", handleReceivedMessage);
       socket.off("error", handleError);
     };
   }, [messages]);
