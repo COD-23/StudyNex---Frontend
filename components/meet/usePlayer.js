@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 
 const { useState } = require("react");
 
-const usePlayer = (myPeer, peerIns, message) => {
+const usePlayer = (myPeer, peerIns) => {
   const roomId = useParams().id;
   const [players, setPlayers] = useState([]);
   const router = useRouter();
@@ -35,17 +35,12 @@ const usePlayer = (myPeer, peerIns, message) => {
     socket.emit("user-toggle-video", myPeer, roomId);
   };
 
-  const sendMessage = () => {
-    socket.emit("user-send-message", myPeer, message, roomId);
-  };
-
   return {
     players,
     setPlayers,
     toggleAudio,
     toggleVideo,
     leaveRoom,
-    sendMessage,
   };
 };
 

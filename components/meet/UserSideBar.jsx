@@ -9,21 +9,25 @@ import {
 } from "lucide-react";
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { twMerge } from "tailwind-merge";
 import classNames from "classnames";
 import { VscSend } from "react-icons/vsc";
+import socket from "@/lib/socketInstance";
+import { useParams } from "next/navigation";
+import { userDetailsStore } from "@/store/userStore";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 const UserSideBar = ({
   players,
   setShow,
   show,
-  setMessage,
-  sendMessage = () => void 0,
-  message,
-  messageList,
+  messageDetails,
+  setMessageDetails,
 }) => {
   const [selectedTab, setSelectedTab] = useState("Chats");
+  const [message, setMessage] = useState("");
   const sendBtn = useRef(null);
+  const roomId = useParams().id;
+  const userDetails = userDetailsStore((state) => state.userDetails);
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -40,16 +44,17 @@ const UserSideBar = ({
       icon: MessageCircleMore,
     },
   ];
-  const messages = [
-    {
-      name: "Aaditya",
-      content: "hihiih",
-    },
-    {
-      name: "Pradnya",
-      content: "jifhkdvjhfb",
-    },
-  ];
+
+  const sendMessage = () => {
+    if (message) {
+      setMessageDetails((prev) => [
+        ...prev,
+        { name: userDetails?.name, content: message },
+      ]);
+      setMessage("");
+      socket.emit("user-send-message", message, roomId, userDetails?.name);
+    }
+  };
 
   return (
     <motion.div
@@ -128,34 +133,32 @@ const UserSideBar = ({
           </div>
         </div>
       ) : (
-        <div>
-          <div className="px-5">
-            <p className="text-lg">In-call Messages</p>
-
+        <div className="">
+          <p className="text-lg px-5 py-2">In-call Messages</p>
+          <ScrollToBottom className="px-5 h-[calc(100vh-32vh)] overflow-y-scroll scrollbar-none">
             <div className="py-4 grid gap-4">
-              {messageList.map((item, index) => {
+              {messageDetails?.map((item, index) => {
                 return (
                   <div key={index}>
-                    <p className="font-semibold">{item}</p>
-                    {/* <p className="text-sm">{item.content}</p> */}
+                    <p className="font-semibold text-base">{item?.name}</p>
+                    <p className="text-sm break-all">{item?.content}</p>
                   </div>
                 );
               })}
             </div>
-
-            <div className="bg-gray-100 flex gap-3 lg:px-5 px-2 py-3 rounded-full items-center absolute bottom-10">
-              <input
-                type="text"
-                placeholder="Send a message"
-                className="flex-1 lg:w-full w-1/2 bg-transparent focus:outline-none text-gray-500 lg:ml-2 placeholder:text-sm"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                onKeyDown={handleKeyPress}
-              />
-              <button ref={sendBtn} onClick={sendMessage}>
-                <VscSend className="text-2xl text-gray-500 cursor-pointer w-5 h-5" />
-              </button>
-            </div>
+          </ScrollToBottom>
+          <div className="bg-gray-100 flex gap-3 mx-5 lg:px-5 px-2 py-3 rounded-full items-center absolute bottom-10">
+            <input
+              type="text"
+              placeholder="Send a message"
+              className="flex-1 lg:w-full w-1/2 bg-transparent focus:outline-none text-gray-500 lg:ml-2 placeholder:text-sm"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={handleKeyPress}
+            />
+            <button ref={sendBtn} onClick={sendMessage}>
+              <VscSend className="text-2xl text-gray-500 cursor-pointer w-5 h-5" />
+            </button>
           </div>
         </div>
       )}

@@ -26,7 +26,7 @@ const GetOrgCode = ({ orgDetails, setPopup }) => {
             setPopup(false);
           }}
         >
-          <p className="flex justify-between p-4 border-2 rounded-2xl">
+          <p className="flex justify-between items-center p-4 border-2 rounded-2xl">
             {orgDetails?.org_code}{" "}
             <Copy className="w-4 h-4 md:cursor-pointer" />
           </p>

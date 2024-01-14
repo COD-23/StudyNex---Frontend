@@ -14,23 +14,21 @@ import MeetHeader from "./MeetHeader";
 const Room = () => {
   const [myPeer, setMyPeer] = useState(null);
   const [peerIns, setPeerIns] = useState(null);
-  const [message, setMessage] = useState("");
-  const [messageList, setMessageList] = useState([]);
   const [myStream, setMyStream] = useState(null);
   const roomId = useParams().id;
-  const {
-    players,
-    setPlayers,
-    toggleAudio,
-    toggleVideo,
-    leaveRoom,
-    sendMessage,
-  } = usePlayer(myPeer, peerIns, message);
+  const { players, setPlayers, toggleAudio, toggleVideo, leaveRoom } =
+    usePlayer(myPeer, peerIns);
   const [users, setUser] = useState([]);
   const [show, setShow] = useState(false);
   const [peerCall, setPeerCall] = useState(null);
   const [time, setTime] = useState(0);
   const userDetails = userDetailsStore((state) => state.userDetails);
+  const [messageDetails, setMessageDetails] = useState([
+    {
+      name: "",
+      content: "",
+    },
+  ]);
 
   useEffect(() => {
     const initPeer = () => {
@@ -190,11 +188,11 @@ const Room = () => {
       });
     };
 
-    const handleMessageEvent = ({ userId, message }) => {
-      console.log("name",players);
-      console.log(message);
-      setMessage("");
-      setMessageList((prev) => [...prev, message]);
+    const handleMessageEvent = (message, userName) => {
+      setMessageDetails((prev) => [
+        ...prev,
+        { name: userName, content: message },
+      ]);
     };
 
     socket.on("user-toggle-audio", handleToggleAudio);
@@ -251,9 +249,8 @@ const Room = () => {
         players={players}
         setShow={setShow}
         show={show}
-        sendMessage={sendMessage}
-        setMessage={setMessage}
-        messageList={messageList}
+        setMessageDetails={setMessageDetails}
+        messageDetails={messageDetails}
       />
     </div>
   );
