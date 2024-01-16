@@ -5,11 +5,22 @@ import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { IoVideocamOutline } from "react-icons/io5";
 import { LuInfo } from "react-icons/lu";
 import { channelProfileStore } from "@/store/channelProfileStore";
-const ChannelMenuPopup = () => {
+import { channelStore } from "@/store/channelStore";
+import { useRouter } from "next/navigation";
+
+const ChannelMenuPopup = ({ data }) => {
   const [active, setActive] = useState(false);
   const setShowChannelProfile = channelProfileStore(
     (state) => state.setShowChannelProfile
   );
+  const channelDetails = channelStore((state) => state.channelDetails);
+  const router = useRouter();
+
+  const handleChannelClick = () => {
+    setShowChannelProfile(true);
+    setActive(false);
+  };
+
   return (
     <div className="relative inline-block text-left">
       <div className="flex items-center">
@@ -34,17 +45,14 @@ const ChannelMenuPopup = () => {
               type: "spring",
             }}
           >
-            <ul className="absolute top-2 right-[6rem] z-10 mt-2 w-[160px] origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <ul className="absolute top-2 right-[6rem] z-50 mt-2 w-[160px] origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="py-1">
                 <li>
                   <p
                     className={classNames(
                       "cursor-pointer text-gray-900 flex px-4 py-2 text-sm items-center gap-2 hover:bg-gray-100"
                     )}
-                    onClick={() => {
-                      setShowChannelProfile(true);
-                      setActive(false);
-                    }}
+                    onClick={handleChannelClick}
                   >
                     <LuInfo />
                     Channel info
@@ -55,6 +63,9 @@ const ChannelMenuPopup = () => {
                     className={classNames(
                       "cursor-pointer text-gray-900 flex px-4 py-2 text-sm items-center gap-2 hover:bg-gray-100"
                     )}
+                    onClick={() =>
+                      router.push(`/lobby?id=${channelDetails._id}`)
+                    }
                   >
                     <IoVideocamOutline className="text-lg" />
                     Start a meet

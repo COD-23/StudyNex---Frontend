@@ -7,6 +7,7 @@ import JoinChannel from "../popup/JoinChannel";
 import { isEmpty } from "lodash";
 import { userDetailsStore } from "@/store/userStore";
 import RightContainer from './RightContainer'
+import GetOrgCode from "../popup/GetOrgCodePopup";
 
 const ParentContainer = ({ children, orgData, channelsData }) => {
   const setOrgDetails = orgStore((state) => state.setOrgDetails);
@@ -21,7 +22,7 @@ const ParentContainer = ({ children, orgData, channelsData }) => {
   const [popup, setPopup] = useState("");
   setOrgDetails(orgData.data);
   return (
-    <div className="grid lg:grid-cols-[280px,1fr] mx-auto bg-[#e9f8f5] overflow-hidden">
+    <div className="grid lg:grid-cols-[280px,1fr] mx-auto bg-main overflow-hidden">
       <SideBar
         channelsData={channelsData}
         setPopup={setPopup}
@@ -42,6 +43,13 @@ const ParentContainer = ({ children, orgData, channelsData }) => {
           channelsData={channelsData}
           setPopup={setPopup}
           setActiveTab={setActiveTab}
+        />
+      )}
+      {popup == "getOrgCode" && (
+        <GetOrgCode
+          orgDetails={orgData.data}
+          channelsData={channelsData}
+          setPopup={setPopup}
         />
       )}
       {children}

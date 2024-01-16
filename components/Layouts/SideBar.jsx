@@ -1,42 +1,48 @@
 "use client";
 import Image from "next/image";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
 import { MdGroups2, MdOutlineQuiz } from "react-icons/md";
 import { motion } from "framer-motion";
 import { CgMenuGridR } from "react-icons/cg";
-import { channelProfileStore } from "@/store/channelProfileStore";
 import { orgStore } from "@/store/orgStore";
-import { getRequest } from "@/config/axiosInterceptor";
-import { getChannel } from "../Constants/apiEndpoints";
+import { getRequest, postRequest } from "@/config/axiosInterceptor";
+import { accessChat, fetchMessages, getChannel } from "../Constants/apiEndpoints";
 import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
 import { channelStore } from "@/store/channelStore";
 import { userDetailsStore } from "@/store/userStore";
 import { nameInitials } from "@/helperFunctions/nameInitials";
 import MenuPopup from "../popup/MenuPopup";
+import { OrgChannels, UserChannels } from "../Organization/Channel/Channels";
+import { chatStore } from "@/store/chatStore";
 
 const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
-  const setShowChannelProfile = channelProfileStore(
-    (state) => state.setShowChannelProfile
-  );
   const orgDetails = orgStore((state) => state.orgDetails);
   const token = getCookie("token");
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
   const userDetails = userDetailsStore((state) => state.userDetails);
+  const setChatDetails = chatStore((state) => state.setChatDetails);
+  const [showMenu, setShowMenu] = useState(false);
+  const [generalChannel,setGeneralChannel] = useState(channelsData[0]);
 
-  const commonTabs = useMemo(() => [
-    {
-      label: "General",
-      link: "/Home",
-      icon: MdGroups2,
-    },
-    {
-      label: "Assessments",
-      link: "About",
-      icon: MdOutlineQuiz,
-    },
-  ],[]);
+
+
+  const commonTabs = useMemo(
+    () => [
+      {
+        label: "General",
+        link: "/Home",
+        icon: MdGroups2,
+      },
+      {
+        label: "Assessments",
+        link: "About",
+        icon: MdOutlineQuiz,
+      },
+    ],
+    []
+  );
 
   const loadChannelData = async (id) => {
     try {
@@ -55,7 +61,41 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
     }
   };
 
-  const [showMenu, setShowMenu] = useState(false);
+  const initiateChat = async (name, users) => {
+    const body = {
+      chatName: name,
+      userList: users,
+    };
+    try {
+      const response = await postRequest({
+        url: accessChat,
+        body: body,
+        token: token,
+      });
+      const data = response.data.data;
+      if (response.status) {
+        setChatDetails(data);
+      }
+    } catch (error) {
+      toast.error("Couldn't iniate chat");
+      console.log(error);
+    }
+  };  
+
+  // useEffect(() => {
+  //   const data = channelsData[0];
+  //   loadChannelData(data?._id);
+  //   initiateChat(data?.name,data?.users);
+  //   // console.log(channelsData);
+  // }, [channelsData[0]])
+
+  // useEffect(() => {
+  //   loadChannelData(generalChannel?._id);
+  //   initiateChat(generalChannel?.name,generalChannel?.users);
+  //   // console.log(channelsData);
+  // }, [])
+  
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -100 }}
@@ -85,32 +125,15 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
       {/* Common Section */}
       <ul className="grid gap-2 py-5">
         {commonTabs.map((item, index) => {
-          const Icon = item.icon;
           return (
-            <motion.li
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{
-                delay: 0.1 * index,
-                type: "spring",
-              }}
+            <OrgChannels
               key={index}
-              className={classNames(
-                "flex items-center gap-4 p-2 lg:cursor-pointer rounded-md hover:bg-gray-100",
-                activeTab == item.label &&
-                  "gradient-transition text-white hover:bg-[#919eb7]"
-              )}
-              onClick={() => setActiveTab(item.label)}
-            >
-              <Icon className="h-6 w-6" />
-              <p
-                className={classNames(
-                  activeTab == item.label && "font-semibold"
-                )}
-              >
-                {item.label}
-              </p>
-            </motion.li>
+              data={item}
+              index={index}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              loadChannelData={loadChannelData}
+            />
           );
         })}
       </ul>
@@ -124,58 +147,28 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
           transition={{ duration: 0.5 }}
           className="flex justify-between items-center sticky top-0 z-50 bg-white"
         >
-          <div className="absolute border-2 top-10 border-r-gray-300 border-l-0 h-[calc(100vh-370px)]" />
+          <div className="absolute border-2 top-10 border-r-gray-300 border-l-0 h-[calc(100vh-360px)]" />
           <p className="font-semibold text-lg">Your Channels</p>
         </motion.div>
 
         {channelsData?.map((item, index) => {
           return (
-            <motion.li
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{
-                delay: 0.05 * index,
-                type: "keyframes",
-              }}
+            <UserChannels
+              index={index}
+              data={item}
               key={index}
-              className={classNames("flex items-center relative py-5")}
-              onClick={() => {
-                setActiveTab(item.name);
-                setShowChannelProfile(true);
-                loadChannelData(item?._id);
-              }}
-            >
-              <div className="border-2 border-t-gray-300 border-b-0 w-5" />
-              <div
-                className={classNames(
-                  "absolute left-8 right-0 flex gap-1 items-center p-2  lg:cursor-pointer rounded-md hover:bg-gray-100",
-                  activeTab == item.name &&
-                    "gradient-transition text-white hover:bg-[#919eb7]"
-                )}
-              >
-                <p
-                  className={classNames(
-                    activeTab == item.name && "font-semibold"
-                  )}
-                >
-                  #
-                </p>
-                <p
-                  className={classNames(
-                    activeTab == item.name && "font-semibold"
-                  )}
-                >
-                  {item.name}
-                </p>
-              </div>
-            </motion.li>
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              loadChannelData={loadChannelData}
+              initiateChat={initiateChat}
+            />
           );
         })}
       </ul>
 
       {/* Profile Section */}
       <motion.div
-        className="grid pt-5"
+        className="grid"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
@@ -185,7 +178,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="flex gap-3 items-center relative py-2 md:cursor-pointer"
+          className=" flex-row-reverse flex md:flex-row gap-3 items-center relative py-2 md:cursor-pointer"
         >
           <MenuPopup
             showMenu={showMenu}
@@ -207,7 +200,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
               </p>
             </div>
           )}
-          <div className="line-clamp-2 text-left flex-1">
+          <div className="line-clamp-2 flex flex-col items-end md:block text-left flex-1">
             <p className="text-md font-bold">{userDetails.name}</p>
             <p className="text-xs text-gray-400">{userDetails.username}</p>
           </div>

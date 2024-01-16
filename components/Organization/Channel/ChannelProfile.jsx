@@ -38,7 +38,7 @@ const ChannelProfile = () => {
   const [newChannelName, setNewChannelName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const token = getCookie("token");
-  console.log(channelDetails);
+  
   let createdDate;
   if (!isEmpty(channelDetails)) {
     createdDate = format(
@@ -171,10 +171,10 @@ const ChannelProfile = () => {
                 <BsSearch className="h-6 w-6 absolute right-8 top-6 text-gray-500" />
               </div>
               <div className="p-4 overflow-scroll scrollbar-none">
-                {!isLoading ? (
+                {!isLoading && !isEmpty(channelMembers) ? (
                   channelMembers?.map((item, index) => {
                     return (
-                      <ChannelMember data={item} key={index} />
+                      <ChannelMember data={item} key={index}  />
                     );
                   })
                 ) : (

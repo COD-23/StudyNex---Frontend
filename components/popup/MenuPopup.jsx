@@ -1,10 +1,11 @@
-import { AnimatePresence,motion } from 'framer-motion';
-import React from 'react'
-import { AiOutlineUsergroupAdd } from 'react-icons/ai';
-import { FaPlus } from 'react-icons/fa';
-import { MdOutlineLogout } from 'react-icons/md';
+import { AnimatePresence, motion } from "framer-motion";
+import { BookMarked } from "lucide-react";
+import React from "react";
+import { AiOutlineUsergroupAdd } from "react-icons/ai";
+import { FaPlus } from "react-icons/fa";
+import { MdOutlineLogout } from "react-icons/md";
 
-const MenuPopup = ({showMenu,setPopup,setShowMenu}) => {
+const MenuPopup = ({ showMenu, setPopup, setShowMenu }) => {
   return (
     <AnimatePresence>
       {showMenu && (
@@ -21,7 +22,7 @@ const MenuPopup = ({showMenu,setPopup,setShowMenu}) => {
             duration: 0.5,
             type: "spring",
           }}
-          className="absolute right-[-10rem] -top-24 origin-bottom-left grid gap-2 w-fit h-fit p-2 bg-white border border-gray-100 shadow-lg"
+          className="absolute left-[-3rem] md:right-[-11rem] md:left-[11rem] -top-36 origin-bottom-left grid gap-2 w-max h-fit p-2 bg-white border border-gray-100 shadow-lg"
         >
           <div
             className="flex items-center gap-4 lg:cursor-pointer hover:bg-gray-100 px-2 py-2 transition-all"
@@ -46,16 +47,29 @@ const MenuPopup = ({showMenu,setPopup,setShowMenu}) => {
             <p className="">Join Channel</p>
           </div>
           <div
-            className="flex items-center gap-4 lg:cursor-pointer hover:bg-gray-100 px-2 py-2 text-red-500 transition-all"
-            onClick={() => setPopup("join")}
+            className="flex items-center gap-4 lg:cursor-pointer hover:bg-gray-100 px-2 py-2 transition-all"
+            onClick={() => {
+              setPopup("getOrgCode");
+              setShowMenu(false);
+            }}
           >
-            <MdOutlineLogout className=" w-6 h-6" />
+            <BookMarked className="w-4 h-4" />
+            <p className="">Get Organization Code</p>
+          </div>
+          <div
+            className="flex items-center gap-4 lg:cursor-pointer hover:bg-gray-100 px-2 py-2 text-red-500 transition-all"
+            onClick={() => {
+              setPopup("getOrgCode");
+              setShowMenu(false);
+            }}
+          >
+            <MdOutlineLogout className="w-4 h-4" />
             <p className="">Leave Organization</p>
           </div>
         </motion.div>
       )}
     </AnimatePresence>
   );
-}
+};
 
-export default MenuPopup
+export default MenuPopup;

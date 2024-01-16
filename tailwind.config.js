@@ -19,6 +19,7 @@ module.exports = {
       },
       colors: {
         nack: "#c4f4ea",
+        main: "#e9f8f5",
       },
     },
   },
