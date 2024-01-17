@@ -29,6 +29,9 @@ const Room = () => {
       content: "",
     },
   ]);
+  const [id, setId] = useState(0);
+  const [isScreenSharing, setScreenSharing] = useState(false);
+  const [screenStream, setScreenStream] = useState(null);
 
   useEffect(() => {
     const initPeer = () => {
@@ -66,11 +69,15 @@ const Room = () => {
               const userName = call.metadata.name;
               const nTime = call.metadata.time;
               const nImage = call.metadata.image;
+              const screenShareId = call.metadata.screenShareId;
               setTime(nTime);
               console.log("Incoming Stream: ", incomingStream);
+              if (screenShareId) {
+                setScreenStream(incomingStream);
+              }
               setPlayers((prev) => ({
                 ...prev,
-                [call.peer]: {
+                [screenShareId ? screenShareId : call.peer]: {
                   url: incomingStream,
                   playing: true,
                   muted: true,
@@ -80,7 +87,7 @@ const Room = () => {
               }));
               setUser((prev) => ({
                 ...prev,
-                [call.peer]: call,
+                [screenShareId ? screenShareId : call.peer]: call,
               }));
             });
           })
@@ -181,6 +188,7 @@ const Room = () => {
     };
 
     const handleUserLeave = (userId) => {
+      setScreenStream(null);
       users[userId]?.close();
       setPlayers((prevPlayers) => {
         const { [userId]: _, ...newPlayers } = prevPlayers;
@@ -219,6 +227,68 @@ const Room = () => {
     return date.toISOString().substr(11, 8);
   };
 
+  const startScreenSharing = () => {
+    try {
+      let nId = Math.random().toString();
+      setId(nId);
+      navigator.mediaDevices
+        .getDisplayMedia({
+          video: { cursor: "always" },
+        })
+        .then((stream) => {
+          console.log(stream);
+          setScreenStream(stream);
+          setScreenSharing(true);
+          Object.keys(users).forEach((userId) => {
+            const call = peerIns.call(userId, stream, {
+              metadata: {
+                name: userDetails?.name,
+                time: time,
+                screenShareId: nId,
+              },
+            });
+
+            if (call) {
+              setPeerCall(call);
+              call.on("stream", (incomingStream) => {
+                console.log("Incoming Stream2: ", incomingStream);
+                setUser((prev) => ({
+                  ...prev,
+                  [id]: call,
+                }));
+              });
+            } else {
+              console.error("Call object is undefined.");
+            }
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.error("Error while accessing video stream: ", error);
+    }
+  };
+
+  const stopScreenSharing = () => {
+    try {
+      const tracks = screenStream.getTracks();
+      tracks.forEach((t) => t.stop());
+      setScreenStream(null);
+      setScreenSharing(false);
+      users[id]?.close();
+      socket.emit("user-leave", id, roomId);
+    } catch (error) {}
+  };
+
+  const toggleScreenSharing = () => {
+    if (isScreenSharing) {
+      stopScreenSharing();
+    } else {
+      startScreenSharing();
+    }
+  };
+
   return (
     <div className="h-screen flex w-full bg-[#101825] overflow-hidden">
       <div className="flex-1">
@@ -227,7 +297,11 @@ const Room = () => {
 
         <div className="rounded-md flex flex-col gap-3 h-[calc(100vh-68px)]">
           {/* Video Component */}
-          <VideoComponent players={players} />
+          <VideoComponent
+            players={players}
+            screenStream={screenStream}
+            isScreenSharing={isScreenSharing}
+          />
 
           {/* BottomControl */}
           {!isEmpty(players) && (
@@ -239,6 +313,8 @@ const Room = () => {
               leaveRoom={leaveRoom}
               setShow={setShow}
               show={show}
+              isScreenSharing={isScreenSharing}
+              toggleScreenSharing={toggleScreenSharing}
             />
           )}
         </div>
