@@ -11,9 +11,11 @@ import toast from "react-hot-toast";
 import socket from "@/lib/socketInstance";
 import { MessageSkeleton } from "../Layouts/Skeleton";
 import { format, isToday, isYesterday } from "date-fns";
+import * as animationData from "../../public/Assets/Lotties/MessageLottie.json";
+import Lottie from "react-lottie";
 
 const Chat = ({ messages, setMessages }) => {
-  const [messageCopies, setMessageCopies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const userDetails = userDetailsStore((state) => state.userDetails);
   const [connectionStatus, setConnectionStatus] = useState(false);
   const chatDetails = chatStore((state) => state.chatDetails);
@@ -22,6 +24,15 @@ const Chat = ({ messages, setMessages }) => {
   const currentDate = new Date();
   let lastFormattedDate;
   let dateHeading;
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
   // Establishing connection
   useEffect(() => {
@@ -34,6 +45,8 @@ const Chat = ({ messages, setMessages }) => {
 
   useEffect(() => {
     const fetchMsg = async () => {
+      setIsLoading(true);
+      setMessages([]);
       try {
         const response = await getRequest({
           url: fetchMessages,
@@ -42,16 +55,20 @@ const Chat = ({ messages, setMessages }) => {
         });
         const data = response.data.data;
         if (response.status) {
-          setMessages(data);
-          socket.emit("join chat", chatDetails?._id);
+          if (isEmpty(response.data.data)) setIsLoading(false);
+          else {
+            setIsLoading(false);
+            setMessages(data);
+            socket.emit("join chat", chatDetails?._id);
+          }
         }
       } catch (error) {
+        setIsLoading(false);
         console.log(error);
         toast.error("There is a problem fetching messages");
       }
     };
     fetchMsg();
-    setMessageCopies(messages);
   }, [chatDetails]);
 
   useEffect(() => {
@@ -92,7 +109,7 @@ const Chat = ({ messages, setMessages }) => {
   return (
     <ScrollToBottom className="h-[calc(100vh-76px-72px)] relative w-full flex-1 bg-slate-100 overflow-y-scroll scrollbar-none">
       <div className="p-4 overflow-x-hidden flex flex-col gap-2">
-        {!isEmpty(messages) ?
+        {!isLoading && !isEmpty(messages) ? (
           messages.map((data, index) => (
             <React.Fragment key={index}>
               <div>
@@ -107,7 +124,15 @@ const Chat = ({ messages, setMessages }) => {
                 setMessages={setMessages}
               />
             </React.Fragment>
-          )) : <MessageSkeleton/>}
+          ))
+        ) : !isLoading ? (
+          <div className="md:w-[50%] md:m-auto md:p-20">
+            <Lottie options={defaultOptions}/>
+            <p className="text-center text-lg">No messages to display</p>
+          </div>
+        ) : (
+          <MessageSkeleton />
+        )}
       </div>
     </ScrollToBottom>
   );

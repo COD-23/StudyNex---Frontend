@@ -7,7 +7,11 @@ import { motion } from "framer-motion";
 import { CgMenuGridR } from "react-icons/cg";
 import { orgStore } from "@/store/orgStore";
 import { getRequest, postRequest } from "@/config/axiosInterceptor";
-import { accessChat, fetchMessages, getChannel } from "../Constants/apiEndpoints";
+import {
+  accessChat,
+  fetchMessages,
+  getChannel,
+} from "../Constants/apiEndpoints";
 import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
 import { channelStore } from "@/store/channelStore";
@@ -16,6 +20,10 @@ import { nameInitials } from "@/helperFunctions/nameInitials";
 import MenuPopup from "../popup/MenuPopup";
 import { OrgChannels, UserChannels } from "../Organization/Channel/Channels";
 import { chatStore } from "@/store/chatStore";
+import { useRouter } from "next/navigation";
+import { generalChannelStore } from "@/store/generalChannelStore";
+import { isEmpty } from "lodash";
+import { initiateChat, loadChannelData } from "@/lib/ChannelApi";
 
 const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
   const orgDetails = orgStore((state) => state.orgDetails);
@@ -24,19 +32,17 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
   const userDetails = userDetailsStore((state) => state.userDetails);
   const setChatDetails = chatStore((state) => state.setChatDetails);
   const [showMenu, setShowMenu] = useState(false);
-  const [generalChannel,setGeneralChannel] = useState(channelsData[0]);
-
-
-
+  const router = useRouter();
+  const generalChannel = generalChannelStore((state) => state.generalChannel);
   const commonTabs = useMemo(
     () => [
       {
-        label: "General",
+        name: "General",
         link: "/Home",
         icon: MdGroups2,
       },
       {
-        label: "Assessments",
+        name: "Assessments",
         link: "About",
         icon: MdOutlineQuiz,
       },
@@ -44,57 +50,67 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
     []
   );
 
-  const loadChannelData = async (id) => {
-    try {
-      const response = await getRequest({
-        url: getChannel,
-        params: `/${id}`,
-        token: token,
-      });
-      const data = response.data.data;
-      if (response.status) {
-        setChannelDetails(data);
-      }
-    } catch (error) {
-      toast.error("Something went wrong");
-      console.log(error);
-    }
-  };
+  // const loadChannelData = async (id) => {
+  //   try {
+  //     const response = await getRequest({
+  //       url: getChannel,
+  //       params: `/${id}`,
+  //       token: token,
+  //     });
+  //     const data = response.data.data;
+  //     if (response.status) {
+  //       setChannelDetails(data);
+  //     }
+  //   } catch (error) {
+  //     toast.error("Something went wrong");
+  //     console.log(error);
+  //   }
+  // };
 
-  const initiateChat = async (name, users) => {
-    const body = {
-      chatName: name,
-      userList: users,
-    };
-    try {
-      const response = await postRequest({
-        url: accessChat,
-        body: body,
-        token: token,
-      });
-      const data = response.data.data;
-      if (response.status) {
-        setChatDetails(data);
-      }
-    } catch (error) {
-      toast.error("Couldn't iniate chat");
-      console.log(error);
-    }
-  };  
+  // const initiateChat = async (name, users) => {
+  //   const body = {
+  //     chatName: name,
+  //     userList: users,
+  //   };
+  //   try {
+  //     const response = await postRequest({
+  //       url: accessChat,
+  //       body: body,
+  //       token: token,
+  //     });
+  //     const data = response.data.data;
+  //     if (response.status) {
+  //       setChatDetails(data);
+  //     }
+  //   } catch (error) {
+  //     toast.error("Couldn't iniate chat");
+  //     console.log(error);
+  //   }
+  // };
 
   // useEffect(() => {
   //   const data = channelsData[0];
   //   loadChannelData(data?._id);
-  //   initiateChat(data?.name,data?.users);
+  //   initiateChat(data?.name, data?.users);
   //   // console.log(channelsData);
-  // }, [channelsData[0]])
+  // }, [channelsData[0]]);
 
-  // useEffect(() => {
-  //   loadChannelData(generalChannel?._id);
-  //   initiateChat(generalChannel?.name,generalChannel?.users);
-  //   // console.log(channelsData);
-  // }, [])
-  
+  useEffect(() => {
+    const getGenaralChannel = async () => {
+      const channelData = await loadChannelData(generalChannel?._id);
+      const chatData = await initiateChat(
+        generalChannel?.name,
+        generalChannel?.users
+      );
+      setChannelDetails(channelData ? channelData : null);
+      setChatDetails(chatData ? chatData : null);
+    };
+    setTimeout(() => {
+      if (!isEmpty(generalChannel)) {
+        getGenaralChannel();
+      }
+    }, 500);
+  }, [generalChannel]);
 
   return (
     <motion.div
@@ -130,9 +146,11 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
               key={index}
               data={item}
               index={index}
+              channelsData={channelsData}
               activeTab={activeTab}
               setActiveTab={setActiveTab}
               loadChannelData={loadChannelData}
+              initiateChat={initiateChat}
             />
           );
         })}
@@ -178,31 +196,36 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className=" flex-row-reverse flex md:flex-row gap-3 items-center relative py-2 md:cursor-pointer"
+          className=" flex-row-reverse flex md:flex-row gap-3 items-center justify-between relative py-2"
         >
           <MenuPopup
             showMenu={showMenu}
             setPopup={setPopup}
             setShowMenu={setShowMenu}
           />
-          {userDetails.image ? (
-            <Image
-              src={userDetails.image}
-              alt="org logo"
-              width="50"
-              height="50"
-              className="rounded-full h-12 w-12 object-cover"
-            />
-          ) : (
-            <div className="bg-nack flex justify-center items-center h-12 w-12 rounded-full">
-              <p className="text-lg text-center">
-                {nameInitials(userDetails.name)}
-              </p>
+          <div
+            className="flex gap-4 items-center md:cursor-pointer"
+            onClick={() => router.push("/Profile")}
+          >
+            {userDetails.image ? (
+              <Image
+                src={userDetails?.image}
+                alt="org logo"
+                width="50"
+                height="50"
+                className="rounded-full h-12 w-12 object-cover"
+              />
+            ) : (
+              <div className="bg-nack flex justify-center items-center h-12 w-12 rounded-full">
+                <p className="text-lg text-center">
+                  {nameInitials(userDetails.name)}
+                </p>
+              </div>
+            )}
+            <div className="line-clamp-2 flex flex-col items-end md:block text-left flex-1">
+              <p className="text-md font-bold">{userDetails.name}</p>
+              <p className="text-xs text-gray-400">{userDetails.username}</p>
             </div>
-          )}
-          <div className="line-clamp-2 flex flex-col items-end md:block text-left flex-1">
-            <p className="text-md font-bold">{userDetails.name}</p>
-            <p className="text-xs text-gray-400">{userDetails.username}</p>
           </div>
           <div
             className="w-fit h-fit gradient-transition text-white transition-all duration-200 p-2 rounded-full lg:cursor-pointer relative"

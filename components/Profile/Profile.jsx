@@ -60,9 +60,7 @@ const Profile = () => {
             />
           </div>
           <div className="hidden md:h-16 md:w-80 md:bg-gradient-to-r from-blue-400 to-violet-600 md:rounded-lg md:my-20 md:ml-24 md:flex md:justify-center md:items-center md:shadow-2xl">
-            <p className="text-white text-2xl font-bold">
-              Hey Krystal!!
-            </p>
+            <p className="text-white text-2xl font-bold">Hey Krystal!!</p>
           </div>
         </div>
       </div>
@@ -74,11 +72,11 @@ const Profile = () => {
               className={classNames(
                 active == item.tab &&
                   "lg:bg-gradient-to-r text-white lg:bg-transparent bg-gradient-to-r lg:rounded-none rounded-md",
-                "hover:lg:text-white shrink-0 px-4 lg:w-11/12 hover:lg:bg-gradient-to-r from-blue-400 to-violet-600 py-3 flex lg:pl-3 justify-center lg:justify-start flex-row items-center lg:rounded-r-3xl lg:rounded-l-none gap-1 cursor-pointer "
+                "hover:lg:text-white shrink-0 px-4 lg:w-11/12 hover:lg:bg-gradient-to-r from-blue-400 to-violet-600 py-3 flex lg:pl-3 justify-center lg:justify-start flex-row items-center lg:rounded-r-3xl lg:rounded-l-none gap-2 cursor-pointer "
               )}
               onClick={() => setActive(item.tab)}
             >
-              <item.Icon className="" />
+              <item.Icon className="w-5 h-5" />
               <p className="shrink-0 font-semibold">{item.label}</p>
             </div>
           ))}
