@@ -103,3 +103,6 @@ video{
   border-radius: 2%;
   border: 1px solid black;
 }
+.screen video {
+  object-fit: fill;
+}
