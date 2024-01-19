@@ -12,8 +12,6 @@ export const OrgChannels = ({
   index,
   activeTab,
   setActiveTab,
-  // loadChannelData,
-  // initiateChat
 }) => {
   const Icon = data.icon;
   const generalChannel = generalChannelStore((state) => state.generalChannel);
@@ -29,7 +27,6 @@ export const OrgChannels = ({
     );
     setChannelDetails(channelData ? channelData : null);
     setChatDetails(chatData ? chatData : null);
-    // fetchMessages();
   };
   return (
     <motion.li
@@ -59,7 +56,6 @@ export const UserChannels = ({
   index,
   activeTab,
   setActiveTab,
-  // fetchMessages
 }) => {
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
   const setChatDetails = chatStore((state) => state.setChatDetails);

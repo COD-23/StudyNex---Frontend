@@ -45,8 +45,8 @@ const Lobby = () => {
   };
 
   return (
-    <div className="bg-main h-screen flex justify-center items-center text-black">
-      <div className="bg-white rounded-xl p-5 py-20 w-[90vw] px-7 shadow-md flex items-center gap-6">
+    <div className="bg-[#101825]  h-screen flex justify-center items-center text-black">
+      <div className="bg-main rounded-xl p-5 py-20 w-[90vw] px-7 shadow-md flex items-center gap-6">
         <div className="flex-1 flex flex-col items-center gap-4 justify-center relative">
           <ReactPlayer
             url={myStream}
