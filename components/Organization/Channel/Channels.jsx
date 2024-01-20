@@ -6,7 +6,7 @@ import { initiateChat, loadChannelData } from "@/lib/ChannelApi";
 import { channelStore } from "@/store/channelStore";
 import { chatStore } from "@/store/chatStore";
 
-export const OrgChannels = ({ data, index, activeTab, setActiveTab }) => {
+export const OrgChannels = ({ data, index, activeTab, setActiveTab,setActiveMobile }) => {
   const Icon = data.icon;
   const generalChannel = generalChannelStore((state) => state.generalChannel);
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
@@ -23,6 +23,8 @@ export const OrgChannels = ({ data, index, activeTab, setActiveTab }) => {
       setChatDetails(chatData ? chatData : null);
     }
     setActiveTab(channel);
+    window.history.pushState("#", null, null);
+    setActiveMobile(true);
   };
   return (
     <motion.li
@@ -47,7 +49,7 @@ export const OrgChannels = ({ data, index, activeTab, setActiveTab }) => {
   );
 };
 
-export const UserChannels = ({ data, index, activeTab, setActiveTab }) => {
+export const UserChannels = ({ data, index, activeTab, setActiveTab,setActiveMobile }) => {
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
   const setChatDetails = chatStore((state) => state.setChatDetails);
   const handleChannelClick = async () => {
@@ -56,6 +58,8 @@ export const UserChannels = ({ data, index, activeTab, setActiveTab }) => {
     const chatData = await initiateChat(data?.name, data?.users);
     setChannelDetails(channelData ? channelData : null);
     setChatDetails(chatData ? chatData : null);
+    window.history.pushState("#", null, null);
+    setActiveMobile(true);
   };
   return (
     data?.name !== "General" && (

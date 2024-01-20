@@ -6,6 +6,7 @@ import CreateChannel from "../popup/CreateChannel";
 import JoinChannel from "../popup/JoinChannel";
 import { isEmpty } from "lodash";
 import { userDetailsStore } from "@/store/userStore";
+import { channelStore } from "@/store/channelStore";
 import RightContainer from "./RightContainer";
 import GetOrgCode from "../popup/GetOrgCodePopup";
 import { generalChannelStore } from "@/store/generalChannelStore";
@@ -14,6 +15,8 @@ const ParentContainer = ({ children, orgData, channelsData }) => {
   const setOrgDetails = orgStore((state) => state.setOrgDetails);
   const userDetails = userDetailsStore((state) => state.userDetails);
   const getUserDetails = userDetailsStore((state) => state.getUserDetails);
+  const isActiveMobile = channelStore((state) => state.isActiveMobile);
+  const setActiveMobile = channelStore((state) => state.setActiveMobile);
   const setGeneralChannel = generalChannelStore(
     (state) => state.setGeneralChannel
   );
@@ -37,6 +40,8 @@ const ParentContainer = ({ children, orgData, channelsData }) => {
         setPopup={setPopup}
         setActiveTab={setActiveTab}
         activeTab={activeTab}
+        setActiveMobile={setActiveMobile}
+        isActiveMobile={isActiveMobile}
       />
       {popup == "create" && (
         <CreateChannel
@@ -44,6 +49,7 @@ const ParentContainer = ({ children, orgData, channelsData }) => {
           channelsData={channelsData}
           setPopup={setPopup}
           setActiveTab={setActiveTab}
+          activeTab={activeTab}
         />
       )}
       {popup == "join" && (
@@ -52,6 +58,7 @@ const ParentContainer = ({ children, orgData, channelsData }) => {
           channelsData={channelsData}
           setPopup={setPopup}
           setActiveTab={setActiveTab}
+          activeTab={activeTab}
         />
       )}
       {popup == "getOrgCode" && (

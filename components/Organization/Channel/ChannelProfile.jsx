@@ -8,10 +8,7 @@ import { CgClose } from "react-icons/cg";
 import { channelStore } from "@/store/channelStore";
 import { format } from "date-fns";
 import { debounce, isEmpty } from "lodash";
-import {
-  postRequestV2,
-  putRequest,
-} from "@/config/axiosInterceptor";
+import { postRequestV2, putRequest } from "@/config/axiosInterceptor";
 import {
   getChannelMembers,
   renameChannel,
@@ -23,6 +20,8 @@ import {
 } from "@/components/Layouts/Skeleton";
 import ChannelMember from "@/components/Channel/ChannelMember";
 import ChannelFooter from "@/components/Channel/ChannelFooter";
+import { isMobile } from "react-device-detect";
+
 const ChannelProfile = () => {
   const showChannelProfile = channelProfileStore(
     (state) => state.showChannelProfile
@@ -32,13 +31,17 @@ const ChannelProfile = () => {
   );
   const channelDetails = channelStore((state) => state.channelDetails);
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
+
+  const isActiveMobile = channelStore((state) => state.isActiveMobile);
+  const setActiveMobile = channelStore((state) => state.setActiveMobile);
+
   const [channelMembers, setChannelMembers] = useState([]);
   const [isEditChannel, setIsEditChannel] = useState(false);
   const [searchKey, setSearchKey] = useState("");
   const [newChannelName, setNewChannelName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const token = getCookie("token");
-  
+
   let createdDate;
   if (!isEmpty(channelDetails)) {
     createdDate = format(
@@ -102,6 +105,20 @@ const ChannelProfile = () => {
     };
     if (!isEmpty(newChannelName) && !isEditChannel) renameChannelName();
   }, [newChannelName, isEditChannel]);
+
+
+  useEffect(() => {
+    if (isMobile) {
+      const handlePopState = function () {
+        setActiveMobile(false);
+        setShowChannelProfile(false);
+      };
+      window.addEventListener("popstate", handlePopState);
+      return () => {
+        window.removeEventListener("popstate", handlePopState);
+      };
+    }
+  }, []);
 
   return (
     showChannelProfile && (
@@ -173,9 +190,7 @@ const ChannelProfile = () => {
               <div className="p-4 overflow-scroll scrollbar-none">
                 {!isLoading && !isEmpty(channelMembers) ? (
                   channelMembers?.map((item, index) => {
-                    return (
-                      <ChannelMember data={item} key={index}  />
-                    );
+                    return <ChannelMember data={item} key={index} />;
                   })
                 ) : (
                   <>
@@ -187,7 +202,7 @@ const ChannelProfile = () => {
               </div>
             </div>
             <hr className=" bg-white h-[2px] mx-4" />
-            <ChannelFooter/>
+            <ChannelFooter />
           </div>
         )}
       </RightContainer>
