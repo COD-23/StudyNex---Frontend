@@ -32,8 +32,9 @@ const Room = () => {
   const [id, setId] = useState(0);
   const [isScreenSharing, setScreenSharing] = useState(false);
   const [screenStream, setScreenStream] = useState(null);
-
+  
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
     const initPeer = () => {
       const peer = new Peer();
       peer.on("open", (id) => {
@@ -57,8 +58,8 @@ const Room = () => {
               ...prev,
               [myPeer]: {
                 url: stream,
-                playing: true,
-                muted: true,
+                playing: urlParams.get("playing") == "false" ? false : true,
+                muted: urlParams.get("muted") == "false" ? false : true,
                 name: userDetails.name,
                 image: userDetails.image,
               },
@@ -147,8 +148,8 @@ const Room = () => {
           ...prev,
           [myPeer]: {
             url: stream,
-            playing: true,
-            muted: true,
+            playing: urlParams.get("playing") == "false" ? false : true,
+            muted: urlParams.get("muted") == "false" ? false : true,
             name: userDetails.name,
             image: userDetails.image,
           },
