@@ -15,6 +15,7 @@ function ChatSection() {
     (state) => state.showChannelProfile
   );
   const [show, setShow] = useState("");
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     if (isMobile) {
@@ -46,8 +47,8 @@ function ChatSection() {
       )}
     >
       <ChatNavbar />
-      <Chat />
-      <ChatInput />
+      <Chat setMessages={setMessages} messages={messages} />
+      <ChatInput setMessages={setMessages} />
     </div>
   );
 }

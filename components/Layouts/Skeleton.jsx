@@ -47,3 +47,24 @@ export const ChannelMemberSkeleton = () => {
     </div>
   );
 };
+
+export const MessageSkeleton = () => {
+  return (
+    <div className="grid gap-2">
+      <div className="flex gap-4 py-2 flex-col">
+        <div className="flex justify-end">
+          <div className="h-24 w-[30%] bg-gray-400 animate-pulse border rounded-l-2xl rounded-br-2xl " />
+        </div>
+        <div className="h-24 w-[20%] bg-gray-400 animate-pulse border rounded-r-2xl rounded-bl-2xl " />
+        <div className="flex justify-end">
+          <div className="h-24 w-[20%] bg-gray-400 animate-pulse border rounded-l-2xl rounded-br-2xl " />
+        </div>
+        <div className="h-24 w-[50%] bg-gray-400 animate-pulse border rounded-r-2xl rounded-bl-2xl " />
+        <div className="flex justify-end">
+          <div className="h-14 w-[29%] bg-gray-400 animate-pulse border rounded-l-2xl rounded-br-2xl " />
+        </div>
+        <div className="h-10 w-[5%] bg-gray-400 animate-pulse border rounded-r-2xl rounded-bl-2xl " />
+      </div>
+    </div>
+  );
+};
