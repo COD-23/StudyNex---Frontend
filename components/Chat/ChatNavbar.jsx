@@ -1,9 +1,11 @@
 import Image from "next/image";
 import React from "react";
-import { QuizLogo } from "../Constants/imageContants";
+import { QuizIcon, QuizLogo } from "../Constants/imageContants";
 import ChannelMenuPopup from "../popup/ChannelMenuDropdown";
 import { channelProfileStore } from "@/store/channelProfileStore";
 import { channelStore } from "@/store/channelStore";
+import quiz from "../../quiz.json";
+import Link from "next/link";
 
 const ChatNavbar = () => {
   const setShowChannelProfile = channelProfileStore(
@@ -24,7 +26,14 @@ const ChatNavbar = () => {
           </p>
         </div>
       </div>
-      <div className="flex gap-3 text-2xl">
+      <div className="flex gap-3 text-2xl items-center">
+        <Link href={`/quiz/${quiz.id}`}>
+          <Image
+            src={QuizIcon}
+            alt=""
+            className="w-10 h-10 rounded-full cursor-pointer"
+          />
+        </Link>
         <ChannelMenuPopup data={channelDetails} />
       </div>
     </div>
