@@ -6,7 +6,7 @@ import PrimaryBtn from '../Helpers/PrimaryBtn';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { postRequest } from '@/config/axiosInterceptor';
-import { joinOrgApi } from '../Constants/apiEndpoints';
+import {  joinOrgApi } from '../Constants/apiEndpoints';
 import { getCookie, setCookie } from 'cookies-next';
 import toast from 'react-hot-toast';
 import { userDetailsStore } from '@/store/userStore';
@@ -44,6 +44,7 @@ const JoinOrgPopup = ({setPopup}) => {
       console.log(error);
     }
   };
+
 
   return (
     <PopupContainer setPopup={setPopup} closeBtn>
