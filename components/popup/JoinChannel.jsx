@@ -9,9 +9,22 @@ import { getCookie } from "cookies-next";
 import { isEmpty } from "lodash";
 import { ChannelListSkeleton } from "../Layouts/Skeleton";
 import toast from "react-hot-toast";
+import { channelStore } from "@/store/channelStore";
+import { chatStore } from "@/store/chatStore";
+import { initiateChat, loadChannelData } from "@/lib/ChannelApi";
 
 const JoinChannel = ({ orgDetails, setPopup, channelsData, setActiveTab }) => {
   const [allChannelsData, setAllChannelsData] = useState([]);
+  const setChannelDetails = channelStore((state) => state.setChannelDetails);
+  const setChatDetails = chatStore((state) => state.setChatDetails);
+
+  const handleChannelJoining = async (data) => {
+    setActiveTab(data.name);
+    const channelData = await loadChannelData(data?._id);
+    const chatData = await initiateChat(data?.name, data?.users);
+    setChannelDetails(channelData ? channelData : null);
+    setChatDetails(chatData ? chatData : null);
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -43,8 +56,9 @@ const JoinChannel = ({ orgDetails, setPopup, channelsData, setActiveTab }) => {
       });
       if (response?.data?.status) {
         channelsData.unshift(response?.data?.data);
-        setActiveTab(response?.data?.data?.name);
+        // setActiveTab(response?.data?.data?.name);
         setPopup(false);
+        handleChannelJoining(response?.data?.data);
       } else {
         toast.error(response?.data?.message);
       }
@@ -75,19 +89,21 @@ const JoinChannel = ({ orgDetails, setPopup, channelsData, setActiveTab }) => {
           {!isEmpty(allChannelsData) &&
             allChannelsData.map((item, index) => {
               return (
-                <div
-                  key={index}
-                  className="flex flex-col relative"
-                  onClick={() => join(item)}
-                >
-                  <div className="hover:bg-gray-100 cursor-pointer p-3">
-                    <p className=""># {item.name}</p>
-                    <p className="text-xs text-gray-500 truncate">
-                      {item.description}
-                    </p>
+                item?.name !== "General" && (
+                  <div
+                    key={index}
+                    className="flex flex-col relative"
+                    onClick={() => join(item)}
+                  >
+                    <div className="hover:bg-gray-100 cursor-pointer p-3">
+                      <p className=""># {item.name}</p>
+                      <p className="text-xs text-gray-500 truncate">
+                        {item.description}
+                      </p>
+                    </div>
+                    <hr />
                   </div>
-                  <hr />
-                </div>
+                )
               );
             })}
           {isEmpty(allChannelsData) && <ChannelListSkeleton />}

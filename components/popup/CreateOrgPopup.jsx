@@ -12,11 +12,13 @@ import { createChannelApi, createOrgApi } from "../Constants/apiEndpoints";
 import { useRouter } from "next/navigation";
 import { getCookie, setCookie } from "cookies-next";
 import { userDetailsStore } from "@/store/userStore";
+import { generalChannelStore } from "@/store/generalChannelStore";
 
 const CreateOrgPopup = ({ setPopup }) => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const getUserDetails = userDetailsStore((state) => state.getUserDetails);
+  const setGeneralChannel = generalChannelStore((state) => state.setGeneralChannel); 
 
   const {
     register,
@@ -57,7 +59,6 @@ const CreateOrgPopup = ({ setPopup }) => {
   };
 
   const createGeneralChannel = async (orgData) => {
-    console.log("Org data in create channel",orgData);
     const data = {
       name: "General",
       description:
@@ -71,7 +72,8 @@ const CreateOrgPopup = ({ setPopup }) => {
         token: getCookie("token"),
       });
       if (response?.data?.status) {
-        console.log("Channel created successfully");
+        console.log("Channel created successfully",response?.data?.data);
+        setGeneralChannel(response?.data?.data);
       } else {
         toast.error(response?.data?.message);
       }

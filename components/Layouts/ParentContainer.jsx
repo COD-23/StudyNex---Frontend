@@ -6,12 +6,17 @@ import CreateChannel from "../popup/CreateChannel";
 import JoinChannel from "../popup/JoinChannel";
 import { isEmpty } from "lodash";
 import { userDetailsStore } from "@/store/userStore";
+import RightContainer from "./RightContainer";
 import GetOrgCode from "../popup/GetOrgCodePopup";
+import { generalChannelStore } from "@/store/generalChannelStore";
 
 const ParentContainer = ({ children, orgData, channelsData }) => {
   const setOrgDetails = orgStore((state) => state.setOrgDetails);
   const userDetails = userDetailsStore((state) => state.userDetails);
   const getUserDetails = userDetailsStore((state) => state.getUserDetails);
+  const setGeneralChannel = generalChannelStore(
+    (state) => state.setGeneralChannel
+  );
   const [activeTab, setActiveTab] = useState("General");
 
   useEffect(() => {
@@ -19,6 +24,11 @@ const ParentContainer = ({ children, orgData, channelsData }) => {
   }, [userDetails]);
 
   const [popup, setPopup] = useState("");
+
+  const generalChannel = channelsData.filter(
+    (item) => item?.name === "General" && item?.org_id === orgData.data?._id
+  );
+  setGeneralChannel(generalChannel[0]);
   setOrgDetails(orgData.data);
   return (
     <div className="grid lg:grid-cols-[280px,1fr] mx-auto bg-main overflow-hidden">
