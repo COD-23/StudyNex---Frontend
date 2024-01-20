@@ -56,7 +56,7 @@ const JoinChannel = ({ orgDetails, setPopup, channelsData, setActiveTab }) => {
       });
       if (response?.data?.status) {
         channelsData.unshift(response?.data?.data);
-        // setActiveTab(response?.data?.data?.name);
+        setActiveTab(response?.data?.data?.name);
         setPopup(false);
         handleChannelJoining(response?.data?.data);
       } else {

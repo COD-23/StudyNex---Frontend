@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import { generalChannelStore } from "@/store/generalChannelStore";
 import { isEmpty } from "lodash";
 import { initiateChat, loadChannelData } from "@/lib/ChannelApi";
+import { BarChart3 } from "lucide-react";
 
 const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
   const orgDetails = orgStore((state) => state.orgDetails);
@@ -38,13 +39,15 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
     () => [
       {
         name: "General",
-        link: "/Home",
         icon: MdGroups2,
       },
       {
         name: "Assessments",
-        link: "About",
         icon: MdOutlineQuiz,
+      },
+      {
+        name: "Leaderboard",
+        icon: BarChart3,
       },
     ],
     []

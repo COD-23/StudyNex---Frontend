@@ -11,6 +11,7 @@ export const getChannelList = "/fetch-all-channels";
 export const getChannel = "/fetch-channel";
 export const renameChannel = "/rename-channel";
 export const fetchMessages = "/fetch-message";
+export const leaveOrg = "/leave-org";
 
 //POST
 export const loginApi = "/login";

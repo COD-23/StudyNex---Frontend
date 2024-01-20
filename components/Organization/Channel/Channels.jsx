@@ -1,32 +1,28 @@
 import React from "react";
 import { motion } from "framer-motion";
 import classNames from "classnames";
-import { channelProfileStore } from "@/store/channelProfileStore";
 import { generalChannelStore } from "@/store/generalChannelStore";
 import { initiateChat, loadChannelData } from "@/lib/ChannelApi";
 import { channelStore } from "@/store/channelStore";
 import { chatStore } from "@/store/chatStore";
 
-export const OrgChannels = ({
-  data,
-  index,
-  activeTab,
-  setActiveTab,
-}) => {
+export const OrgChannels = ({ data, index, activeTab, setActiveTab }) => {
   const Icon = data.icon;
   const generalChannel = generalChannelStore((state) => state.generalChannel);
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
   const setChatDetails = chatStore((state) => state.setChatDetails);
 
-  const handleChannelClick = async () => {
-    setActiveTab(generalChannel.name);
-    const channelData = await loadChannelData(generalChannel?._id);
-    const chatData = await initiateChat(
-      generalChannel?.name,
-      generalChannel?.users
-    );
-    setChannelDetails(channelData ? channelData : null);
-    setChatDetails(chatData ? chatData : null);
+  const handleChannelClick = async (channel) => {
+    if (channel === "General") {
+      const channelData = await loadChannelData(generalChannel?._id);
+      const chatData = await initiateChat(
+        generalChannel?.name,
+        generalChannel?.users
+      );
+      setChannelDetails(channelData ? channelData : null);
+      setChatDetails(chatData ? chatData : null);
+    }
+    setActiveTab(channel);
   };
   return (
     <motion.li
@@ -41,7 +37,7 @@ export const OrgChannels = ({
         activeTab == data.name &&
           "gradient-transition text-white hover:bg-[#919eb7]"
       )}
-      onClick={handleChannelClick}
+      onClick={() => handleChannelClick(data.name)}
     >
       <Icon className="h-6 w-6" />
       <p className={classNames(activeTab == data.name && "font-semibold")}>
@@ -51,12 +47,7 @@ export const OrgChannels = ({
   );
 };
 
-export const UserChannels = ({
-  data,
-  index,
-  activeTab,
-  setActiveTab,
-}) => {
+export const UserChannels = ({ data, index, activeTab, setActiveTab }) => {
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
   const setChatDetails = chatStore((state) => state.setChatDetails);
   const handleChannelClick = async () => {

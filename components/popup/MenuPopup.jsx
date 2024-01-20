@@ -1,11 +1,38 @@
+import { postRequest } from "@/config/axiosInterceptor";
 import { AnimatePresence, motion } from "framer-motion";
 import { BookMarked } from "lucide-react";
 import React from "react";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { FaPlus } from "react-icons/fa";
 import { MdOutlineLogout } from "react-icons/md";
+import { leaveOrg } from "../Constants/apiEndpoints";
+import { orgStore } from "@/store/orgStore";
+import { deleteCookie, getCookie } from "cookies-next";
+import toast from "react-hot-toast";
 
 const MenuPopup = ({ showMenu, setPopup, setShowMenu }) => {
+  const orgDetails = orgStore((state) => state.orgDetails);
+  const leaveOrganzization = async () => {
+    const bodyData = {
+      org_code: orgDetails?.org_code,
+    };
+    try {
+      const response = await postRequest({
+        url: leaveOrg,
+        body: bodyData,
+        token: getCookie("token"),
+      });
+      const data = response.data.data;
+      if (data) {
+        deleteCookie("org");
+        window.location.reload();
+        toast.success("Organization leaved successfully");
+      }
+    } catch (error) {
+      toast.error("Unable to leave the organization");
+      console.error(error);
+    }
+  };
   return (
     <AnimatePresence>
       {showMenu && (
@@ -59,7 +86,7 @@ const MenuPopup = ({ showMenu, setPopup, setShowMenu }) => {
           <div
             className="flex items-center gap-4 lg:cursor-pointer hover:bg-gray-100 px-2 py-2 text-red-500 transition-all"
             onClick={() => {
-              setPopup("getOrgCode");
+              leaveOrganzization();
               setShowMenu(false);
             }}
           >
