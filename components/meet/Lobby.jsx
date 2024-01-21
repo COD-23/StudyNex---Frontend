@@ -35,12 +35,12 @@ const Lobby = () => {
 
   const createAndJoin = () => {
     const newRoomId = uuidv4();
-    router.push(`/room/${newRoomId}`);
+    router.push(`/room/${newRoomId}?muted=${muted}&playing=${playing}`);
   };
 
   const joinRoom = () => {
     if (roomId) {
-      router.push(`/room/${roomId}`);
+      router.push(`/room/${roomId}?muted=${muted}&playing=${playing}`);
     }
   };
 

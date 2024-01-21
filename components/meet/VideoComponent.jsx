@@ -1,19 +1,25 @@
 import { userDetailsStore } from "@/store/userStore";
 import { MicOff, VideoOff } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
+import { isMobile } from "react-device-detect";
 import ReactPlayer from "react-player";
 const MAX_MEMBERS = 5;
 const VideoComponent = ({ players, screenStream }) => {
   const numberOfVideos = Object.keys(players).length;
   const userDetails = userDetailsStore((state) => state.userDetails);
-
   return (
     <div
       className={`grid gap-6 place-items-center transition flex-1 p-4 h-[calc(100vh-68px-78px-42px)]`}
       style={{
         gridTemplateColumns: `${
-          !screenStream
+          !screenStream && !isMobile
+            ? `repeat(${Math.min(numberOfVideos, 3)}, minmax(0, 1fr))`
+            : "none"
+        }`,
+        gridTemplateRows: `${
+          !screenStream && isMobile
             ? `repeat(${Math.min(numberOfVideos, 3)}, minmax(0, 1fr))`
             : "none"
         }`,
@@ -37,13 +43,14 @@ const VideoComponent = ({ players, screenStream }) => {
             const { url, playing, muted, name, image } = players[playerId];
             return (
               <div
-                className={`relative ${!playing && "w-full"} ${
+                // className={`relative ${playing && "w-full"} ${
+                className={`relative ${
                   numberOfVideos === 3 ? "h-1/2" : "h-full"
                 }`}
                 key={playerId}
               >
                 <ReactPlayer
-                  url={playing && url}
+                  url={url}
                   playing={playing}
                   muted={muted}
                   width="100%"

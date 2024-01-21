@@ -28,9 +28,9 @@ const BottomControl = ({
 }) => {
   const router = useRouter();
   return (
-    <div className="flex relative gap-8 justify-center z-50 bg-[#121B21] shadow-sm p-4 border border-gray-800">
+    <div className="flex relative lg:gap-8 justify-between md:justify-center z-50 bg-[#121B21] shadow-sm p-4 border border-gray-800">
       <div className="absolute left-5 top-2 text-white text-sm">
-        <p>Room Code </p>
+        {/* <p>Room Code </p>
         <CopyToClipboard
           text={useParams().id}
           onCopy={() => toast.success("Code copied")}
@@ -38,11 +38,23 @@ const BottomControl = ({
           <p className="flex gap-2 items-center p-2 bg-[#27303F] rounded-md cursor-pointer">
             {useParams().id} <Copy size={15} />
           </p>
-        </CopyToClipboard>
+        </CopyToClipboard> */}
       </div>
+      <CopyToClipboard
+        text={useParams().id}
+        onCopy={() => toast.success("Code copied")}
+      >
+        <button
+          className={twMerge(
+            `bg-[#27303F] text-white border border-gray-600 rounded-lg md:px-5 md:py-3 px-4 py-3 cursor-pointer  hover:bg-blue-500 hover:text-white transition duration-150`
+          )}
+        >
+          <Copy size={17} />
+        </button>
+      </CopyToClipboard>
       <button
         className={twMerge(
-          `bg-[#27303F] text-white border border-gray-600 rounded-lg px-5 py-3 cursor-pointer  hover:bg-blue-500 hover:text-white transition duration-150 ${
+          `bg-[#27303F] text-white border border-gray-600 rounded-lg md:px-5 md:py-3 px-4 py-3 cursor-pointer  hover:bg-blue-500 hover:text-white transition duration-150 ${
             muted && "bg-blue-500 text-white "
           }`
         )}
@@ -52,7 +64,7 @@ const BottomControl = ({
       </button>
       <button
         className={twMerge(
-          `bg-[#27303F] text-white border border-gray-600 rounded-lg px-5 py-3 cursor-pointer  hover:bg-blue-500 hover:text-white transition duration-150 ${
+          `bg-[#27303F] text-white border border-gray-600 rounded-lg md:px-5 md:py-3 px-4 py-3 cursor-pointer  hover:bg-blue-500 hover:text-white transition duration-150 ${
             !playing && "bg-blue-500 text-white"
           }`
         )}
@@ -61,7 +73,7 @@ const BottomControl = ({
         {playing ? <Video size={17} /> : <VideoOff size={17} />}
       </button>
       <button
-        className={`bg-[#27303F] text-white border border-gray-600 rounded-lg px-5 py-3 cursor-pointer hover:bg-blue-500 hover:text-white transition duration-150 ${
+        className={`bg-[#27303F] text-white border border-gray-600 rounded-lg md:px-5 md:py-3 px-4 py-3 cursor-pointer hover:bg-blue-500 hover:text-white transition duration-150 ${
           isScreenSharing && "bg-blue-500 text-white"
         }`}
         onClick={toggleScreenSharing}
@@ -69,7 +81,7 @@ const BottomControl = ({
         <MonitorUp size={17} />
       </button>
       <button
-        className={`bg-[#27303F] text-white border border-gray-600 rounded-lg px-5 py-3 cursor-pointer hover:bg-blue-500 hover:text-white transition duration-150 ${
+        className={`bg-[#27303F] text-white border border-gray-600 rounded-lg md:px-5 md:py-3 px-4 py-3 cursor-pointer hover:bg-blue-500 hover:text-white transition duration-150 ${
           isScreenSharing && "bg-blue-500 text-white"
         }`}
         onClick={() => window.open("/whiteboard", "_blank")}
@@ -77,7 +89,7 @@ const BottomControl = ({
         <Presentation size={17} />
       </button>
       <button
-        className={`bg-red-500 text-white border border-gray-600 rounded-lg px-5 py-3 cursor-pointer hover:bg-[red] hover:text-white transition duration-150 `}
+        className={`bg-red-500 text-white border border-gray-600 rounded-lg md:px-5 md:py-3 px-4 py-3 cursor-pointer hover:bg-[red] hover:text-white transition duration-150 `}
         onClick={leaveRoom}
       >
         <PhoneOff size={17} />

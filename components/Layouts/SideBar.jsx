@@ -26,7 +26,7 @@ import { isEmpty } from "lodash";
 import { initiateChat, loadChannelData } from "@/lib/ChannelApi";
 import { BarChart3 } from "lucide-react";
 
-const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
+const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab,  setActiveMobile, isActiveMobile, }) => {
   const orgDetails = orgStore((state) => state.orgDetails);
   const token = getCookie("token");
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
@@ -120,7 +120,10 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5 }}
-      className="relative top-0 left-0 flex flex-col  w-full h-screen  px-5 py-2 z-[51] bg-white shadow-xl"
+      className={classNames(
+        isActiveMobile ? "md:flex hidden" : "flex",
+        `relative top-0 left-0 flex flex-col  w-full h-screen  px-5 py-2 z-[51] bg-white shadow-xl`
+      )}
     >
       {/* Header */}
       <motion.div
@@ -152,6 +155,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
               channelsData={channelsData}
               loadChannelData={loadChannelData}
               initiateChat={initiateChat}
+              setActiveMobile={setActiveMobile}
             />
           );
         })}
@@ -180,6 +184,7 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
               setActiveTab={setActiveTab}
               loadChannelData={loadChannelData}
               initiateChat={initiateChat}
+              setActiveMobile={setActiveMobile}
             />
           );
         })}

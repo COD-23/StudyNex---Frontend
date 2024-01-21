@@ -16,7 +16,7 @@ import Description from "../Helpers/Description";
 import { userDetailsStore } from "@/store/userStore";
 
 const LoginComponent = () => {
-  const [type, setType] = useState(true);
+  const [type, setType] = useState(false);
   const [loading, setLoading] = useState(true);
   const getUserDetails = userDetailsStore((state) => state.getUserDetails);
 

@@ -7,6 +7,7 @@ import { LuInfo } from "react-icons/lu";
 import { channelProfileStore } from "@/store/channelProfileStore";
 import { channelStore } from "@/store/channelStore";
 import { useRouter } from "next/navigation";
+import { MoreVertical } from "lucide-react";
 
 const ChannelMenuPopup = ({ data }) => {
   const [active, setActive] = useState(false);
@@ -25,7 +26,7 @@ const ChannelMenuPopup = ({ data }) => {
     <div className="relative inline-block text-left">
       <div className="flex items-center">
         <button onClick={() => setActive(!active)}>
-          <BiDotsHorizontalRounded className="cursor-pointer" />
+          <MoreVertical className="cursor-pointer" />
         </button>
       </div>
 
