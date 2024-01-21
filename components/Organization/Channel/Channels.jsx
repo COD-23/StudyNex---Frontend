@@ -6,13 +6,21 @@ import { initiateChat, loadChannelData } from "@/lib/ChannelApi";
 import { channelStore } from "@/store/channelStore";
 import { chatStore } from "@/store/chatStore";
 
-export const OrgChannels = ({ data, index, activeTab, setActiveTab,setActiveMobile }) => {
+export const OrgChannels = ({
+  data,
+  index,
+  activeTab,
+  setActiveTab,
+  setActiveMobile,
+}) => {
   const Icon = data.icon;
   const generalChannel = generalChannelStore((state) => state.generalChannel);
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
   const setChatDetails = chatStore((state) => state.setChatDetails);
 
   const handleChannelClick = async (channel) => {
+    window.history.pushState("#", null, null);
+    setActiveMobile(true);
     if (channel === "General") {
       const channelData = await loadChannelData(generalChannel?._id);
       const chatData = await initiateChat(
@@ -23,8 +31,6 @@ export const OrgChannels = ({ data, index, activeTab, setActiveTab,setActiveMobi
       setChatDetails(chatData ? chatData : null);
     }
     setActiveTab(channel);
-    window.history.pushState("#", null, null);
-    setActiveMobile(true);
   };
   return (
     <motion.li
@@ -49,7 +55,15 @@ export const OrgChannels = ({ data, index, activeTab, setActiveTab,setActiveMobi
   );
 };
 
-export const UserChannels = ({ data, index, activeTab, setActiveTab,setActiveMobile }) => {
+export const UserChannels = ({
+  data,
+  index,
+  activeTab,
+  setActiveTab,
+  setActiveMobile,
+}) => {
+  window.history.pushState("#", null, null);
+  setActiveMobile(true);
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
   const setChatDetails = chatStore((state) => state.setChatDetails);
   const handleChannelClick = async () => {
@@ -58,8 +72,6 @@ export const UserChannels = ({ data, index, activeTab, setActiveTab,setActiveMob
     const chatData = await initiateChat(data?.name, data?.users);
     setChannelDetails(channelData ? channelData : null);
     setChatDetails(chatData ? chatData : null);
-    window.history.pushState("#", null, null);
-    setActiveMobile(true);
   };
   return (
     data?.name !== "General" && (

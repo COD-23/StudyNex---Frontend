@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import Title from "../Helpers/Title";
 import { Mic, MicOff, Video, VideoOff } from "lucide-react";
 import { userDetailsStore } from "@/store/userStore";
+import { isMobile } from "react-device-detect";
 
 const Lobby = () => {
   const [roomId, setRoomId] = useState("");
@@ -46,37 +47,41 @@ const Lobby = () => {
 
   return (
     <div className="bg-[#101825]  h-screen flex justify-center items-center text-black">
-      <div className="bg-main rounded-xl p-5 py-20 w-[90vw] px-7 shadow-md flex items-center gap-6">
+      <div className="bg-main rounded-xl p-5 py-20 w-[90vw] px-7 shadow-md flex items-center gap-6 flex-col lg:flex-row">
         <div className="flex-1 flex flex-col items-center gap-4 justify-center relative">
           <ReactPlayer
             url={myStream}
             playing={playing}
             muted={true}
-            width="600px"
-            height="400px"
+            width={isMobile ? "100%" : "600px"}
+            height={isMobile ? "100%" : "400px"}
           />
           {!playing && (
-            <div className="absolute w-[600px] h-[400px] bg-black rounded-lg"></div>
+            <div className="absolute lg:w-[600px] lg:h-[400px] w-full h-full bg-black rounded-lg"></div>
           )}
           <div className="absolute top-5 left-10 text-white text-sm">
             {userDetails?.name}
           </div>
           <div className="absolute flex gap-4 bottom-5">
             <button
-              className={`text-white border border-white rounded-full p-4 cursor-pointer  transition duration-150 ${
+              className={`text-white border border-white rounded-full lg:p-4 p-2 cursor-pointer  transition duration-150 ${
                 muted ? "bg-blue-500 text-white" : "hover:bg-gray-200"
               }`}
               onClick={() => setMuted(!muted)}
             >
-              {muted ? <MicOff size={14} /> : <Mic size={14} />}
+              {muted ? (
+                <MicOff size={isMobile ? 10 : 14} />
+              ) : (
+                <Mic size={isMobile ? 10 : 14} />
+              )}
             </button>
             <button
-              className={`text-white border border-white rounded-full p-4 cursor-pointer   transition duration-150 ${
+              className={`text-white border border-white rounded-full lg:p-4 p-2 cursor-pointer   transition duration-150 ${
                 !playing ? "bg-blue-500 text-white" : "hover:bg-gray-200"
               }`}
               onClick={() => setPlaying(!playing)}
             >
-              {playing ? <Video size={14} /> : <VideoOff size={14} />}
+              {playing ? <Video size={isMobile ? 10 : 14} /> : <VideoOff size={isMobile ? 10 : 14} />}
             </button>
           </div>
         </div>
@@ -87,7 +92,7 @@ const Lobby = () => {
           <div className="flex w-[80%] justify-center items-center gap-3">
             <div className="relative h-10 w-full flex-1">
               <input
-                className="peer h-full w-full  rounded-[7px] border border-blue-gray-200 border-t bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-black focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                className="peer h-full w-full  rounded-[7px] border border-black border-t bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-black focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                 placeholder=" "
                 id="roomId"
                 type="text"

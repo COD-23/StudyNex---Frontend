@@ -8,6 +8,7 @@ import { channelProfileStore } from "@/store/channelProfileStore";
 import { channelStore } from "@/store/channelStore";
 import { useRouter } from "next/navigation";
 import { MoreVertical } from "lucide-react";
+import Link from "next/link";
 
 const ChannelMenuPopup = ({ data }) => {
   const [active, setActive] = useState(false);
@@ -60,17 +61,15 @@ const ChannelMenuPopup = ({ data }) => {
                   </p>
                 </li>
                 <li>
-                  <p
+                  <Link
                     className={classNames(
                       "cursor-pointer text-gray-900 flex px-4 py-2 text-sm items-center gap-2 hover:bg-gray-100"
                     )}
-                    onClick={() =>
-                      router.push(`/lobby?id=${channelDetails._id}`)
-                    }
+                    href={`/lobby?id=${channelDetails._id}`}
                   >
                     <IoVideocamOutline className="text-lg" />
                     Start a meet
-                  </p>
+                  </Link>
                 </li>
               </div>
             </ul>

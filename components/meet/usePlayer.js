@@ -1,4 +1,5 @@
 import socket from "@/lib/socketInstance";
+import { channelStore } from "@/store/channelStore";
 import { cloneDeep } from "lodash";
 import { useParams, useRouter } from "next/navigation";
 
@@ -8,11 +9,12 @@ const usePlayer = (myPeer, peerIns) => {
   const roomId = useParams().id;
   const [players, setPlayers] = useState([]);
   const router = useRouter();
+  const channelDetails = channelStore((state) => state.channelDetails);
 
   const leaveRoom = () => {
     socket.emit("user-leave", myPeer, roomId);
     peerIns.disconnect();
-    router.push("/");
+    router.push(`/lobby?id=${channelDetails._id}`);
   };
 
   const toggleAudio = () => {

@@ -45,7 +45,7 @@ const VideoComponent = ({ players, screenStream }) => {
               <div
                 // className={`relative ${playing && "w-full"} ${
                 className={`relative ${
-                  numberOfVideos === 3 ? "h-1/2" : "h-full"
+                  numberOfVideos === 3 ? "md:h-1/2 h-full" : "h-full"
                 }`}
                 key={playerId}
               >
