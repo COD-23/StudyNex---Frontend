@@ -6,9 +6,9 @@ import CreateChannel from "../popup/CreateChannel";
 import JoinChannel from "../popup/JoinChannel";
 import { isEmpty } from "lodash";
 import { userDetailsStore } from "@/store/userStore";
-import RightContainer from "./RightContainer";
 import GetOrgCode from "../popup/GetOrgCodePopup";
 import { generalChannelStore } from "@/store/generalChannelStore";
+import { activeOrgChannel } from "@/store/activeOrgChannel";
 
 const ParentContainer = ({ children, orgData, channelsData }) => {
   const setOrgDetails = orgStore((state) => state.setOrgDetails);
@@ -18,6 +18,7 @@ const ParentContainer = ({ children, orgData, channelsData }) => {
     (state) => state.setGeneralChannel
   );
   const [activeTab, setActiveTab] = useState("General");
+  const orgChannel = activeOrgChannel((state) => state.orgChannel);
 
   useEffect(() => {
     if (isEmpty(userDetails)) getUserDetails();

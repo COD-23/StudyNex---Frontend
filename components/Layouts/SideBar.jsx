@@ -150,8 +150,6 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab }) => {
               data={item}
               index={index}
               channelsData={channelsData}
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
               loadChannelData={loadChannelData}
               initiateChat={initiateChat}
             />

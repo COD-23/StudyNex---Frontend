@@ -5,12 +5,15 @@ import { generalChannelStore } from "@/store/generalChannelStore";
 import { initiateChat, loadChannelData } from "@/lib/ChannelApi";
 import { channelStore } from "@/store/channelStore";
 import { chatStore } from "@/store/chatStore";
+import { activeOrgChannel } from "@/store/activeOrgChannel";
 
-export const OrgChannels = ({ data, index, activeTab, setActiveTab }) => {
+export const OrgChannels = ({ data, index }) => {
   const Icon = data.icon;
   const generalChannel = generalChannelStore((state) => state.generalChannel);
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
   const setChatDetails = chatStore((state) => state.setChatDetails);
+  const orgActiveChannel = activeOrgChannel((state) => state.orgChannel);
+  const setOrgActiveChannel = activeOrgChannel((state) => state.setOrgChannel);
 
   const handleChannelClick = async (channel) => {
     if (channel === "General") {
@@ -22,7 +25,7 @@ export const OrgChannels = ({ data, index, activeTab, setActiveTab }) => {
       setChannelDetails(channelData ? channelData : null);
       setChatDetails(chatData ? chatData : null);
     }
-    setActiveTab(channel);
+    setOrgActiveChannel(channel);
   };
   return (
     <motion.li
@@ -34,13 +37,13 @@ export const OrgChannels = ({ data, index, activeTab, setActiveTab }) => {
       }}
       className={classNames(
         "flex datas-center gap-4 p-2 lg:cursor-pointer rounded-md hover:bg-gray-100",
-        activeTab == data.name &&
+        orgActiveChannel == data.name &&
           "gradient-transition text-white hover:bg-[#919eb7]"
       )}
       onClick={() => handleChannelClick(data.name)}
     >
       <Icon className="h-6 w-6" />
-      <p className={classNames(activeTab == data.name && "font-semibold")}>
+      <p className={classNames(orgActiveChannel == data.name && "font-semibold")}>
         {data.name}
       </p>
     </motion.li>
