@@ -2,6 +2,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import NextTopLoader from "nextjs-toploader";
+import Head from "next/head";
 
 const inter = Poppins({ subsets: ["latin"], weight: "400" });
 

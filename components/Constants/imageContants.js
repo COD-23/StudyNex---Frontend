@@ -9,6 +9,7 @@ import createbg from "../../public/Assets/Images/createbg.jpeg"
 import upload from "../../public/Assets/Images/upload.svg";
 import quizIcon from "../../public/Assets/Images/exercise.png";
 import defaultpic from "../../public/Assets/Images/defaultpic.jpeg"
+import pdf from "../../public/Assets/Images/pdf.svg"
 
 export const StudyLogo = studyLogo;
 export const TeacherLogo = teacher1;
@@ -20,3 +21,4 @@ export const caramal = createAsset;
 export const Upload = upload;
 export const QuizIcon = quizIcon;
 export const Defaultpic = defaultpic;
+export const Pdf = pdf;

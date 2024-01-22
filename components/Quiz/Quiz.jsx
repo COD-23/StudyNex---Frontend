@@ -1,7 +1,7 @@
 import { Image } from "lucide-react";
 import React from "react";
 
-const Quiz = ({ question, handleAnswer = () => void 0 }) => {
+const Quiz = ({ question, handleAnswer = () => void 0, listing = false }) => {
   return (
     <div className="px-10 py-8">
       <p className="text-base font-semibold">
@@ -22,14 +22,23 @@ const Quiz = ({ question, handleAnswer = () => void 0 }) => {
               : "hover:bg-slate-100"
           }`}
         >
-          <div
-            className="p-3 flex justify-between"
-            name={option}
-          >
+          <div className="p-3 flex justify-between" name={option}>
             <span>{option}</span>
           </div>
         </div>
       ))}
+      {listing && (
+        <>
+          <div
+            className={`rounded-lg border-gray-400 mt-4 items-center cursor-pointer`}
+          >
+            <div className="flex">
+              <span className="font-bold">Correct Answer : &nbsp;</span>
+              <span>{question.answer}</span>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

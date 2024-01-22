@@ -9,6 +9,9 @@ import { channelStore } from "@/store/channelStore";
 import { useRouter } from "next/navigation";
 import { MoreVertical } from "lucide-react";
 import Link from "next/link";
+import { userDetailsStore } from "@/store/userStore";
+import { MdOutlineQuiz } from "react-icons/md";
+import { orgStore } from "@/store/orgStore";
 
 const ChannelMenuPopup = ({ data }) => {
   const [active, setActive] = useState(false);
@@ -17,6 +20,8 @@ const ChannelMenuPopup = ({ data }) => {
   );
   const channelDetails = channelStore((state) => state.channelDetails);
   const router = useRouter();
+  const userDetails = userDetailsStore((state) => state.userDetails);
+  const orgDetails = orgStore((state) => state.orgDetails);
 
   const handleChannelClick = () => {
     setShowChannelProfile(true);
@@ -71,6 +76,19 @@ const ChannelMenuPopup = ({ data }) => {
                     Start a meet
                   </Link>
                 </li>
+                {channelDetails?.admin_id?._id === userDetails?._id && (
+                  <li>
+                    <Link
+                      className={classNames(
+                        "cursor-pointer text-gray-900 flex px-4 py-2 text-sm items-center gap-2 hover:bg-gray-100"
+                      )}
+                      href={`/admin/quiz/${channelDetails._id}?org_id=${orgDetails._id}`}
+                    >
+                      <MdOutlineQuiz className="text-lg" />
+                      Create Quiz
+                    </Link>
+                  </li>
+                )}
               </div>
             </ul>
           </motion.div>
