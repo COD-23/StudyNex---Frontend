@@ -1,11 +1,24 @@
-import { format } from 'date-fns';
-import React from 'react'
+import { format } from "date-fns";
+import { useRouter } from "next/navigation";
+import React from "react";
 
-const QuizCard = ({ setQuizId ,quiz}) => {
+const QuizCard = ({ setQuizId, quiz, isStudent }) => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const router = useRouter();
   return (
     <div
       className="border border-gray-300 w-full p-3 rounded-md text-blue-500 cursor-pointer "
-      onClick={() => setQuizId(quiz._id)}
+      onClick={() => {
+        if (isStudent) {
+          router.push(
+            `/quiz/${quiz._id}?channel_id=${urlParams.get(
+              "channel_id"
+            )}&org_id=${urlParams.get("org_id")}`
+          );
+        } else {
+          setQuizId(quiz._id);
+        }
+      }}
     >
       <p className="text-xl">{quiz.title}</p>
       <div className="flex gap-7">
@@ -17,4 +30,4 @@ const QuizCard = ({ setQuizId ,quiz}) => {
   );
 };
 
-export default QuizCard
+export default QuizCard;

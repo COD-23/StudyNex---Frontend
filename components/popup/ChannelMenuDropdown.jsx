@@ -82,7 +82,7 @@ const ChannelMenuPopup = ({ data }) => {
                       className={classNames(
                         "cursor-pointer text-gray-900 flex px-4 py-2 text-sm items-center gap-2 hover:bg-gray-100"
                       )}
-                      href={`/admin/quiz/${channelDetails._id}?org_id=${orgDetails._id}`}
+                      href={`/admin/quiz?channel_id=${channelDetails._id}&org_id=${orgDetails._id}`}
                     >
                       <MdOutlineQuiz className="text-lg" />
                       Create Quiz
