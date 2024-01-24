@@ -42,11 +42,11 @@ const CustomGraphColumn = ({ value, data }) => {
 
 const MedalItem = (rank) => {
   return rank.rank == 1 ? (
-    <Medal className="h-7 w-7 text-yellow-600 animate-pulse" />
+    <Medal className="h-7 w-7 text-[#F3CC3C] animate-pulse" />
   ) : rank.rank == 2 ? (
-    <Medal className="h-6 w-6 text-yellow-600 animate-pulse" />
+    <Medal className="h-6 w-6 text-gray-500 animate-pulse" />
   ) : rank.rank == 3 ? (
-    <Medal className="h-5 w-5 text-yellow-600 animate-pulse" />
+    <Medal className="h-5 w-5 text-orange-400 animate-pulse" />
   ) : null;
 };
 
@@ -199,9 +199,9 @@ const LeaderTable = ({ data }) => {
     },
   ];
   return (
-    <div className="mx-24 my-7 bg-white shadow-2xl rounded-xl">
+    <div className="mx-5 md:mx-24 max-w-[90vw] my-7 bg-white shadow-2xl rounded-xl">
       <DataGrid
-        className="max-h-[80vh] px-6 py-4"
+        className="max-h-[90vh] md:max-h-[80vh] px-6 py-4"
         style={{ fontSize: "18px" }}
         rows={data}
         columns={columns}

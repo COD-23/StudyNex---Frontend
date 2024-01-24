@@ -13,6 +13,7 @@ const LeaderBoardSection = () => {
   const getUsersData = async () => {
     try {
       const response = await getRequest({
+        params: `/${getCookie("org")}`,
         url: getUserProgress,
         token: getCookie("token"),
       });
@@ -41,7 +42,13 @@ const LeaderBoardSection = () => {
           <LeaderBoardHeader />
           <LeaderTable data={usersData} />
         </motion.div>
-      ) : null}
+      ) : (
+        <div className="flex h-screen items-center justify-center">
+          <p className="text-2xl">
+            None of the users have participated in quizzes....
+          </p>
+        </div>
+      )}
     </>
   );
 };

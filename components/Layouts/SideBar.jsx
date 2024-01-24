@@ -6,14 +6,7 @@ import { MdGroups2, MdOutlineQuiz } from "react-icons/md";
 import { motion } from "framer-motion";
 import { CgMenuGridR } from "react-icons/cg";
 import { orgStore } from "@/store/orgStore";
-import { getRequest, postRequest } from "@/config/axiosInterceptor";
-import {
-  accessChat,
-  fetchMessages,
-  getChannel,
-} from "../Constants/apiEndpoints";
 import { getCookie } from "cookies-next";
-import toast from "react-hot-toast";
 import { channelStore } from "@/store/channelStore";
 import { userDetailsStore } from "@/store/userStore";
 import { nameInitials } from "@/helperFunctions/nameInitials";
@@ -26,7 +19,14 @@ import { isEmpty } from "lodash";
 import { initiateChat, loadChannelData } from "@/lib/ChannelApi";
 import { BarChart3 } from "lucide-react";
 
-const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab,  setActiveMobile, isActiveMobile, }) => {
+const SideBar = ({
+  channelsData,
+  setPopup,
+  setActiveTab,
+  activeTab,
+  setActiveMobile,
+  isActiveMobile,
+}) => {
   const orgDetails = orgStore((state) => state.orgDetails);
   const token = getCookie("token");
   const setChannelDetails = channelStore((state) => state.setChannelDetails);

@@ -7,7 +7,7 @@ import { channelStore } from "@/store/channelStore";
 import { chatStore } from "@/store/chatStore";
 import { activeOrgChannel } from "@/store/activeOrgChannel";
 
-export const OrgChannels = ({ data, index,setActiveMobile }) => {
+export const OrgChannels = ({ data, index, setActiveMobile }) => {
   const Icon = data.icon;
   const generalChannel = generalChannelStore((state) => state.generalChannel);
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
@@ -27,6 +27,8 @@ export const OrgChannels = ({ data, index,setActiveMobile }) => {
       setChannelDetails(channelData ? channelData : null);
       setChatDetails(chatData ? chatData : null);
     }
+    window.history.pushState("#", null, null);
+    setActiveMobile(true);
     setOrgActiveChannel(channel);
   };
   return (
@@ -62,7 +64,7 @@ export const UserChannels = ({ data, index, setActiveMobile }) => {
   const orgChannels = ["General", "Assessments", "Leaderboard"];
 
   const handleChannelClick = async () => {
-    setOrgActiveChannel(data.name)
+    setOrgActiveChannel(data.name);
     const channelData = await loadChannelData(data?._id);
     const chatData = await initiateChat(data?.name, data?.users);
     setChannelDetails(channelData ? channelData : null);
@@ -70,10 +72,6 @@ export const UserChannels = ({ data, index, setActiveMobile }) => {
     window.history.pushState("#", null, null);
     setActiveMobile(true);
   };
-
-  // useEffect(() => {
-  //   !orgChannels.includes(orgActiveChannel) && handleChannelClick();
-  // }, [orgActiveChannel]);
 
   return (
     data?.name !== "General" && (
@@ -86,7 +84,6 @@ export const UserChannels = ({ data, index, setActiveMobile }) => {
         }}
         key={index}
         className="flex items-center relative py-5"
-        // onClick={() => setOrgActiveChannel(data.name)}
         onClick={handleChannelClick}
       >
         <div className="border-2 border-t-gray-300 border-b-0 w-5" />
