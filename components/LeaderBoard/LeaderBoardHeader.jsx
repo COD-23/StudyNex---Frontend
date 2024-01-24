@@ -3,7 +3,7 @@ import Title from "../Helpers/Title";
 
 const LeaderBoardHeader = () => {
   return (
-    <div className="flex justify-center py-10">
+    <div className="flex justify-center py-10 px-10">
       <div className="text-2xl font-semibold">
         <span className="text-orange-500">
           Leaderboard Triumph:{" "}

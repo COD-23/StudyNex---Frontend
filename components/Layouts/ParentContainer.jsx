@@ -22,7 +22,6 @@ const ParentContainer = ({ children, orgData, channelsData }) => {
     (state) => state.setGeneralChannel
   );
   const [activeTab, setActiveTab] = useState("General");
-  const orgChannel = activeOrgChannel((state) => state.orgChannel);
 
   useEffect(() => {
     if (isEmpty(userDetails)) getUserDetails();
