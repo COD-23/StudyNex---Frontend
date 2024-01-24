@@ -2,16 +2,14 @@ import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import classNames from "classnames";
 import { generalChannelStore } from "@/store/generalChannelStore";
-import { initiateChat, loadChannelData } from "@/lib/ChannelApi";
+import { loadChannelData } from "@/lib/ChannelApi";
 import { channelStore } from "@/store/channelStore";
-import { chatStore } from "@/store/chatStore";
 import { activeOrgChannel } from "@/store/activeOrgChannel";
 
 export const OrgChannels = ({ data, index, setActiveMobile }) => {
   const Icon = data.icon;
   const generalChannel = generalChannelStore((state) => state.generalChannel);
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
-  const setChatDetails = chatStore((state) => state.setChatDetails);
   const orgActiveChannel = activeOrgChannel((state) => state.orgChannel);
   const setOrgActiveChannel = activeOrgChannel((state) => state.setOrgChannel);
 
@@ -20,12 +18,7 @@ export const OrgChannels = ({ data, index, setActiveMobile }) => {
     setActiveMobile(true);
     if (channel === "General") {
       const channelData = await loadChannelData(generalChannel?._id);
-      const chatData = await initiateChat(
-        generalChannel?.name,
-        generalChannel?.users
-      );
       setChannelDetails(channelData ? channelData : null);
-      setChatDetails(chatData ? chatData : null);
     }
     window.history.pushState("#", null, null);
     setActiveMobile(true);
@@ -58,7 +51,6 @@ export const OrgChannels = ({ data, index, setActiveMobile }) => {
 
 export const UserChannels = ({ data, index, setActiveMobile }) => {
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
-  const setChatDetails = chatStore((state) => state.setChatDetails);
   const orgActiveChannel = activeOrgChannel((state) => state.orgChannel);
   const setOrgActiveChannel = activeOrgChannel((state) => state.setOrgChannel);
   const orgChannels = ["General", "Assessments", "Leaderboard"];
@@ -66,9 +58,7 @@ export const UserChannels = ({ data, index, setActiveMobile }) => {
   const handleChannelClick = async () => {
     setOrgActiveChannel(data.name);
     const channelData = await loadChannelData(data?._id);
-    const chatData = await initiateChat(data?.name, data?.users);
     setChannelDetails(channelData ? channelData : null);
-    setChatDetails(chatData ? chatData : null);
     window.history.pushState("#", null, null);
     setActiveMobile(true);
   };

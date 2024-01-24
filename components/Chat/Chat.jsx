@@ -6,22 +6,21 @@ import { isEmpty } from "lodash";
 import { userDetailsStore } from "@/store/userStore";
 import { getRequest } from "@/config/axiosInterceptor";
 import { fetchMessages } from "../Constants/apiEndpoints";
-import { chatStore } from "@/store/chatStore";
 import toast from "react-hot-toast";
 import socket from "@/lib/socketInstance";
 import { MessageSkeleton } from "../Layouts/Skeleton";
 import { format, isToday, isYesterday } from "date-fns";
 import * as animationData from "../../public/Assets/Lotties/MessageLottie.json";
 import Lottie from "react-lottie";
+import { channelStore } from "@/store/channelStore";
 
 const Chat = ({ messages, setMessages }) => {
   const [isLoading, setIsLoading] = useState(false);
   const userDetails = userDetailsStore((state) => state.userDetails);
   const [connectionStatus, setConnectionStatus] = useState(false);
-  const chatDetails = chatStore((state) => state.chatDetails);
   const token = getCookie("token");
-  // const postedDate = new Date(data?.createdAt);
-  const currentDate = new Date();
+  const channelDetails = channelStore((state) => state.channelDetails);
+  // const currentDate = new Date();
   let lastFormattedDate;
   let dateHeading;
 
@@ -50,7 +49,7 @@ const Chat = ({ messages, setMessages }) => {
       try {
         const response = await getRequest({
           url: fetchMessages,
-          params: `/${chatDetails?._id}`,
+          params: `/${channelDetails?._id}`,
           token: token,
         });
         const data = response.data.data;
@@ -59,7 +58,7 @@ const Chat = ({ messages, setMessages }) => {
           else {
             setIsLoading(false);
             setMessages(data);
-            socket.emit("join chat", chatDetails?._id);
+            socket.emit("join chat", channelDetails?._id);
           }
         }
       } catch (error) {
@@ -69,7 +68,7 @@ const Chat = ({ messages, setMessages }) => {
       }
     };
     fetchMsg();
-  }, [chatDetails]);
+  }, [channelDetails]);
 
   useEffect(() => {
     const handleReceivedMessage = (newMessage) => {
@@ -127,7 +126,7 @@ const Chat = ({ messages, setMessages }) => {
           ))
         ) : !isLoading ? (
           <div className="md:w-[50%] md:m-auto md:p-20">
-            <Lottie options={defaultOptions}/>
+            <Lottie options={defaultOptions} />
             <p className="text-center text-lg">No messages to display</p>
           </div>
         ) : (

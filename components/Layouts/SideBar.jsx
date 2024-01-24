@@ -6,17 +6,15 @@ import { MdGroups2, MdOutlineQuiz } from "react-icons/md";
 import { motion } from "framer-motion";
 import { CgMenuGridR } from "react-icons/cg";
 import { orgStore } from "@/store/orgStore";
-import { getCookie } from "cookies-next";
 import { channelStore } from "@/store/channelStore";
 import { userDetailsStore } from "@/store/userStore";
 import { nameInitials } from "@/helperFunctions/nameInitials";
 import MenuPopup from "../popup/MenuPopup";
 import { OrgChannels, UserChannels } from "../Organization/Channel/Channels";
-import { chatStore } from "@/store/chatStore";
 import { useRouter } from "next/navigation";
 import { generalChannelStore } from "@/store/generalChannelStore";
 import { isEmpty } from "lodash";
-import { initiateChat, loadChannelData } from "@/lib/ChannelApi";
+import { loadChannelData } from "@/lib/ChannelApi";
 import { BarChart3 } from "lucide-react";
 
 const SideBar = ({
@@ -28,10 +26,8 @@ const SideBar = ({
   isActiveMobile,
 }) => {
   const orgDetails = orgStore((state) => state.orgDetails);
-  const token = getCookie("token");
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
   const userDetails = userDetailsStore((state) => state.userDetails);
-  const setChatDetails = chatStore((state) => state.setChatDetails);
   const [showMenu, setShowMenu] = useState(false);
   const router = useRouter();
   const generalChannel = generalChannelStore((state) => state.generalChannel);
@@ -55,14 +51,8 @@ const SideBar = ({
 
   useEffect(() => {
     const getGenaralChannel = async () => {
-      console.log("On page load");
       const channelData = await loadChannelData(generalChannel?._id);
-      const chatData = await initiateChat(
-        generalChannel?.name,
-        generalChannel?.users
-      );
       setChannelDetails(channelData ? channelData : null);
-      setChatDetails(chatData ? chatData : null);
     };
     setTimeout(() => {
       if (!isEmpty(generalChannel)) {
@@ -109,8 +99,6 @@ const SideBar = ({
               data={item}
               index={index}
               channelsData={channelsData}
-              loadChannelData={loadChannelData}
-              initiateChat={initiateChat}
               setActiveMobile={setActiveMobile}
             />
           );
@@ -137,9 +125,6 @@ const SideBar = ({
               data={item}
               key={index}
               activeTab={activeTab}
-              setActiveTab={setActiveTab}
-              loadChannelData={loadChannelData}
-              initiateChat={initiateChat}
               setActiveMobile={setActiveMobile}
             />
           );

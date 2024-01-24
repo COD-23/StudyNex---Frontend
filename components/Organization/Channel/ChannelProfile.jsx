@@ -80,7 +80,7 @@ const ChannelProfile = () => {
 
   useEffect(() => {
     if (!isEmpty(channelDetails)) fetchChannelMembers();
-  }, [channelDetails]);
+  }, []);
 
   useEffect(() => {
     if (!isEmpty(channelDetails)) delayedQuery();
@@ -105,7 +105,6 @@ const ChannelProfile = () => {
     };
     if (!isEmpty(newChannelName) && !isEditChannel) renameChannelName();
   }, [newChannelName, isEditChannel]);
-
 
   useEffect(() => {
     if (isMobile) {

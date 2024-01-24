@@ -9,7 +9,6 @@ import { sendMessage } from "../Constants/apiEndpoints";
 import { channelStore } from "@/store/channelStore";
 import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
-import { chatStore } from "@/store/chatStore";
 import socket from "@/lib/socketInstance";
 import MediaPopup from "../popup/MediaPopup";
 import { motion } from "framer-motion";
@@ -19,7 +18,6 @@ import { Player } from "video-react";
 const ChatInput = ({ setMessages }) => {
   const [emojiPicker, setEmojiPicker] = useState(false);
   const [mediaPicker, setMediaPicker] = useState(false);
-  const chatDetails = chatStore((state) => state.chatDetails);
   const channelDetails = channelStore((state) => state.channelDetails);
   const [messageContent, setMessageContent] = useState("");
   const [fileContent, setFileContent] = useState("");
@@ -62,7 +60,7 @@ const ChatInput = ({ setMessages }) => {
       receiver: channelDetails?.users,
       content: messageContent,
       attachments: fileContent,
-      chat: chatDetails?._id,
+      channel: channelDetails?._id,
       mediaType: returnMediaType(),
     };
     try {
@@ -74,7 +72,7 @@ const ChatInput = ({ setMessages }) => {
       const data = response.data.data;
       if (data) {
         setMessages((prev) => [...prev, data]);
-        socket.emit("new_message", data, chatDetails?._id);
+        socket.emit("new_message", data, channelDetails?._id);
         setFilePreview(null);
       }
     } catch (error) {

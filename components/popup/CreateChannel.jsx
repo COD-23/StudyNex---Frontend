@@ -8,16 +8,10 @@ import { createChannelApi } from "../Constants/apiEndpoints";
 import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
 import { postRequest } from "@/config/axiosInterceptor";
-import { initiateChat, loadChannelData } from "@/lib/ChannelApi";
+import { loadChannelData } from "@/lib/ChannelApi";
 import { channelStore } from "@/store/channelStore";
-import { chatStore } from "@/store/chatStore";
 import { activeOrgChannel } from "@/store/activeOrgChannel";
-const CreateChannel = ({
-  orgDetails,
-  setPopup,
-  channelsData,
-  setActiveTab,
-}) => {
+const CreateChannel = ({ orgDetails, setPopup, channelsData }) => {
   const {
     register,
     handleSubmit,
@@ -27,9 +21,7 @@ const CreateChannel = ({
   } = useForm();
 
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
-  const setChatDetails = chatStore((state) => state.setChatDetails);
   const setOrgActiveChannel = activeOrgChannel((state) => state.setOrgChannel);
-
 
   useEffect(() => {
     setValue("org_id", orgDetails._id);
@@ -38,9 +30,7 @@ const CreateChannel = ({
   const handleChannelCreation = async (data) => {
     setOrgActiveChannel(data.name);
     const channelData = await loadChannelData(data?._id);
-    const chatData = await initiateChat(data?.name, data?.users);
     setChannelDetails(channelData ? channelData : null);
-    setChatDetails(chatData ? chatData : null);
   };
 
   const onSubmit = async (data) => {
