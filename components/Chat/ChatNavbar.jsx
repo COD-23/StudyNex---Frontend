@@ -34,7 +34,7 @@ const ChatNavbar = ({ data = null }) => {
       >
         {data && (
           <div>
-            <ArrowLeft onClick={() => router.push(`/org/${orgDetails._id}`)} />
+            <ArrowLeft onClick={() => router.push(`/`)} />
           </div>
         )}
         <Image src={QuizLogo} alt="" className="w-12 h-12 rounded-full" />

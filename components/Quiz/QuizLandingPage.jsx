@@ -7,6 +7,7 @@ import { postRequest } from "@/config/axiosInterceptor";
 import { getCookie } from "cookies-next";
 import { useParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { activeOrgChannel } from "@/store/activeOrgChannel";
 
 const QuizLandingPage = ({ quiz, quizData }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -22,6 +23,7 @@ const QuizLandingPage = ({ quiz, quizData }) => {
     }))
   );
   const urlParams = new URLSearchParams(window.location.search);
+  const setOrgActiveChannel = activeOrgChannel((state) => state.setOrgChannel);
 
   const handleNext = () => {
     if (currentQuestionIndex < quiz.length - 1) {
@@ -40,13 +42,18 @@ const QuizLandingPage = ({ quiz, quizData }) => {
           token: getCookie("token"),
         });
         const res = response;
-          setLoading(false);
-          console.log(res);
+        setLoading(false);
+        console.log(res);
+        if (urlParams.get("org")) {
+          setOrgActiveChannel("Assessments");
+          router.push("/");
+        } else {
           router.push(
             `/quiz?channel_id=${urlParams.get(
               "channel_id"
             )}&org_id=${urlParams.get("org_id")}`
           );
+        }
       } catch (error) {
         toast.error("Something went wrong!!");
         console.log(error);
