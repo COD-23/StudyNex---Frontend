@@ -6,6 +6,9 @@ import { getQuizDetail } from "../Constants/apiEndpoints";
 import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
 import Quiz from "./Quiz";
+import QuizTable from "./QuizTable";
+import QuizCard from "./QuizCard";
+
 const AllQuiz = ({ setCreatePage, quizData }) => {
   const [quizId, setQuizId] = useState(null);
   return !quizId ? (
@@ -41,18 +44,7 @@ const AllQuiz = ({ setCreatePage, quizData }) => {
           <>
             {quizData &&
               quizData.map((quiz, index) => (
-                <div
-                  key={index}
-                  className="border border-gray-300 w-full p-3 rounded-md text-blue-500 cursor-pointer "
-                  onClick={() => setQuizId(quiz._id)}
-                >
-                  <p className="text-xl">{quiz.title}</p>
-                  <div className="flex gap-7">
-                    <p className="text-gray-500">10 Questions</p>
-                    <p className="text-gray-500">10 Points</p>
-                  </div>
-                  <p>{format(new Date(quiz?.createdAt), "dd MMM, yyyy")}</p>
-                </div>
+                <QuizCard key={index} quiz={quiz} setQuizId={setQuizId}/>
               ))}
           </>
         )}
@@ -72,6 +64,8 @@ const QuizDetails = ({ setQuizId, quizId }) => {
   const [isLoading, setLoading] = useState(null);
   const [submissionsTrue, setSubmissionTrue] = useState(false);
 
+  console.log(submissionData);
+
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -84,7 +78,7 @@ const QuizDetails = ({ setQuizId, quizId }) => {
       if (response.status) {
         setData(JSON.parse(res?.quiz[0]?.quiz));
         setQuizData(res?.quiz[0]);
-        setSubmissionData(res.submissions);
+        setSubmissionData(res?.submissions);
         setLoading(false);
       }
     } catch (error) {
@@ -100,7 +94,7 @@ const QuizDetails = ({ setQuizId, quizId }) => {
 
   return !submissionsTrue ? (
     <div className="flex flex-col gap-3 h-full">
-      <div className="flex gap-5 px-10">
+      <div className="flex gap-5 lg:px-10 px-2">
         <button
           onClick={() => setQuizId(null)}
           className="bg-blue-500 text-white rounded-md px-4 py-2  w-fit flex gap-2"
@@ -108,14 +102,16 @@ const QuizDetails = ({ setQuizId, quizId }) => {
           <ArrowLeft />
           Back
         </button>
-        {data && <button
-          onClick={() => setSubmissionTrue(true)}
-          className="bg-blue-500 text-white rounded-md px-4 py-2  w-fit flex gap-2"
-        >
-          Check Submissions
-        </button>}
+        {data && (
+          <button
+            onClick={() => setSubmissionTrue(true)}
+            className="bg-blue-500 text-white rounded-md px-4 py-2  w-fit flex gap-2"
+          >
+            Check Submissions
+          </button>
+        )}
       </div>
-      <div className="flex justify-between px-10">
+      <div className="flex justify-between lg:px-10 px-2">
         <p className="font-bold">Quiz title : {quizData?.title}</p>
         <p>10 Points</p>
       </div>
@@ -135,14 +131,9 @@ const QuizDetails = ({ setQuizId, quizId }) => {
       )}
     </div>
   ) : (
-    <div className="px-10">
-      <button
-        onClick={() => setSubmissionTrue(false)}
-        className="bg-blue-500 text-white rounded-md px-4 py-2  w-fit flex gap-2"
-      >
-        <ArrowLeft />
-        Back
-      </button>
-    </div>
+    <QuizTable
+      submissionData={submissionData}
+      setSubmissionTrue={setSubmissionTrue}
+    />
   );
 };

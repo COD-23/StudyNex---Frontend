@@ -29,3 +29,4 @@ export const sendMessage = "/send-message";
 export const deleteMessage = "/delete-message";
 export const getAdminQuizzes = "/get-quizzes";
 export const getQuizDetail = "/get-quiz";
+export const createNewQuizApi = "/create-quiz";

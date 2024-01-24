@@ -3,7 +3,7 @@ import React from "react";
 
 const Quiz = ({ question, handleAnswer = () => void 0, listing = false }) => {
   return (
-    <div className="px-10 py-8">
+    <div className="py-8 lg:px-10 px-2">
       <p className="text-base font-semibold">
         Q {question.id} : {question?.question}
       </p>

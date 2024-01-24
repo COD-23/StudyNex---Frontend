@@ -5,10 +5,15 @@ import { Pdf } from "../Constants/imageContants";
 import Quiz from "./Quiz";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { postRequest } from "@/config/axiosInterceptor";
+import { createNewQuizApi } from "../Constants/apiEndpoints";
+import { useParams } from "next/navigation";
+import { getCookie } from "cookies-next";
 
 const NewQuiz = ({ setCreatePage }) => {
   const [quiz, setQuiz] = useState(null);
   const [file, setFile] = useState(null);
+  const [title, setTitle] = useState(null);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -32,7 +37,7 @@ const NewQuiz = ({ setCreatePage }) => {
       {!quiz ? (
         <>
           <button
-            onClick={()=>setCreatePage(false)}
+            onClick={() => setCreatePage(false)}
             className="bg-blue-500 text-white rounded-md px-4 py-2  w-fit flex gap-2"
           >
             <ArrowLeft />
@@ -48,8 +53,8 @@ const NewQuiz = ({ setCreatePage }) => {
                 type="text"
                 required={true}
                 placeholder="Quiz Title"
-                //   value={roomId}
-                //   onChange={(e) => setRoomId(e.target.value)}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
               />
             </div>
           </div>
@@ -91,7 +96,7 @@ const NewQuiz = ({ setCreatePage }) => {
           </button>
         </>
       ) : (
-        <DisplayQuiz quiz={quiz} />
+        <DisplayQuiz quiz={quiz} title={title} setQuiz={setQuiz} />
       )}
     </>
   );
@@ -99,21 +104,66 @@ const NewQuiz = ({ setCreatePage }) => {
 
 export default NewQuiz;
 
-const DisplayQuiz = ({ quiz }) => {
-  console.log(quiz);
+const DisplayQuiz = ({ quiz, title, setQuiz }) => {
+  const [isLoading, setLoading] = useState(false);
+  const params = useParams();
+  const urlParams = new URLSearchParams(window.location.search);
+
+  const createQuiz = async () => {
+    try {
+      setLoading(true);
+      const response = await postRequest({
+        url: createNewQuizApi,
+        body: {
+          title: title,
+          quiz: JSON.stringify(quiz),
+          channel_id: params.id,
+          org_id: urlParams.get("org_id"),
+        },
+        token: getCookie("token"),
+      });
+      const res = response.data.data;
+      if (response.status) {
+        console.log(res);
+        window.location.reload();
+      }
+    } catch (error) {
+      toast.error("Something went wrong!!");
+      setLoading(false);
+      console.log(error);
+    }
+  };
   return (
     <div className="h-full w-full">
-      {quiz && quiz.map((quiz, index) => (
-        <Quiz key={index} question={quiz} listing={true} />
-      ))}
-      <div className="w-full flex justify-end px-10">
+      <div className="flex flex-col gap-3">
         <button
-          // onClick={() => setCreatePage(true)}
+          onClick={() => setQuiz(null)}
+          className="bg-blue-500 text-white rounded-md px-4 py-2  w-fit flex gap-2"
+        >
+          <ArrowLeft />
+          Back
+        </button>
+        <p className="font-bold">Quiz title : {title}</p>
+      </div>
+
+      {quiz &&
+        quiz.map((quiz, index) => (
+          <Quiz key={index} question={quiz} listing={true} />
+        ))}
+      <div className="w-full flex justify-end lg:px-10 px-2">
+        <button
+          onClick={createQuiz}
           className="bg-blue-500 text-white rounded-md px-4 py-2 mb-6 hover:scale-105 transition duration-200 w-fit self-end"
         >
           Create new Quiz
         </button>
       </div>
+      {/* loader */}
+      {isLoading && (
+        <div className="absolute flex justify-center items-center inset-0 bg-black bg-opacity-75">
+          <div class="loader"></div>
+        </div>
+      )}
     </div>
   );
 };

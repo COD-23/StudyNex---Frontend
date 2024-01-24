@@ -16,7 +16,9 @@ const ChatNavbar = ({ data = null }) => {
     (state) => state.setShowChannelProfile
   );
   const channelDetails = channelStore((state) => state.channelDetails);
-  const router = useRouter()
+  const userDetails = userDetailsStore((state) => state.userDetails);
+  const router = useRouter();
+
   return (
     <div className="w-full bg-white flex px-4 py-3 justify-between items-center z-50 shadow-sm">
       <div
@@ -28,9 +30,11 @@ const ChatNavbar = ({ data = null }) => {
           }
         }}
       >
-        {data && <div>
-          <ArrowLeft onClick={()=>router.back()}/>
-        </div>}
+        {data && (
+          <div>
+            <ArrowLeft onClick={() => router.back()} />
+          </div>
+        )}
         <Image src={QuizLogo} alt="" className="w-12 h-12 rounded-full" />
         <div>
           <p>{data ? data.name : channelDetails?.name}</p>
@@ -41,13 +45,15 @@ const ChatNavbar = ({ data = null }) => {
       </div>
       {!data && (
         <div className="flex gap-3 text-2xl items-center">
-          <Link href={`/quiz/${quiz.id}`}>
-            <Image
-              src={QuizIcon}
-              alt=""
-              className="w-10 h-10 rounded-full cursor-pointer"
-            />
-          </Link>
+          {channelDetails?.admin_id?._id !== userDetails?._id && (
+            <Link href={`/quiz/${quiz.id}`}>
+              <Image
+                src={QuizIcon}
+                alt=""
+                className="w-10 h-10 rounded-full cursor-pointer"
+              />
+            </Link>
+          )}
           <ChannelMenuPopup data={channelDetails} />
         </div>
       )}
