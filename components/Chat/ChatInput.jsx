@@ -116,7 +116,7 @@ const ChatInput = ({ setMessages }) => {
               src={filePreview}
             />
           ) : fileType === "video" ? (
-            <Player fluid={false} src={filePreview} aspectRatio="4:3" />
+            <Player fluid={false} src={filePreview} aspectRatio="3:2" />
           ) : fileType === "document" ? (
             <iframe
               className="bg-transparent focus:outline-none text-gray-500 rounded-xl shadow-2xl"

@@ -9,7 +9,7 @@ import "video-react/dist/video-react.css";
 import { Player } from "video-react";
 import Head from "next/head";
 import Link from "next/link";
-import { differenceInHours, format} from "date-fns";
+import { differenceInHours, format } from "date-fns";
 
 const Message = ({ data, setMessages, messages }) => {
   const userDetails = userDetailsStore((state) => state.userDetails);
@@ -23,7 +23,7 @@ const Message = ({ data, setMessages, messages }) => {
   const partMessage = data?.content.split(linkRegex);
 
   useEffect(() => {
-      setFormattedDate(format(new Date(data?.createdAt),"HH:mm"));
+    setFormattedDate(format(new Date(data?.createdAt), "HH:mm"));
   }, []);
 
   return (
@@ -68,7 +68,7 @@ const Message = ({ data, setMessages, messages }) => {
             (data?.mediaType === "Image" ? (
               <img
                 src={data?.attachments}
-                className="md:max-w-[400px] max-w-[300px] rounded-md mb-2 cursor-pointer pb-2"
+                className="md:max-w-[400px] max-w-[250px] rounded-md mb-2 cursor-pointer pb-2"
                 onClick={() => setIsViewerOpen(true)}
               />
             ) : data?.mediaType === "Video" ? (

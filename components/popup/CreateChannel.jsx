@@ -11,6 +11,7 @@ import { postRequest } from "@/config/axiosInterceptor";
 import { initiateChat, loadChannelData } from "@/lib/ChannelApi";
 import { channelStore } from "@/store/channelStore";
 import { chatStore } from "@/store/chatStore";
+import { activeOrgChannel } from "@/store/activeOrgChannel";
 const CreateChannel = ({
   orgDetails,
   setPopup,
@@ -27,13 +28,15 @@ const CreateChannel = ({
 
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
   const setChatDetails = chatStore((state) => state.setChatDetails);
+  const setOrgActiveChannel = activeOrgChannel((state) => state.setOrgChannel);
+
 
   useEffect(() => {
     setValue("org_id", orgDetails._id);
   }, [orgDetails]);
 
   const handleChannelCreation = async (data) => {
-    setActiveTab(data.name);
+    setOrgActiveChannel(data.name);
     const channelData = await loadChannelData(data?._id);
     const chatData = await initiateChat(data?.name, data?.users);
     setChannelDetails(channelData ? channelData : null);
@@ -52,7 +55,7 @@ const CreateChannel = ({
         toast.success("Channel created Successfully!");
         setPopup(false);
         channelsData.unshift(response.data.data);
-        // setActiveTab(response.data.data.name);
+        // setOrgActiveChannel(response.data.data.name);
         handleChannelCreation(response.data.data);
       } else {
         toast.error(response?.data?.message);

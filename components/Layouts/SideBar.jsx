@@ -53,53 +53,9 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab,  setActiveMo
     []
   );
 
-  // const loadChannelData = async (id) => {
-  //   try {
-  //     const response = await getRequest({
-  //       url: getChannel,
-  //       params: `/${id}`,
-  //       token: token,
-  //     });
-  //     const data = response.data.data;
-  //     if (response.status) {
-  //       setChannelDetails(data);
-  //     }
-  //   } catch (error) {
-  //     toast.error("Something went wrong");
-  //     console.log(error);
-  //   }
-  // };
-
-  // const initiateChat = async (name, users) => {
-  //   const body = {
-  //     chatName: name,
-  //     userList: users,
-  //   };
-  //   try {
-  //     const response = await postRequest({
-  //       url: accessChat,
-  //       body: body,
-  //       token: token,
-  //     });
-  //     const data = response.data.data;
-  //     if (response.status) {
-  //       setChatDetails(data);
-  //     }
-  //   } catch (error) {
-  //     toast.error("Couldn't iniate chat");
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const data = channelsData[0];
-  //   loadChannelData(data?._id);
-  //   initiateChat(data?.name, data?.users);
-  //   // console.log(channelsData);
-  // }, [channelsData[0]]);
-
   useEffect(() => {
     const getGenaralChannel = async () => {
+      console.log("On page load");
       const channelData = await loadChannelData(generalChannel?._id);
       const chatData = await initiateChat(
         generalChannel?.name,
@@ -153,8 +109,6 @@ const SideBar = ({ channelsData, setPopup, setActiveTab, activeTab,  setActiveMo
               data={item}
               index={index}
               channelsData={channelsData}
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
               loadChannelData={loadChannelData}
               initiateChat={initiateChat}
               setActiveMobile={setActiveMobile}
