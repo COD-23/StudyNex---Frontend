@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import classNames from "classnames";
 import { generalChannelStore } from "@/store/generalChannelStore";
@@ -43,18 +43,24 @@ export const OrgChannels = ({ data, index }) => {
       onClick={() => handleChannelClick(data.name)}
     >
       <Icon className="h-6 w-6" />
-      <p className={classNames(orgActiveChannel == data.name && "font-semibold")}>
+      <p
+        className={classNames(orgActiveChannel == data.name && "font-semibold")}
+      >
         {data.name}
       </p>
     </motion.li>
   );
 };
 
-export const UserChannels = ({ data, index, activeTab, setActiveTab,setActiveMobile }) => {
+export const UserChannels = ({ data, index, setActiveMobile }) => {
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
   const setChatDetails = chatStore((state) => state.setChatDetails);
+  const orgActiveChannel = activeOrgChannel((state) => state.orgChannel);
+  const setOrgActiveChannel = activeOrgChannel((state) => state.setOrgChannel);
+  const orgChannels = ["General", "Assessments", "Leaderboard"];
+
   const handleChannelClick = async () => {
-    setActiveTab(data.name);
+    setOrgActiveChannel(data.name)
     const channelData = await loadChannelData(data?._id);
     const chatData = await initiateChat(data?.name, data?.users);
     setChannelDetails(channelData ? channelData : null);
@@ -62,6 +68,10 @@ export const UserChannels = ({ data, index, activeTab, setActiveTab,setActiveMob
     window.history.pushState("#", null, null);
     setActiveMobile(true);
   };
+
+  // useEffect(() => {
+  //   !orgChannels.includes(orgActiveChannel) && handleChannelClick();
+  // }, [orgActiveChannel]);
 
   return (
     data?.name !== "General" && (
@@ -74,20 +84,29 @@ export const UserChannels = ({ data, index, activeTab, setActiveTab,setActiveMob
         }}
         key={index}
         className="flex items-center relative py-5"
+        // onClick={() => setOrgActiveChannel(data.name)}
         onClick={handleChannelClick}
       >
         <div className="border-2 border-t-gray-300 border-b-0 w-5" />
         <div
           className={classNames(
             "absolute left-8 right-0 flex gap-1 datas-center p-2  lg:cursor-pointer rounded-md hover:bg-gray-100",
-            activeTab == data.name &&
+            orgActiveChannel == data.name &&
               "gradient-transition text-white hover:bg-[#919eb7]"
           )}
         >
-          <p className={classNames(activeTab == data.name && "font-semibold")}>
+          <p
+            className={classNames(
+              orgActiveChannel == data.name && "font-semibold"
+            )}
+          >
             #
           </p>
-          <p className={classNames(activeTab == data.name && "font-semibold")}>
+          <p
+            className={classNames(
+              orgActiveChannel == data.name && "font-semibold"
+            )}
+          >
             {data?.name}
           </p>
         </div>

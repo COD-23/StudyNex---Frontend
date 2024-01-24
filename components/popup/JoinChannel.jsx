@@ -12,14 +12,17 @@ import toast from "react-hot-toast";
 import { channelStore } from "@/store/channelStore";
 import { chatStore } from "@/store/chatStore";
 import { initiateChat, loadChannelData } from "@/lib/ChannelApi";
+import { activeOrgChannel } from "@/store/activeOrgChannel";
 
-const JoinChannel = ({ orgDetails, setPopup, channelsData, setActiveTab }) => {
+const JoinChannel = ({ orgDetails, setPopup, channelsData }) => {
   const [allChannelsData, setAllChannelsData] = useState([]);
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
   const setChatDetails = chatStore((state) => state.setChatDetails);
+  const setOrgActiveChannel = activeOrgChannel((state) => state.setOrgChannel);
+
 
   const handleChannelJoining = async (data) => {
-    setActiveTab(data.name);
+    setOrgActiveChannel(data.name);
     const channelData = await loadChannelData(data?._id);
     const chatData = await initiateChat(data?.name, data?.users);
     setChannelDetails(channelData ? channelData : null);
@@ -56,7 +59,7 @@ const JoinChannel = ({ orgDetails, setPopup, channelsData, setActiveTab }) => {
       });
       if (response?.data?.status) {
         channelsData.unshift(response?.data?.data);
-        setActiveTab(response?.data?.data?.name);
+        setOrgActiveChannel(response?.data?.data?.name);
         setPopup(false);
         handleChannelJoining(response?.data?.data);
       } else {
