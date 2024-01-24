@@ -79,7 +79,8 @@ const ChannelProfile = () => {
   ]);
 
   useEffect(() => {
-    if (!isEmpty(channelDetails)) fetchChannelMembers();
+    // if (!isEmpty(channelDetails))
+    fetchChannelMembers();
   }, []);
 
   useEffect(() => {
