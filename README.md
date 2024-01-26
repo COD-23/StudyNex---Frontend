@@ -4,6 +4,7 @@ StudyNex....as the name suggests is the next generation virtual group study plat
 All the students & teachers of the organizations can have a insightful communication through interactive channels where teachers can upload study documents, arrange assessments for the students. Also if a group of students wants to study only in their anonymous group then they can create their own private channels where they can interact.
 
 Workflow:-
+
 Organization should register themselves.
 Separate general channel will be created for each organization.
 Then admin can share organization invite code to their repective entities in the organization such as teachers,students etc.
@@ -16,7 +17,10 @@ User can also view their profile which is updated along with the active particip
 Tech Stack Used:- 
 
 Frontend: Next.Js,React.Js,Tailwind CSS,Framer Motion,Material UI
+
 Backend: Node.js,Express.js,Python,MongoDB,Cloudinary (for storing media content)
+
 API Management: Postman
+
 Project Deployment: Vercel (Frontend), Onrender(Backend)
 
