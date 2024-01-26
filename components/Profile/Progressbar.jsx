@@ -1,11 +1,5 @@
-import {
-  BarElement,
-  Legend,
-  LinearScale,
-  Title,
-  Tooltip,
-} from "chart.js";
-import { Chart as ChartJS } from 'chart.js/auto'
+import { BarElement, Legend, LinearScale, Title, Tooltip } from "chart.js";
+import { Chart as ChartJS } from "chart.js/auto";
 import React, { useEffect, useRef } from "react";
 import { Bar } from "react-chartjs-2";
 
@@ -56,7 +50,7 @@ const Progressbar = () => {
   useEffect(() => {
     return () => {
       if (chartRef.current) {
-        chartRef.current.chartInstance.destroy();
+        chartRef?.current?.chartInstance?.destroy();
       }
     };
   }, []);

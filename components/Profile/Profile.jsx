@@ -13,9 +13,11 @@ import Image from "next/image";
 import { Defaultpic } from "../Constants/imageContants";
 import Logout from "./Logout";
 import classNames from "classnames";
+import { userDetailsStore } from "@/store/userStore";
 
 const Profile = () => {
   const [active, setActive] = useState("Info");
+  const userDetails = userDetailsStore((state) => state.userDetails);
   const menuData = useMemo(
     () => [
       {
@@ -60,7 +62,9 @@ const Profile = () => {
             />
           </div>
           <div className="hidden md:h-16 md:w-80 md:bg-gradient-to-r from-blue-400 to-violet-600 md:rounded-lg md:my-20 md:ml-24 md:flex md:justify-center md:items-center md:shadow-2xl">
-            <p className="text-white text-2xl font-bold">Hey Krystal!!</p>
+            <p className="text-white text-2xl font-bold">
+              Hey {userDetails?.name}
+            </p>
           </div>
         </div>
       </div>
