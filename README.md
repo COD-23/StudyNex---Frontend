@@ -14,8 +14,12 @@ Users in the organization can participate in the assessments uploaded by the adm
 User can also view their profile which is updated along with the active participation of the user on our platform.
 
 Tech Stack Used:- 
+
 Frontend: Next.Js,React.Js,Tailwind CSS,Framer Motion,Material UI
+
 Backend: Node.js,Express.js,Python,MongoDB,Cloudinary (for storing media content)
+
 API Management: Postman
+
 Project Deployment: Vercel (Frontend), Onrender(Backend)
 
