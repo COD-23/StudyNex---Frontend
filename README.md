@@ -13,3 +13,9 @@ User can join to the only one organization and multiple channels at a time.
 Users in the organization can participate in the assessments uploaded by the admins in their respective channel and can watch their rankings in the leaderboard section section of the organization which indicates continuous progress in the form of points & graph.
 User can also view their profile which is updated along with the active participation of the user on our platform.
 
+Tech Stack Used:- 
+Frontend: Next.Js,React.Js,Tailwind CSS,Framer Motion,Material UI
+Backend: Node.js,Express.js,Python,MongoDB,Cloudinary (for storing media content)
+API Management: Postman
+
+
