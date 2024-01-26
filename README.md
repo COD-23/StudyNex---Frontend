@@ -19,4 +19,3 @@ Backend: Node.js,Express.js,Python,MongoDB,Cloudinary (for storing media content
 API Management: Postman
 Project Deployment: Vercel (Frontend), Onrender(Backend)
 
-
