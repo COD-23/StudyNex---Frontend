@@ -67,7 +67,7 @@ const Chat = ({ messages, setMessages }) => {
         toast.error("There is a problem fetching messages");
       }
     };
-    fetchMsg();
+    if (!isEmpty(channelDetails)) fetchMsg();
   }, [channelDetails]);
 
   useEffect(() => {

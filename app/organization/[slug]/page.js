@@ -12,7 +12,7 @@ export default async function page() {
     <ParentContainer orgData={orgData} channelsData={channelsData}>
       <div className="lg:flex">
         <OrgMainPage />
-        <ChannelProfile />
+        <ChannelProfile channelsData={channelsData} />
       </div>
     </ParentContainer>
   );

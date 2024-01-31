@@ -2,15 +2,20 @@
 import React, { useCallback, useEffect, useState } from "react";
 import RightContainer from "../../Layouts/RightContainer";
 import { BsSearch } from "react-icons/bs";
-import { MdDone, MdEdit } from "react-icons/md";
+import { MdDone, MdEdit, MdOutlineLogout } from "react-icons/md";
 import { channelProfileStore } from "@/store/channelProfileStore";
 import { CgClose } from "react-icons/cg";
 import { channelStore } from "@/store/channelStore";
 import { format } from "date-fns";
 import { debounce, isEmpty } from "lodash";
-import { postRequestV2, putRequest } from "@/config/axiosInterceptor";
+import {
+  getRequest,
+  postRequestV2,
+  putRequest,
+} from "@/config/axiosInterceptor";
 import {
   getChannelMembers,
+  leaveChannel,
   renameChannel,
 } from "@/components/Constants/apiEndpoints";
 import { getCookie } from "cookies-next";
@@ -19,10 +24,21 @@ import {
   ChannelProfileSkeleton,
 } from "@/components/Layouts/Skeleton";
 import ChannelMember from "@/components/Channel/ChannelMember";
-import ChannelFooter from "@/components/Channel/ChannelFooter";
 import { isMobile } from "react-device-detect";
+import toast from "react-hot-toast";
+import { activeOrgChannel } from "@/store/activeOrgChannel";
+import { loadChannelData } from "@/lib/ChannelApi";
+import { generalChannelStore } from "@/store/generalChannelStore";
 
-const ChannelProfile = () => {
+const ChannelProfile = ({ channelsData }) => {
+  const [channelMembers, setChannelMembers] = useState([]);
+  const [isEditChannel, setIsEditChannel] = useState(false);
+  const [searchKey, setSearchKey] = useState("");
+  const [newChannelName, setNewChannelName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const token = getCookie("token");
+  console.log(channelsData);
+
   const showChannelProfile = channelProfileStore(
     (state) => state.showChannelProfile
   );
@@ -32,15 +48,9 @@ const ChannelProfile = () => {
   const channelDetails = channelStore((state) => state.channelDetails);
   const setChannelDetails = channelStore((state) => state.setChannelDetails);
 
-  const isActiveMobile = channelStore((state) => state.isActiveMobile);
   const setActiveMobile = channelStore((state) => state.setActiveMobile);
-
-  const [channelMembers, setChannelMembers] = useState([]);
-  const [isEditChannel, setIsEditChannel] = useState(false);
-  const [searchKey, setSearchKey] = useState("");
-  const [newChannelName, setNewChannelName] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const token = getCookie("token");
+  const setOrgChannel = activeOrgChannel((state) => state.setOrgChannel);
+  const generalChannel = generalChannelStore((state) => state.generalChannel);
 
   let createdDate;
   if (!isEmpty(channelDetails)) {
@@ -79,9 +89,8 @@ const ChannelProfile = () => {
   ]);
 
   useEffect(() => {
-    // if (!isEmpty(channelDetails))
-    fetchChannelMembers();
-  }, []);
+    if (!isEmpty(channelDetails)) fetchChannelMembers();
+  }, [channelDetails]);
 
   useEffect(() => {
     if (!isEmpty(channelDetails)) delayedQuery();
@@ -119,6 +128,34 @@ const ChannelProfile = () => {
       };
     }
   }, []);
+
+  const handleLeaveChannel = async () => {
+    try {
+      const response = await getRequest({
+        url: leaveChannel,
+        params: channelDetails._id,
+        token: token,
+      });
+      const data = response.data.data;
+      if (data) {
+        setShowChannelProfile(false);
+        setOrgChannel("General");
+        handleChannelClick();
+        toast.success("Channel Leaved Successfully");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleChannelClick = async () => {
+    // window.history.pushState("#", null, null);
+    // setActiveMobile(true);
+    const channelData = await loadChannelData(generalChannel?._id);
+    setChannelDetails(channelData ? channelData : null);
+    // window.history.pushState("#", null, null);
+    // setActiveMobile(true);
+  };
 
   return (
     showChannelProfile && (
@@ -202,7 +239,15 @@ const ChannelProfile = () => {
               </div>
             </div>
             <hr className=" bg-white h-[2px] mx-4" />
-            <ChannelFooter />
+            <div className="text-sm">
+              <div
+                className="flex items-center gap-4 lg:cursor-pointer p-4"
+                onClick={handleLeaveChannel}
+              >
+                <MdOutlineLogout className="text-red-600 w-5 h-5" />
+                <p className="text-red-600">Leave Channel</p>
+              </div>
+            </div>
           </div>
         )}
       </RightContainer>

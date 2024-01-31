@@ -20,7 +20,6 @@ import { BarChart3 } from "lucide-react";
 const SideBar = ({
   channelsData,
   setPopup,
-  setActiveTab,
   activeTab,
   setActiveMobile,
   isActiveMobile,
@@ -50,6 +49,7 @@ const SideBar = ({
   );
 
   useEffect(() => {
+    console.log("general", generalChannel);
     const getGenaralChannel = async () => {
       const channelData = await loadChannelData(generalChannel?._id);
       setChannelDetails(channelData ? channelData : null);
