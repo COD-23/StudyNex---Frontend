@@ -7,6 +7,7 @@ import { channelProfileStore } from "@/store/channelProfileStore";
 import { isMobile } from "react-device-detect";
 import classNames from "classnames";
 import LeaderBoardSection from "./Channel/LeaderBoardSection";
+import StudentAllQuiz from "../Quiz/StudentAllQuiz";
 
 const OrgMainPage = () => {
   const orgActiveChannel = activeOrgChannel((state) => state.orgChannel);
@@ -45,7 +46,13 @@ const OrgMainPage = () => {
         `flex-1  md:flex flex-col transition h-screen`
       )}
     >
-      {orgActiveChannel === "Leaderboard" ? <LeaderBoardSection /> : <ChatSection />}
+      {orgActiveChannel === "Assessments" ? (
+        <StudentAllQuiz org={true}/>
+      ) : orgActiveChannel === "Leaderboard" ? (
+        <LeaderBoardSection />
+      ) : (
+        <ChatSection />
+      )}
     </div>
   );
 };

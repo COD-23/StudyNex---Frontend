@@ -10,6 +10,7 @@ import Link from "next/link";
 import { userDetailsStore } from "@/store/userStore";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { orgStore } from "@/store/orgStore";
 
 const ChatNavbar = ({ data = null }) => {
   const setShowChannelProfile = channelProfileStore(
@@ -17,6 +18,7 @@ const ChatNavbar = ({ data = null }) => {
   );
   const channelDetails = channelStore((state) => state.channelDetails);
   const userDetails = userDetailsStore((state) => state.userDetails);
+  const orgDetails = orgStore((state) => state.orgDetails);
   const router = useRouter();
 
   return (
@@ -32,7 +34,7 @@ const ChatNavbar = ({ data = null }) => {
       >
         {data && (
           <div>
-            <ArrowLeft onClick={() => router.back()} />
+            <ArrowLeft onClick={() => router.push(`/`)} />
           </div>
         )}
         <Image src={QuizLogo} alt="" className="w-12 h-12 rounded-full" />
@@ -46,7 +48,7 @@ const ChatNavbar = ({ data = null }) => {
       {!data && (
         <div className="flex gap-3 text-2xl items-center">
           {channelDetails?.admin_id?._id !== userDetails?._id && (
-            <Link href={`/quiz/${quiz.id}`}>
+            <Link href={`/quiz?channel_id=${channelDetails?._id}&org_id=${orgDetails?._id}`}>
               <Image
                 src={QuizIcon}
                 alt=""
