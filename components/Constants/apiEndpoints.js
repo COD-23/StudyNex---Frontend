@@ -32,3 +32,5 @@ export const deleteMessage = "/delete-message";
 export const getAdminQuizzes = "/get-quizzes";
 export const getQuizDetail = "/get-quiz";
 export const createNewQuizApi = "/create-quiz";
+export const getUserQuizzes = "/get-user-quizzes";
+export const submitQuiz = "/submit-quiz";
