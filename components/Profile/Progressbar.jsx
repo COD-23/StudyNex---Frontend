@@ -13,16 +13,15 @@ const options = {
     },
     title: {
       display: true,
-      text: "Chart.js Bar Chart",
     },
   },
 };
 const data = {
-  labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+  labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"],
   datasets: [
     {
-      label: "# of Votes",
-      data: [12, 19, 3, 5, 2, 3],
+      label: "No of points",
+      data: [20, 17, 30, 42, 28, 50],
       backgroundColor: [
         "rgba(255, 99, 132, 0.2)",
         "rgba(54, 162, 235, 0.2)",
@@ -57,7 +56,7 @@ const Progressbar = () => {
 
   return (
     <div>
-      <h2>Bar Example (custom size)</h2>
+      <h2>Your Weekly Progress Report</h2>
       <Bar
         data={data}
         width={400}
