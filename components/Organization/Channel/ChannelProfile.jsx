@@ -37,7 +37,6 @@ const ChannelProfile = ({ channelsData }) => {
   const [newChannelName, setNewChannelName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const token = getCookie("token");
-  console.log(channelsData);
 
   const showChannelProfile = channelProfileStore(
     (state) => state.showChannelProfile
@@ -138,6 +137,9 @@ const ChannelProfile = ({ channelsData }) => {
       });
       const data = response.data.data;
       if (data) {
+        channelsData = channelsData.filter(
+          (item) => item?._id !== channelDetails._id
+        );
         setShowChannelProfile(false);
         setOrgChannel("General");
         handleChannelClick();
@@ -213,7 +215,7 @@ const ChannelProfile = ({ channelsData }) => {
             </div>
             <hr className=" bg-white h-[2px] mx-4" />
 
-            <div className="flex flex-col py-2 h-[calc(100vh-55vh)] lg:h-[calc(100vh-60vh)] relative">
+            <div className="flex flex-col py-2 h-[calc(100vh-55vh)] lg:h-[calc(100vh-50vh)] relative">
               <div className="rounded-full w-full relative p-4 z-50">
                 <input
                   type="text"
@@ -238,16 +240,20 @@ const ChannelProfile = ({ channelsData }) => {
                 )}
               </div>
             </div>
-            <hr className=" bg-white h-[2px] mx-4" />
-            <div className="text-sm">
-              <div
-                className="flex items-center gap-4 lg:cursor-pointer p-4"
-                onClick={handleLeaveChannel}
-              >
-                <MdOutlineLogout className="text-red-600 w-5 h-5" />
-                <p className="text-red-600">Leave Channel</p>
-              </div>
-            </div>
+            {channelDetails?.name !== "General" && (
+              <>
+                <hr className=" bg-white h-[2px] mx-4" />
+                <div className="text-sm">
+                  <div
+                    className="flex items-center gap-4 lg:cursor-pointer p-4"
+                    onClick={handleLeaveChannel}
+                  >
+                    <MdOutlineLogout className="text-red-600 w-5 h-5" />
+                    <p className="text-red-600">Leave Channel</p>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         )}
       </RightContainer>

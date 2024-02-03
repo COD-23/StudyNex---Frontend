@@ -49,7 +49,6 @@ const SideBar = ({
   );
 
   useEffect(() => {
-    console.log("general", generalChannel);
     const getGenaralChannel = async () => {
       const channelData = await loadChannelData(generalChannel?._id);
       setChannelDetails(channelData ? channelData : null);
