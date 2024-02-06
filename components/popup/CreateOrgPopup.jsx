@@ -13,12 +13,13 @@ import { useRouter } from "next/navigation";
 import { getCookie, setCookie } from "cookies-next";
 import { userDetailsStore } from "@/store/userStore";
 import { generalChannelStore } from "@/store/generalChannelStore";
+import { useLoader } from "@/store/loaderStore";
 
 const CreateOrgPopup = ({ setPopup }) => {
   const [image, setImage] = useState(null);
-  const [loading, setLoading] = useState(false);
   const getUserDetails = userDetailsStore((state) => state.getUserDetails);
   const setGeneralChannel = generalChannelStore((state) => state.setGeneralChannel); 
+  const setLoading = useLoader((state) => state.setLoading);
 
   const {
     register,

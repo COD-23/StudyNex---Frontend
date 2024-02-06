@@ -10,10 +10,12 @@ import {  joinOrgApi } from '../Constants/apiEndpoints';
 import { getCookie, setCookie } from 'cookies-next';
 import toast from 'react-hot-toast';
 import { userDetailsStore } from '@/store/userStore';
+import { useLoader } from '@/store/loaderStore';
 
 const JoinOrgPopup = ({setPopup}) => {
 
   const getUserDetails = userDetailsStore((state) => state.getUserDetails);
+  const setLoading = useLoader((state) => state.setLoading);
 
   const {
     register,
@@ -26,6 +28,7 @@ const JoinOrgPopup = ({setPopup}) => {
 
   const submit = async (data) => {
     try {
+      setLoading(true);
       const response = await postRequest({
         url: joinOrgApi,
         body: data,
@@ -40,8 +43,10 @@ const JoinOrgPopup = ({setPopup}) => {
       } else {
         toast.error(response?.data?.message);
       }
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 

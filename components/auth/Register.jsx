@@ -16,12 +16,13 @@ import { postRequest } from "@/config/axiosInterceptor";
 import Title from "../Helpers/Title";
 import Description from "../Helpers/Description";
 import { userDetailsStore } from "@/store/userStore";
+import { useLoader } from "@/store/loaderStore";
 
 const RegisterComponent = () => {
   const [type, setType] = useState(false);
   const [image, setImage] = useState(null);
-  const [loading, setLoading] = useState(false);
   const getUserDetails = userDetailsStore((state) => state.getUserDetails);
+  const setLoading = useLoader((state) => state.setLoading);
 
   const {
     register,

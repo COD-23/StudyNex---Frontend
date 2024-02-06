@@ -3,6 +3,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import NextTopLoader from "nextjs-toploader";
 import Head from "next/head";
+import LoaderContainer from "@/components/Loader/LoaderContainer";
 
 const inter = Poppins({ subsets: ["latin"], weight: "400" });
 
@@ -17,7 +18,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <Toaster position="top-right" reverseOrder={false} />
         <NextTopLoader color="#4983f6" />
-        {children}
+        <LoaderContainer>{children}</LoaderContainer>
       </body>
     </html>
   );

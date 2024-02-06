@@ -14,10 +14,12 @@ import { postRequest } from "@/config/axiosInterceptor";
 import Title from "../Helpers/Title";
 import Description from "../Helpers/Description";
 import { userDetailsStore } from "@/store/userStore";
+import Loader from "../Loader/Loader";
+import { useLoader } from "@/store/loaderStore";
 
 const LoginComponent = () => {
   const [type, setType] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const setLoading = useLoader((state) => state.setLoading);
   const getUserDetails = userDetailsStore((state) => state.getUserDetails);
 
   const {
