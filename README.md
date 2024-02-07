@@ -118,14 +118,25 @@ List down all the future plans for the project here
 Your virtual group study platform contributes to solving real-life problems by:
 
 - Enhancing remote learning and collaboration.
-- Bridging the gap in education by providing equal access.
+- Bridging the gap in education by providing equal access to all the students in the organization.
 - Improving communication and teamwork in various settings.
 - Facilitating dynamic learning channels and adaptable structures.
 - Offering assessment and skill development opportunities.
 
+Monetization can be achieved through premium features, collaborations with institutions, and certification programs.
+
 ## 🛠Project Setup
 
->Include your project setup basics here. Steps for how someone else can setup your project on their machine. Add any relevant details as well.
+Frontend:-
+Installed node js runtime on local machine.
+Then created next js project using npx package manager.
+
+Backend:-
+Create new folder & then init the project using npm init & installed required dependencies.
+Then created new account on the MongoDB atlas.
+Created new project on the atlas platform.
+Then connected to the project using mongodb database connection string using mongoose in the express app.
+
 
 ## 💻Usage
 
