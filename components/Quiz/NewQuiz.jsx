@@ -126,7 +126,7 @@ const DisplayQuiz = ({ quiz, title, setQuiz }) => {
         body: {
           title: title,
           quiz: JSON.stringify(quiz),
-          channel_id: params.id,
+          channel_id: urlParams.get("channel_id"),
           org_id: urlParams.get("org_id"),
         },
         token: getCookie("token"),
