@@ -9,6 +9,7 @@ import { postRequest } from "@/config/axiosInterceptor";
 import { createNewQuizApi } from "../Constants/apiEndpoints";
 import { useParams } from "next/navigation";
 import { getCookie } from "cookies-next";
+import { useLoader } from "@/store/loaderStore";
 
 const NewQuiz = ({ setCreatePage }) => {
   const [quiz, setQuiz] = useState(null);
@@ -20,12 +21,20 @@ const NewQuiz = ({ setCreatePage }) => {
   };
 
   const generateQuiz = () => {
+    if(!title) {
+      toast.error("Please enter a title");
+      return;
+    };
+    if(!file) {
+      toast.error("Please select a file")
+      return;
+    };
     try {
       const formData = new FormData();
       formData.append("file", file);
 
       axios
-        .post("http://localhost:5000/generate_quiz", formData)
+        .post("https://quizcreation.onrender.com/generate_quiz", formData)
         .then((response) => setQuiz(response.data.quiz))
         .catch((error) => console.error("Error:", error));
     } catch (error) {
@@ -90,7 +99,7 @@ const NewQuiz = ({ setCreatePage }) => {
           )}
           <button
             onClick={generateQuiz}
-            className="bg-blue-500 text-white rounded-md px-4 py-2 hover:scale-105 transition duration-200 w-fit self-end"
+            className="bg-blue-500 text-white rounded-md px-4 py-2 transition duration-200 w-fit self-end"
           >
             Create new Quiz
           </button>
