@@ -75,7 +75,6 @@ const LeaderTable = ({ data }) => {
       ),
     },
   ];
-  console.log("lead data", data);
 
   const rows = [
     {

@@ -133,7 +133,6 @@ const DisplayQuiz = ({ quiz, title, setQuiz }) => {
       });
       const res = response.data.data;
       if (response.status) {
-        console.log(res);
         window.location.reload();
       }
     } catch (error) {
