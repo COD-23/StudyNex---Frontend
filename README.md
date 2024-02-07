@@ -62,9 +62,6 @@ User can also view their profile which is updated along with the active particip
 
 ## 🤖Tech-Stack
 
-Mention all languages/libraries/frameworks used in your project **domain-wise**   
-You can use icons too - find them [here](https://github.com/get-icon/geticon) 
-
 #### Front-end
 - Next Js
 - React Js
@@ -155,7 +152,7 @@ Add names of your team members with their emails and links to their GitHub accou
 
 - [Team Member 1 Aaditya Jayant Padte](https://github.com/Aaditya8C): aadityajp0419@gmail.com
 - [Team Member 2 Vedant Mahendra Kale](https://github.com/VedantKale08): vedantkale8114@gmail.com
-- [Team Member 3 Aniket Suresh Jadhav](https://github.com/VedantKale08): aj230375@gmail.com
+- [Team Member 3 Aniket Suresh Jadhav](https://github.com/DevAniket010): aj230375@gmail.com
 
 ## 👨‍🏫Mentors
 
