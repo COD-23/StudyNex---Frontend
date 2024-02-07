@@ -1,6 +1,6 @@
 <h1 align="center">
   <a href="https://github.com/CommunityOfCoders/Inheritance-2023">
-    <img src="./Untitled.png" alt="CoC Inheritance 2022" width="500" height="166">
+    <img src="./COC" alt="CoC Inheritance 2022" width="500" height="166">
   </a>
   <br>
   StudyNex
@@ -162,7 +162,7 @@ Add names of your team members with their emails and links to their GitHub accou
 Add names of your mentors with their emails and links to their GitHub accounts
 
 - [Mentor 1 Riya Kasture](https://github.com/): Email 
-- [Mentor 2 Name](https://github.com/): Email 
+- [Mentor 2 Asmita Raina](https://github.com/): Email 
 
 ## 📱Screenshots
 Add a few screenshots for parts of the project completed till now to give the viewer a quick idea of what your project looks like. After all, a picture speaks a thousand words.
