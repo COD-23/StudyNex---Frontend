@@ -70,6 +70,7 @@ You can use icons too - find them [here](https://github.com/get-icon/geticon)
 - React Js
 - Tailwind CSS
 - Material UI
+- Framer Motion
 
 #### Back-end
 - NodeJS
@@ -128,32 +129,39 @@ Monetization can be achieved through premium features, collaborations with insti
 ## 🛠Project Setup
 
 Frontend:-
-Installed node js runtime on local machine.
-Then created next js project using npx package manager.
+
+- Installed node js runtime on local machine.
+- Then created next js project using npx package manager.
 
 Backend:-
-Create new folder & then init the project using npm init & installed required dependencies.
-Then created new account on the MongoDB atlas.
-Created new project on the atlas platform.
-Then connected to the project using mongodb database connection string using mongoose in the express app.
+
+- Create new folder & then init the project using npm init & installed required dependencies.
+- Then created new account on the MongoDB atlas.
+- Created new project on the atlas platform.
+- Then connected to the project using mongodb database connection string using mongoose in the express app.
+
+Others can simply fork the repository & then clone it in their machine. Once done they should run 'npm i --force'
+to install all the required dependecies.Then can simply run 'npm run dev' to start the project.
 
 
 ## 💻Usage
 
->Steps to run your project once its setup. If you have an app or website, list how the user can go about using it.
+- Users must required to add .env file in order to run the project. 
+- Then they can simply run 'npm run dev' to start the project.
 
 ## 👨‍💻Team Members
 
 Add names of your team members with their emails and links to their GitHub accounts
 
-- [Team Member 1 Name](https://github.com/): Email 
-- [Team Member 2 Name](https://github.com/): Email 
+- [Team Member 1 Aaditya Jayant Padte](https://github.com/Aaditya8C): aadityajp0419@gmail.com
+- [Team Member 2 Vedant Mahendra Kale](https://github.com/VedantKale08): vedantkale8114@gmail.com
+- [Team Member 3 Aniket Suresh Jadhav](https://github.com/VedantKale08): aj230375@gmail.com
 
 ## 👨‍🏫Mentors
 
 Add names of your mentors with their emails and links to their GitHub accounts
 
-- [Mentor 1 Name](https://github.com/): Email 
+- [Mentor 1 Riya Kasture](https://github.com/): Email 
 - [Mentor 2 Name](https://github.com/): Email 
 
 ## 📱Screenshots
@@ -168,29 +176,5 @@ For more Markdown syntax help, visit [here](https://www.markdownguide.org/basic-
 
 
 
-Description:- 
 
-StudyNex....as the name suggests is the next generation virtual group study platform designed for the students by the students. It involved many entities such as student's particular organization, teachers & students of that organization etc. Using this web platform organizations can improve their overall flow of learning.
-All the students & teachers of the organizations can have a insightful communication through interactive channels where teachers can upload study documents, arrange assessments for the students. Also if a group of students wants to study only in their anonymous group then they can create their own private channels where they can interact.
-
-Workflow:-
-
-Organization should register themselves.
-Separate general channel will be created for each organization.
-Then admin can share organization invite code to their repective entities in the organization such as teachers,students etc.
-Teachers can create channels as per their requirements to interact with the students.
-Channel features includes:- Realtime interactive chat, Realtime video streaming along with whiteboard and screen sharing like attrcative features,etc.
-User can join to the only one organization and multiple channels at a time.
-Users in the organization can participate in the assessments uploaded by the admins in their respective channel and can watch their rankings in the leaderboard section section of the organization which indicates continuous progress in the form of points & graph.
-User can also view their profile which is updated along with the active participation of the user on our platform.
-
-Tech Stack Used:- 
-
-Frontend: Next.Js,React.Js,Tailwind CSS,Framer Motion,Material UI
-
-Backend: Node.js,Express.js,Python,MongoDB,Cloudinary (for storing media content)
-
-API Management: Postman
-
-Project Deployment: Vercel (Frontend), Onrender(Backend)
 
