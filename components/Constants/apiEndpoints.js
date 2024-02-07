@@ -34,3 +34,4 @@ export const getQuizDetail = "/get-quiz";
 export const createNewQuizApi = "/create-quiz";
 export const getUserQuizzes = "/get-user-quizzes";
 export const submitQuiz = "/submit-quiz";
+export const stopQuizApi = "/stop-quiz";

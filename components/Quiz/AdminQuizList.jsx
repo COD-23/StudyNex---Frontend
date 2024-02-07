@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import QuizCard from "./QuizCard";
 import CustomTabPanel from "./CustomeTabPanel";
 
-const StudentQuizList = ({ quizData, isLoading, selectValue, org }) => {
-
+const AdminQuizList = ({ quizData, isLoading, setQuizId }) => {
   return isLoading ? (
     <div className="flex justify-center items-center w-full h-full">
       <div class="loader"></div>
@@ -11,36 +10,22 @@ const StudentQuizList = ({ quizData, isLoading, selectValue, org }) => {
   ) : (
     <>
       <div className="flex h-full md:flex-row flex-col">
-        {selectValue === "assigned" ? (
-          <MapData
-            quizData={quizData?.notSubmittedQuizzes}
-            selectValue={selectValue}
-            org={org}
-          />
-        ) : (
-          <MapData
-            quizData={quizData?.userSubmittedQuizzes}
-            selectValue={selectValue}
-            org={org}
-          />
-        )}
+        <MapData quizData={quizData} setQuizId={setQuizId} />
       </div>
     </>
   );
 };
 
-export default StudentQuizList;
+export default AdminQuizList;
 
-const MapData = ({ quizData, selectValue, org }) => {
+const MapData = ({ quizData, setQuizId }) => {
   return (
     <div
       className={`border border-gray-300 rounded-lg w-full h-full ${
         quizData?.length === 0
           ? "flex"
           : "grid lg:grid-cols-3 grid-cols-1 place-content-start lg:p-5 overflow-scroll"
-      } flex-col justify-center items-center gap-3 lg:p-0 p-5 ${
-        org && "bg-white"
-      }`}
+      } flex-col justify-center items-center gap-3 lg:p-0 p-5`}
     >
       {quizData?.length === 0 ? (
         <>
@@ -56,13 +41,7 @@ const MapData = ({ quizData, selectValue, org }) => {
         <>
           {quizData?.length !== 0 &&
             quizData?.map((quiz, index) => (
-              <QuizCard
-                org={org}
-                key={index}
-                quiz={selectValue === "assigned" ? quiz : quiz?.quiz}
-                points={quiz?.points}
-                isStudent={selectValue === "assigned" ? "assigned" : "done"}
-              />
+              <QuizCard key={index} quiz={quiz} setQuizId={setQuizId} />
             ))}
         </>
       )}

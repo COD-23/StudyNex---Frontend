@@ -1,16 +1,69 @@
-import { getRequest } from "@/config/axiosInterceptor";
+import { getRequest, putRequestV2 } from "@/config/axiosInterceptor";
 import { format } from "date-fns";
 import { ArrowLeft } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { getQuizDetail } from "../Constants/apiEndpoints";
+import {
+  getAdminQuizzes,
+  getQuizDetail,
+  stopQuizApi,
+} from "../Constants/apiEndpoints";
 import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
 import Quiz from "./Quiz";
 import QuizTable from "./QuizTable";
 import QuizCard from "./QuizCard";
+import { Box, Tab, Tabs } from "@mui/material";
+import { orgStore } from "@/store/orgStore";
+import CustomTabPanel from "./CustomeTabPanel";
+import AdminQuizList from "./AdminQuizList";
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 const AllQuiz = ({ setCreatePage, quizData }) => {
+  const [quiz, setQuiz] = useState(null);
   const [quizId, setQuizId] = useState(null);
+  const [value, setValue] = useState(0);
+  const [isLoading, setLoading] = useState(0);
+  const orgDetails = orgStore((state) => state.orgDetails);
+
+  useEffect(() => {
+    setQuiz(quizData);
+  }, [quizData]);
+
+  const handleChange = async (event, newValue) => {
+    setValue(newValue);
+    setLoading(true);
+    fetchData(newValue);
+  };
+
+  const fetchData = async (newValue) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    try {
+      const response = await getRequest({
+        url: getAdminQuizzes,
+        params: `?org_id=${urlParams.get(
+          "org_id"
+        )}&channel_id=${urlParams.get("channel_id")}${
+          newValue === 0 ? "&active=true" : ""
+        }`,
+        token: getCookie("token"),
+      });
+      const data = response.data.data;
+      if (response.status) {
+        setQuiz(data);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
   return !quizId ? (
     <>
       <div className="grid gap-3">
@@ -23,32 +76,33 @@ const AllQuiz = ({ setCreatePage, quizData }) => {
         </button>
       </div>
 
-      <div
-        className={`border border-gray-300 rounded-lg h-full ${
-          !quizData
-            ? "flex"
-            : "grid lg:grid-cols-3 grid-cols-1 place-content-start lg:p-5 overflow-scroll"
-        } flex-col justify-center items-center gap-3 lg:p-0 p-5`}
-      >
-        {!quizData ? (
-          <>
-            <p className="text-lg">No quizzes added for students</p>
-            <p className="text-sm text-gray-500 text-center">
-              Your teacher hasn&apos;t assigned any quizzes for you. For the
-              main time,
-              <br />
-              chill with your friends.
-            </p>
-          </>
-        ) : (
-          <>
-            {quizData &&
-              quizData.map((quiz, index) => (
-                <QuizCard key={index} quiz={quiz} setQuizId={setQuizId}/>
-              ))}
-          </>
-        )}
+      <div className="flex gap-2">
+        <Box sx={{ borderBottom: 1, borderColor: "divider", flex: "1" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <Tab label="Active" {...a11yProps(0)} />
+            <Tab label="Past" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
       </div>
+
+      <CustomTabPanel value={value} index={0}>
+        <AdminQuizList
+          quizData={quiz}
+          isLoading={isLoading}
+          setQuizId={setQuizId}
+        />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
+        <AdminQuizList
+          quizData={quiz}
+          isLoading={isLoading}
+          setQuizId={setQuizId}
+        />
+      </CustomTabPanel>
     </>
   ) : (
     <QuizDetails setQuizId={setQuizId} quizId={quizId} />
@@ -63,8 +117,6 @@ const QuizDetails = ({ setQuizId, quizId }) => {
   const [submissionData, setSubmissionData] = useState(null);
   const [isLoading, setLoading] = useState(null);
   const [submissionsTrue, setSubmissionTrue] = useState(false);
-
-  console.log(submissionData);
 
   const fetchData = async () => {
     try {
@@ -92,6 +144,26 @@ const QuizDetails = ({ setQuizId, quizId }) => {
     fetchData();
   }, [quizId]);
 
+  const stopQuiz = async () => {
+    try {
+      setLoading(true);
+      const response = await putRequestV2({
+        url: stopQuizApi,
+        params: `?quiz_id=${quizId}`,
+        token: getCookie("token"),
+      });
+      const res = response.data.data;
+      if (response.status) {
+        window.location.reload();
+        setLoading(false);
+      }
+    } catch (error) {
+      toast.error("Something went wrong!!");
+      setLoading(false);
+      console.log(error);
+    }
+  };
+
   return !submissionsTrue ? (
     <div className="flex flex-col gap-3 h-full">
       <div className="flex gap-5 lg:px-10 px-2">
@@ -110,6 +182,12 @@ const QuizDetails = ({ setQuizId, quizId }) => {
             Check Submissions
           </button>
         )}
+        {quizData?.is_active && <button
+          onClick={stopQuiz}
+          className="bg-red-500 text-white rounded-md px-4 py-2  w-fit flex gap-2"
+        >
+          Stop Quiz
+        </button>}
       </div>
       <div className="flex justify-between lg:px-10 px-2">
         <p className="font-bold">Quiz title : {quizData?.title}</p>

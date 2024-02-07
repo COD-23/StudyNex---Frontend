@@ -199,7 +199,7 @@ const LeaderTable = ({ data }) => {
     },
   ];
   return (
-    <div className="mx-5 md:mx-24 max-w-[90vw] my-7 bg-white shadow-2xl rounded-xl">
+    <div className="mx-5 md:mx-24 max-w-[90vw] my-7 bg-white shadow-sm rounded-xl">
       <DataGrid
         className="max-h-[90vh] md:max-h-[80vh] px-6 py-4"
         style={{ fontSize: "18px" }}

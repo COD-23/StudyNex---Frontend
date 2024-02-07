@@ -75,3 +75,12 @@ export const putRequest = ({ url, body, token }) => {
     },
   });
 };
+
+export const putRequestV2 = ({ url, params = "", data = {}, token }) => {
+  return axiosDefaultInstance.put(`${BASEURL + url + params}`, data, {
+    timeout: timeout,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
