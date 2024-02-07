@@ -43,7 +43,6 @@ const QuizLandingPage = ({ quiz, quizData }) => {
         });
         const res = response;
         setLoading(false);
-        console.log(res);
         if (urlParams.get("org")) {
           setOrgActiveChannel("Assessments");
           router.push("/");

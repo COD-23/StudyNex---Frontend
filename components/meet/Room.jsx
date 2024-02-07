@@ -38,7 +38,7 @@ const Room = () => {
     const initPeer = () => {
       const peer = new Peer();
       peer.on("open", (id) => {
-        console.log("Your peer id is " + id);
+        // console.log("Your peer id is " + id);
         setMyPeer(id);
         socket.emit(
           "join-room",
@@ -72,7 +72,7 @@ const Room = () => {
               const nImage = call.metadata.image;
               const screenShareId = call.metadata.screenShareId;
               setTime(nTime);
-              console.log("Incoming Stream: ", incomingStream);
+              // console.log("Incoming Stream: ", incomingStream);
               if (screenShareId) {
                 setScreenStream(incomingStream);
               }
@@ -116,7 +116,7 @@ const Room = () => {
       if (call) {
         setPeerCall(call);
         call.on("stream", (incomingStream) => {
-          console.log("Incoming Stream: ", incomingStream);
+          // console.log("Incoming Stream: ", incomingStream);
           setPlayers((prev) => ({
             ...prev,
             [userId]: {
@@ -172,7 +172,6 @@ const Room = () => {
 
   useEffect(() => {
     const handleToggleAudio = (userId) => {
-      console.log("Mic muted");
       setPlayers((prev) => {
         const copy = cloneDeep(prev);
         copy[userId].muted = !copy[userId].muted;
@@ -237,7 +236,6 @@ const Room = () => {
           video: { cursor: "always" },
         })
         .then((stream) => {
-          console.log(stream);
           setScreenStream(stream);
           setScreenSharing(true);
           Object.keys(users).forEach((userId) => {
@@ -252,7 +250,7 @@ const Room = () => {
             if (call) {
               setPeerCall(call);
               call.on("stream", (incomingStream) => {
-                console.log("Incoming Stream2: ", incomingStream);
+                // console.log("Incoming Stream2: ", incomingStream);
                 setUser((prev) => ({
                   ...prev,
                   [id]: call,

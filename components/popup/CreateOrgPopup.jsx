@@ -73,7 +73,6 @@ const CreateOrgPopup = ({ setPopup }) => {
         token: getCookie("token"),
       });
       if (response?.data?.status) {
-        console.log("Channel created successfully",response?.data?.data);
         setGeneralChannel(response?.data?.data);
       } else {
         toast.error(response?.data?.message);

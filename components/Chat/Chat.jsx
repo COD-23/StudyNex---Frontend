@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Message from "./Message";
 import ScrollToBottom from "react-scroll-to-bottom";
 import { getCookie } from "cookies-next";
@@ -38,7 +38,7 @@ const Chat = ({ messages, setMessages }) => {
     socket.emit("setup", userDetails);
     socket.on("connection", () => {
       setConnectionStatus(!connectionStatus);
-      console.log("Connected to socket");
+      // console.log("Connected to socket");
     });
   }, []);
 
@@ -72,10 +72,13 @@ const Chat = ({ messages, setMessages }) => {
 
   useEffect(() => {
     const handleReceivedMessage = (newMessage) => {
-      console.log("socket message received: " + newMessage);
-      const lastMessage = messages[messages.length - 1];
-      if (!lastMessage || lastMessage._id !== newMessage._id) {
-        setMessages((prev) => [...prev, newMessage]);
+      // console.log("socket message received: " + newMessage);
+      if (isEmpty(messages)) setMessages((prev) => [...prev, newMessage]);
+      else if (!isEmpty(messages)) {
+        const lastMessage = messages[messages.length - 1];
+        if (!lastMessage || lastMessage._id !== newMessage._id) {
+          setMessages((prev) => [...prev, newMessage]);
+        }
       }
     };
 
@@ -83,10 +86,8 @@ const Chat = ({ messages, setMessages }) => {
       console.error("Socket error:", error);
     };
 
-    if (!isEmpty(messages)) {
-      socket.on("new_message", handleReceivedMessage);
-      socket.on("error", handleError);
-    }
+    socket.on("new_message", handleReceivedMessage);
+    socket.on("error", handleError);
     return () => {
       socket.off("new_message", handleReceivedMessage);
       socket.off("error", handleError);
