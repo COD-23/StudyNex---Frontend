@@ -12,7 +12,7 @@ import { activeOrgChannel } from "@/store/activeOrgChannel";
 const QuizLandingPage = ({ quiz, quizData }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [points, setPoints] = useState(0);
-  const [isLoading, setLoading] = useState(0);
+  const [isLoading, setLoading] = useState(false);
   const [answers, setAnswers] = useState([]);
   const params = useParams();
   const router = useRouter();
