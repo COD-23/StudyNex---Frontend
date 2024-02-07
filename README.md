@@ -59,7 +59,6 @@ User can also view their profile which is updated along with the active particip
 - [App APK Link]()
 - [Hosted Backend Link](https://study-nex-backend.onrender.com)
 
-Add any more links/resources you used for your project
 
 ## 🤖Tech-Stack
 
@@ -67,47 +66,62 @@ Mention all languages/libraries/frameworks used in your project **domain-wise**
 You can use icons too - find them [here](https://github.com/get-icon/geticon) 
 
 #### Front-end
-- HTML
-- CSS
-- JavaScript
-- etc.
+- Next Js
+- React Js
+- Tailwind CSS
+- Material UI
 
 #### Back-end
 - NodeJS
 - ExpressJS
-- etc.
+- Flask
+- Cloudinary (for storing media content)
 
 #### Database
 - MongoDB
-- SQL
-- etc.
 
-#### Computer Vision
-- OpenCV
-- etc.
+#### API Management Platform: 
+- Postman
+
+#### Project Deployment: 
+- Vercel (Frontend)
+- Onrender(Backend)
+
 
 ## 📈Progress
 
 List down all the fully implemented features in your project
 
-- [x] Fully Implemented Feature 1 
-- [x] Fully Implemented Feature 2
+- [x] Customized channel creation. 
+- [x] General channel where everyone in the organization can interact.
+- [x] Exclusive Group chat for the channels for texting,sharing important files such as pdfs, ppts or doc, or for just bickering.
+- [x] Realtime video meet feature for one to one interaction along with screen sharing capability.
+- [x] White board functionality which helps users for demonstration purpose.
+- [x] Assessment for users for testing their skills or for teachers to conduct TAs, all just a click away, just upload your pdf file and get quizzes generated automatically with points scores.
+- [x] Leaderboard to keep track of users points and to keep their competitive fire ignited.
+- [x] Graphs and Charts to track the progress of a user to correctly gauge his skills and to show users journey along the way.
 
 List down all the partially implemented features in your project
 
-- [ ] Partially Implemented Feature 1 
-- [ ] Partially Implemented Feature 2
+- [ ] Scheduling of the assessments. 
+- [ ] Scheduling the events in platform itself, (such as scheduling hackathons and have our AI calculate the scores and rankings).
 
 ## 🔮Future Scope
 
 List down all the future plans for the project here
 
-- Future Feature 1
-- Future Feature 2
+- Scheduling the events in platform itself, (such as scheduling hackathons and have our AI calculate the scores and rankings).
+- Exclusive user mental health checker.
 
 ## 💸Applications
 
->How can your project do its part in solving a real-life problem? What are its possible applications? Can it be monetized? Describe here.
+Your virtual group study platform contributes to solving real-life problems by:
+
+- Enhancing remote learning and collaboration.
+- Bridging the gap in education by providing equal access.
+- Improving communication and teamwork in various settings.
+- Facilitating dynamic learning channels and adaptable structures.
+- Offering assessment and skill development opportunities.
 
 ## 🛠Project Setup
 
