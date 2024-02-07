@@ -30,23 +30,23 @@ const CreateJoin = () => {
             </div>
             <p className="text-white mb-5">
               <FcApproval style={{ display: "inline" }} />
-              This is a sample card in Tailwind CSS.
+              Create your own virtual organizations.
             </p>
             <p className="text-white mb-5">
               <FcApproval style={{ display: "inline" }} />
-              This is a sample card in Tailwind CSS.
+              Create channels for your teams or clubs.
             </p>
             <p className="text-white mb-5">
               <FcApproval style={{ display: "inline" }} />
-              This is a sample card in Tailwind CSS.
+              One stop solutions for all your needs.
             </p>
             <p className="text-white mb-5">
               <FcApproval style={{ display: "inline" }} />
-              This is a sample card in Tailwind CSS.
+              Virtual workspace to share resources.
             </p>
             <p className="text-white ">
               <FcApproval style={{ display: "inline" }} />
-              This is a sample card in Tailwind CSS.
+              Encourage innovation, creativity, and collaboration.
             </p>
           </div>
           <PrimaryBtn
@@ -67,23 +67,23 @@ const CreateJoin = () => {
             </div>
             <p className="text-white mb-5">
               <FcApproval style={{ display: "inline" }} />
-              This is a sample card in Tailwind CSS.
+             Get access to organization resouces.
             </p>
             <p className="text-white mb-5">
               <FcApproval style={{ display: "inline" }} />
-              This is a sample card in Tailwind CSS.
+              Build connections with people sharing similar interests.
             </p>
             <p className="text-white mb-5">
               <FcApproval style={{ display: "inline" }} />
-              This is a sample card in Tailwind CSS.
+              Make your own channels and develope leadership skills.
             </p>
             <p className="text-white mb-5">
               <FcApproval style={{ display: "inline" }} />
-              This is a sample card in Tailwind CSS.
+              Compete in a fun way with your friends.
             </p>
             <p className="text-white ">
               <FcApproval style={{ display: "inline" }} />
-              This is a sample card in Tailwind CSS.
+              Keep track of your progress and improve to your best version.
             </p>
           </div>
           <PrimaryBtn

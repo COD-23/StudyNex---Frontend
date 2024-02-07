@@ -83,19 +83,19 @@ export default function MainPage() {
     () => [
       {
         label: "Study with your Buddies",
-        desc: `${MainLabel} provides you the platform to study with your friends virtually.`,
+        desc: `${MainLabel} Study with your friends and classmates in real time, from sharing notes to compete with each other on a single platform`,
         icon: CgNotes,
         animation_type: "fade-right",
       },
       {
         label: "Interactive Community",
-        desc: `${MainLabel} provides you the platform to study with your friends virtually.`,
+        desc: `${MainLabel} Interactive Community of diffrent people with diffrent skills sharing same interests.`,
         icon: BsPeopleFill,
         animation_type: "fade-up",
       },
       {
-        label: "Study with your Buddies",
-        desc: `${MainLabel} provides you the platform to study with your friends virtually.`,
+        label: "Track Your Progress",
+        desc: `${MainLabel} Track your progress and witness your own journey.`,
         icon: MdLeaderboard,
         animation_type: "fade-left",
       },
@@ -125,14 +125,14 @@ export default function MainPage() {
         mainLabel: "Tools",
         label: "For Teachers And Learners",
         logo: TeacherLogo2,
-        desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam cumque repellat fugiat dignissimos nostrum, in sunt omnis ipsum dolore nihil dolorem, obcaecati ex quasi totam voluptas labore adipisci animi inventore?",
+        desc: "In the digital age, teachers can easily upload course materials, interact with students, conduct live online classes, and administer quizzes with scoring using online platforms and learning management systems (LMS). These tools facilitate seamless communication, engagement, and assessment, enhancing the overall learning experience.",
         isLottie: false,
         link: "#",
       },
       {
         mainLabel: "A user interface",
         label: "designed for the classroom",
-        desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam cumque repellat fugiat dignissimos nostrum, in sunt omnis ipsum dolore nihil dolorem, obcaecati ex quasi totam voluptas labore adipisci animi inventore?",
+        desc: "We provide a modern user interfaces in education streamline interactions for both students and teachers. These interfaces prioritize ease of use, enabling students to access materials and participate in activities effortlessly. Teachers benefit from simplified administrative tasks, allowing them to focus on facilitating learning. With intuitive design principles, modern interfaces enhance engagement and productivity for all users in the educational environment.",
         isLottie: true,
         options: defaultOptions2,
         link: "#",
@@ -155,7 +155,7 @@ export default function MainPage() {
         mainLabel: "Quizzes",
         label: "Assessments & Surveys",
         logo: QuizLogo,
-        desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam cumque repellat fugiat dignissimos nostrum, in sunt omnis ipsum dolore nihil dolorem, obcaecati ex quasi totam voluptas labore adipisci animi inventore?",
+        desc: "We Offer Quizzes, assessments, and surveys which are invaluable tools in gauging student understanding and gathering feedback. With quizzes, teachers can evaluate comprehension, track progress, and tailor instruction accordingly. Assessments provide a comprehensive measure of learning outcomes, informing educators about areas of strength and areas needing improvement. Surveys offer valuable insights into student perceptions and preferences, aiding in instructional refinement and curriculum development. Together, these tools empower educators to create dynamic and responsive learning environments that cater to the diverse needs of their students.",
         isLottie: false,
         link: "#",
       },
@@ -164,7 +164,7 @@ export default function MainPage() {
         label: "Discussions",
         isLottie: true,
         options: defaultOptions3,
-        desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam cumque repellat fugiat dignissimos nostrum, in sunt omnis ipsum dolore nihil dolorem, obcaecati ex quasi totam voluptas labore adipisci animi inventore?",
+        desc: "One-on-one sessions between teachers and students offer personalized support and guidance tailored to individual needs. These sessions provide a valuable opportunity for students to receive focused instruction, ask questions, and clarify concepts in a supportive environment. For teachers, one-on-one sessions enable deeper insights into student learning styles and challenges, allowing for targeted interventions and customized instruction. By fostering meaningful connections and addressing specific learning goals, these sessions enhance student engagement, confidence, and overall academic success.",
         link: "#",
       },
     ],
@@ -188,10 +188,7 @@ export default function MainPage() {
               easier
             </p>
             <p className="text-lg text-gray-500">
-              At {MainLabel}, Lorem ipsum dolor sit amet consectetur adipisicing
-              elit. Quas incidunt blanditiis ullam neque dignissimos quo, fugiat
-              quibusdam alias iure a rerum illum quos! Quos quia in nemo ipsum
-              ullam facilis.
+              At {MainLabel}, We offer solutions for seamless student satisfaction by introducing new digital way of studying which makes it much more user interactive and fun . With Chats, Group Meetings and Quiz assessments try our new way of online studying.
             </p>
             <div className="lg:w-[40%]">
               <PrimaryBtn label="Get Started" box link="/register" />
@@ -232,8 +229,7 @@ export default function MainPage() {
               What is <span className="text-blue-500">{MainLabel}</span>
             </p>
             <p className="text-center py-4 text-lg text-gray-500">
-              {MainLabel} is a powerful online platform that combines all the
-              tools needed to run a successful class of school or college
+              {MainLabel} is a powerful online platform that helps students to view the studying in new light ,ignite their competitiveness and improve their overall performance.
             </p>
           </div>
 
