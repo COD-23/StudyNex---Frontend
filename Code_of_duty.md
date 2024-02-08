@@ -176,6 +176,8 @@ Add names of your mentors with their emails and links to their GitHub accounts
 ![Screenshot from 2024-02-08 16-31-11](https://github.com/COD-23/StudyNex---Frontend/assets/148361286/82e3192e-0eeb-4a45-ae8c-8730581d5921)
 
 
+You can find more detailed images here:
+
 https://drive.google.com/drive/u/0/folders/1tLz-WQNdnF-1BthTvVhtKjemQnMTbjrG
 
 
