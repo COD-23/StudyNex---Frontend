@@ -54,7 +54,7 @@ const Profile = () => {
         <div className="border-4 border-slate-950 bg-cover bg-left bg-[url('../public/Assets/Images/profilebg.jpg')] h-52 w-full px-20 pt-24 lg:px-52 xl:py-28 rounded-b-xl flex">
           <div className="border-2 border-slate-950 w-48 h-48 flex rounded-full">
             <Image
-              src={Defaultpic}
+              src={userDetails?.image}
               alt="Default Pic"
               width={0}
               height={0}

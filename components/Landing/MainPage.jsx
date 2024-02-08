@@ -188,7 +188,10 @@ export default function MainPage() {
               easier
             </p>
             <p className="text-lg text-gray-500">
-              At {MainLabel}, We offer solutions for seamless student satisfaction by introducing new digital way of studying which makes it much more user interactive and fun . With Chats, Group Meetings and Quiz assessments try our new way of online studying.
+              At {MainLabel}, We offer solutions for seamless student
+              satisfaction by introducing new digital way of studying which
+              makes it much more user interactive and fun . With Chats, Group
+              Meetings and Quiz assessments try our new way of online studying.
             </p>
             <div className="lg:w-[40%]">
               <PrimaryBtn label="Get Started" box link="/register" />
@@ -215,7 +218,7 @@ export default function MainPage() {
             </p>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-8">
+          <div className="grid md:grid-cols-3  lg:flex-row gap-8">
             {infoCards.map((item, index) => {
               return <InfoCards data={item} key={index} />;
             })}
@@ -229,7 +232,9 @@ export default function MainPage() {
               What is <span className="text-blue-500">{MainLabel}</span>
             </p>
             <p className="text-center py-4 text-lg text-gray-500">
-              {MainLabel} is a powerful online platform that helps students to view the studying in new light ,ignite their competitiveness and improve their overall performance.
+              {MainLabel} is a powerful online platform that helps students to
+              view the studying in new light ,ignite their competitiveness and
+              improve their overall performance.
             </p>
           </div>
 

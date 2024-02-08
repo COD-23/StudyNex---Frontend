@@ -67,7 +67,7 @@ const CreateJoin = () => {
             </div>
             <p className="text-white mb-5">
               <FcApproval style={{ display: "inline" }} />
-             Get access to organization resouces.
+              Get access to organization resouces.
             </p>
             <p className="text-white mb-5">
               <FcApproval style={{ display: "inline" }} />
