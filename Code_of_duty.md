@@ -54,8 +54,8 @@ User can also view their profile which is updated along with the active particip
 
 - [GitHub Repository](https://github.com/COD-23/StudyNex---Frontend)
 - [Demo Video](https://drive.google.com/file/d/124V86987H4GDjUDFO19R47xkGZFwROIy/view?usp=sharing)
-- [Drive Link to Screenshots of your project](https://drive.google.com/drive/u/0/folders/1SO5D0wcPvpkKoNYzMFf_jomTEUIrriit)
-- [Drive Link to Videos of your project](https://drive.google.com/drive/u/0/folders/19i1YtuBz9lga8as0H9QUNCLvsRvEXIkm)
+- [Drive Link to Screenshots of our project](https://drive.google.com/drive/u/0/folders/1SO5D0wcPvpkKoNYzMFf_jomTEUIrriit)
+- [Drive Link to Videos of our project](https://drive.google.com/drive/u/0/folders/19i1YtuBz9lga8as0H9QUNCLvsRvEXIkm)
 - [Hosted Website Link](https://study-nex.vercel.app/)
 - [Hosted Backend Link](https://study-nex-backend.onrender.com)
 
