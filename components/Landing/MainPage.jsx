@@ -1,5 +1,4 @@
 "use client";
-import Header from "@/components/Landing/Header";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { useEffect, useMemo, useState } from "react";
@@ -23,7 +22,6 @@ import Footer from "./Footer";
 import PrimaryBtn from "../Helpers/PrimaryBtn";
 
 export default function MainPage() {
-  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     Aos.init();
@@ -171,11 +169,8 @@ export default function MainPage() {
     []
   );
   return (
-    <div>
+    <>
       <div className="bg-main lg:h-screen overflow-x-hidden" id="Home">
-        {/* <Header activeSection={activeSection} /> */}
-
-        {/* section1 */}
         <motion.div
           className="py-10 px-12 lg:px-32 lg:py-20 flex flex-col lg:flex-row gap-16 items-center justify-center "
           initial={{ opacity: 0, y: 100 }}
@@ -268,6 +263,6 @@ export default function MainPage() {
         </div>
       </div>
       <Footer />
-    </div>
+    </>
   );
 }
