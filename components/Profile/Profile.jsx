@@ -52,13 +52,13 @@ const Profile = () => {
     <div className="flex flex-col">
       <div className="flex-[2]">
         <div className="border-4 border-slate-950 bg-cover bg-left bg-[url('../public/Assets/Images/profilebg.jpg')] h-52 w-full px-20 pt-24 lg:px-52 xl:py-28 rounded-b-xl flex">
-          <div className="border-2 border-slate-950 w-48 h-48 flex rounded-full">
+          <div className="border-2 shadow-2xl w-48 h-48 flex rounded-full">
             <Image
               src={userDetails?.image}
               alt="Default Pic"
-              width={0}
-              height={0}
-              className="w-full h-full rounded-full object-cover"
+              width={150}
+              height={150}
+              className="w-full h-full rounded-full object-fill bg-center"
             />
           </div>
           <div className="hidden md:h-16 md:w-80 md:bg-gradient-to-r from-blue-400 to-violet-600 md:rounded-lg md:my-20 md:ml-24 md:flex md:justify-center md:items-center md:shadow-2xl">

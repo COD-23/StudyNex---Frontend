@@ -7,10 +7,8 @@ import JoinChannel from "../popup/JoinChannel";
 import { isEmpty } from "lodash";
 import { userDetailsStore } from "@/store/userStore";
 import { channelStore } from "@/store/channelStore";
-import RightContainer from "./RightContainer";
 import GetOrgCode from "../popup/GetOrgCodePopup";
 import { generalChannelStore } from "@/store/generalChannelStore";
-import { activeOrgChannel } from "@/store/activeOrgChannel";
 
 const ParentContainer = ({ children, orgData, channelsData }) => {
   const setOrgDetails = orgStore((state) => state.setOrgDetails);
