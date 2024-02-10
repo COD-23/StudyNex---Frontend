@@ -70,8 +70,8 @@ const JoinChannel = ({ orgDetails, setPopup, channelsData }) => {
       <div className="bg-white w-[90vw] md:w-[30vw] h-[70vh] rounded-md shadow-md py-6 lg:px-10 px-4 flex flex-col gap-3">
         <Title>Join Channel</Title>
         <Description>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe,
-          veritatis! Asperiores id possimus provident.
+          Become a part of the community and embark on a journey of
+          self-discovery.
         </Description>
         <div className="relative h-12 w-full">
           <input

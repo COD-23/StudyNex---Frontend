@@ -61,8 +61,8 @@ const CreateChannel = ({ orgDetails, setPopup, channelsData }) => {
       <div className="bg-white w-[90vw] md:w-[30vw] rounded-md shadow-md py-6 lg:px-10 px-4 flex flex-col gap-3">
         <Title>Create Your Channel</Title>
         <Description>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe,
-          veritatis! Asperiores id possimus provident.
+          Create your own channel and build the community of the like minded
+          peoples like you.
         </Description>
         <form
           action=""
