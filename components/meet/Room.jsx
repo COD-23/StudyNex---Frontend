@@ -166,7 +166,7 @@ const Room = () => {
       socket.off("user-connected", (userId) => {
         // cleanup
       });
-      peerInstance.destroy();
+      peerInstance.destroy(); 
     };
   }, []);
 

@@ -54,6 +54,7 @@ const CreateJoin = () => {
             link=""
             className="mb-4"
             invert
+            id="createOrgButton"
             clickEvent={() => {
               setCreatePopup(true);
               window.history.pushState("#", null, null);

@@ -10,9 +10,10 @@ const PrimaryBtn = ({
   className,
   clickEvent,
   type = "button",
+  id
 }) => {
   return (
-    <button type={type} onClick={clickEvent}>
+    <button type={type} onClick={clickEvent} id={id}>
       <a
         href={link ? link : null}
         className={classNames(

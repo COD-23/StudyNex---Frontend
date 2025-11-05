@@ -244,7 +244,7 @@ const RegisterComponent = () => {
             <span className="text-red-600 text-xs">Password is required</span>
           )}
         </div>
-        <PrimaryBtn label="Sign Up" type="submit" />
+        <PrimaryBtn label="Sign Up" type="submit" id="register"/>
       </form>
     </motion.div>
   );

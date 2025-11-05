@@ -189,7 +189,12 @@ export default function MainPage() {
               Meetings and Quiz assessments try our new way of online studying.
             </p>
             <div className="lg:w-[40%]">
-              <PrimaryBtn label="Get Started" box link="/register" />
+              <PrimaryBtn
+                label="Get Started"
+                box
+                link="/register"
+                id="registerButton"
+              />
             </div>
           </div>
 

@@ -1,8 +1,8 @@
 export const ApiUrl =
   process.env.NEXT_PUBLIC_APP_ENV == "production"
     ? "https://study-nex-backend.onrender.com/api"
-    : // ? "https://study-nex-backend.vercel.app/api"
-      "http://localhost:4000/api";
+    :  "https://study-nex-backend.vercel.app/api"
+      // "http://localhost:4000/api";
 
 //GET
 export const user = "/user";
