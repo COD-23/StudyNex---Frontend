@@ -52,6 +52,7 @@
     "react-scroll-to-bottom": "^4.2.0",
     "react-simple-image-viewer": "^1.2.2",
     "recharts": "^2.10.4",
+    "selenium-webdriver": "^4.30.0",
     "sharp": "^0.33.2",
     "socket.io-client": "^4.7.3",
     "sweetalert2": "^11.10.1",
